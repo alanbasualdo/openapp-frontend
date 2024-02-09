@@ -1,7 +1,7 @@
 import React from "react";
-import { LeftSidebar } from "../components/LeftSidebar";
-import { RightSidebar } from "../components/RightSidebar";
-import { Navbar } from "../components/Navbar";
+import { LeftSidebar } from "../components/bars/LeftSidebar";
+import { RightSidebar } from "../components/bars/RightSidebar";
+import { Navbar } from "../components/bars/Navbar";
 import { HomePage } from "./HomePage";
 
 export const MainPage = () => {
