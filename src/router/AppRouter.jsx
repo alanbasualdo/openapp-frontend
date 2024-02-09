@@ -7,10 +7,9 @@ import { LoginPage } from "../pages/LoginPage";
 import { LeftSidebar } from "../components/bars/LeftSidebar";
 import { MainPage } from "../pages/MainPage";
 import { RightSidebar } from "../components/bars/RightSidebar";
-import { WorkPage } from "../pages/WorkPage";
 import { DollarPage } from "../pages/DollarPage";
 import { ForgetPassword } from "../pages/ForgetPassword";
-import { CreateTicket } from "../components/CreateTicket";
+import { CreateTicket } from "../pages/CreateTicket";
 
 export const AppRouter = () => {
   /*  const { status } = useSelector((state) => state.auth); */
@@ -28,21 +27,25 @@ export const AppRouter = () => {
             showRightbar={showRightbar}
             setShowRightbar={setShowRightbar}
           />
-          <div className="flex">
+          <div className="flex" style={{ marginTop: "60px" }}>
             <LeftSidebar showLeftbar={showLeftbar} />
             <div
-              className="w-full p-3 bg-blue-600 text-white"
-              style={{ height: "calc(100vh - 40px)" }}
+              className="w-full bg-primary text-white"
+              style={{ height: "calc(100vh - 60px)" }}
             >
-              <Routes>
-                <>
-                  <Route path="/home" element={<HomePage />} />
-                  <Route path="/work" element={<WorkPage />} />
-                  <Route path="/dollar" element={<DollarPage />} />
-                  <Route path="/createTicket" element={<CreateTicket />} />
-                  <Route path="/*" element={<HomePage />} />
-                </>
-              </Routes>
+              <div
+                style={{ overflowY: "auto", maxHeight: "calc(100vh - 60px)" }}
+                className="py-3 px-4"
+              >
+                <Routes>
+                  <>
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/dollar" element={<DollarPage />} />
+                    <Route path="/createTicket" element={<CreateTicket />} />
+                    <Route path="/*" element={<HomePage />} />
+                  </>
+                </Routes>
+              </div>
             </div>
             <RightSidebar showRightbar={showRightbar} />
           </div>
