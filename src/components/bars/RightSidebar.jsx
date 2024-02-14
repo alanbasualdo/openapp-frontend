@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const RightSidebar = ({ showRightbar }) => {
+  const [searchUser, setSetSearchUser] = useState(false);
+
   const listaUsuarios = [
     {
       id: 1,
@@ -44,128 +46,88 @@ export const RightSidebar = ({ showRightbar }) => {
     <>
       {showRightbar && (
         <div
-          className="offcanvas-end show bg-primary relative w-50"
+          className="offcanvas-end show bg-dark relative w-50"
           style={{ height: "calc(100vh - 60px)" }}
           tabIndex="-1"
         >
-          <div className="text-sm">
-            <div className="px-4 mt-3">
-              <div className="container mb-4 text-white">
-                <div className="row">
-                  <div className="col-md-5 d-flex flex-column justify-content-center">
-                    <h1 className="text-center mb-3 font-bold text-lg">
-                      Alan Basualdo
-                    </h1>
-                    <ul className="ml-5">
-                      <li className="list-disc mb-2">
-                        <Link className="hover:font-bold" to="/createTicket">
-                          Mis vacaciones
-                        </Link>
-                      </li>
-                      <li className="list-disc mb-2">
-                        <Link className="hover:font-bold" to="/createTicket">
-                          Mis haberes
-                        </Link>
-                      </li>
-                      <li className="list-disc mb-2">
-                        <Link className="hover:font-bold" to="/createTicket">
-                          Mi CV
-                        </Link>
-                      </li>
-                      <li className="list-disc mb-2">
-                        <Link className="hover:font-bold" to="/createTicket">
-                          Cambiar contraseña
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col-md-7 offcanvas-header">
-                    <div
-                      className="mx-auto bg-white"
-                      style={{
-                        width: "180px",
-                        height: "180px",
-                        borderRadius: "50%",
-                        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.4)",
-                      }}
-                    >
-                      <img
-                        src="https://api.opencars.com.ar/api/download/usuarios/20382826001"
-                        alt="Imagen de perfil"
-                        className="rounded-xl p-1"
-                        style={{
-                          objectFit: "cover",
-                          width: "180px",
-                          height: "180px",
-                          borderRadius: "50%",
-                        }}
+          <div className="px-4 mt-3">
+            <div className="mx-auto p-2">
+              <div className="px-2 mx-1 mb-2 row text-sm">
+                <div className="col-md-11 d-flex flex-column justify-content-center text-gray-400 font-bold text-md mb-2">
+                  {searchUser ? (
+                    <div className="">
+                      <input
+                        type="text"
+                        className="border-none outline-none bg-transparent focus:ring-0 w-full"
+                        placeholder="Buscar colaborador"
+                        autoFocus
                       />
                     </div>
-                  </div>
+                  ) : (
+                    <p>Colaboradores</p>
+                  )}
+                </div>
+                <div className="col-md-1 d-flex text-end flex-column justify-content-center text-gray-400 font-bold text-md mb-2">
+                  {searchUser ? (
+                    <i
+                      className="ri-close-fill cursor-pointer hover:text-gray-300"
+                      onClick={() => setSetSearchUser(false)}
+                      title="Cerrar"
+                    ></i>
+                  ) : (
+                    <i
+                      className="ri-search-line cursor-pointer hover:text-gray-300"
+                      onClick={() => setSetSearchUser(true)}
+                      title="Buscar"
+                    ></i>
+                  )}
                 </div>
               </div>
+
+              <hr className="text-gray-400 mb-2" />
+
               <div
-                className="mx-auto py-3 px-2 bg-white rounded-xl"
+                className="offcanvas-body pr-2"
                 style={{
-                  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.4)",
                   overflowY: "auto",
-                  maxHeight: "calc(80vh - 100px)",
+                  maxHeight: "calc(95vh - 100px)",
                 }}
               >
-                <div className="px-2">
-                  <div className="input-group mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Buscar colaborador"
-                    />
-                  </div>
-                </div>
-                <div className="offcanvas-body text-white">
-                  <ul>
-                    {listaUsuarios.map((usuario) => (
-                      <li
-                        key={usuario.id}
-                        className="flex justify-between rounded-lg p-2 cursor-pointer hover:bg-gray-200"
-                      >
-                        <div className="flex items-center gap-x-5">
-                          <div
-                            className="bg-white h-20 w-20 rounded-full"
-                            style={{
-                              boxShadow:
-                                "2px 1px 17px 2px rgba(0,0,0,0.75) inset",
-                            }}
+                <ul>
+                  {listaUsuarios.map((usuario) => (
+                    <li
+                      key={usuario.id}
+                      className="flex justify-between rounded-lg p-2 cursor-pointer hover:bg-gray-700"
+                    >
+                      <div className="flex items-center gap-x-5">
+                        <img
+                          className="h-12 w-12 flex-none rounded-full bg-gray-50 object-cover"
+                          src="https://api.opencars.com.ar/api/download/usuarios/20382826001"
+                          alt="Foto de perfil"
+                        />
+                        <div className="min-w-0 flex-auto">
+                          <p className="text-sm font-semibold leading-6 text-gray-200">
+                            {usuario.nombre}
+                          </p>
+                          <p
+                            className="mt-1 truncate text-xs font-medium leading-5 text-gray-400"
+                            style={{ width: "200px" }}
                           >
-                            <img
-                              className="h-20 w-20 p-1 flex-none rounded-full bg-gray-50 object-cover"
-                              src="https://api.opencars.com.ar/api/download/usuarios/20382826001"
-                              alt="Foto de perfil"
-                            />
-                          </div>
-                          <div className="min-w-0 flex-auto">
-                            <p className="text-sm font-semibold leading-6 text-gray-800">
-                              {usuario.nombre}
-                            </p>
-                            <p
-                              className="mt-1 truncate text-xs font-medium leading-5 text-gray-500"
-                              style={{ width: "200px" }}
-                            >
-                              {usuario.puesto}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-x-1.5">
-                          <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                          </div>
-                          <p className="text-xs leading-5 font-medium text-gray-600">
-                            En línea
+                            {usuario.puesto}
                           </p>
                         </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                      </div>
+                      <div className="flex items-center gap-x-1.5">
+                        <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        </div>
+                        <p className="text-xs leading-5 font-medium text-gray-400">
+                          En línea
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>

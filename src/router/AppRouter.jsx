@@ -30,7 +30,7 @@ export const AppRouter = () => {
           <div className="flex" style={{ marginTop: "60px" }}>
             <LeftSidebar showLeftbar={showLeftbar} />
             <div
-              className="w-full bg-primary text-white"
+              className="w-full bg-dark text-white"
               style={{ height: "calc(100vh - 60px)" }}
             >
               <div

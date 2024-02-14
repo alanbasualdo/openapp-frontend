@@ -5,7 +5,7 @@ export const LeftSidebar = ({ showLeftbar }) => {
     <>
       {showLeftbar && (
         <div
-          className="offcanvas-end show bg-primary text-white relative"
+          className="offcanvas-end show bg-dark text-white relative"
           style={{ height: "calc(100vh - 60px)", width: "550px" }}
           tabIndex="-1"
         >
@@ -132,12 +132,12 @@ export const LeftSidebar = ({ showLeftbar }) => {
           </div>
           {/* End Departamentos */}
           <div
-            className="absolute bottom-0 w-full p-3 bg-primary"
+            className="absolute bottom-0 w-full p-3 bg-dark"
             style={{
               boxShadow: "0px -10px 7px -5px rgba(255, 255, 255, 0.1)",
             }}
           >
-            <p className="text-white italic text-sm px-3">
+            <p className="text-white italic text-xs px-3">
               "Lo importante no es ser iguales, lo importante es formar un buen
               equipo."
             </p>
