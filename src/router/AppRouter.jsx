@@ -31,20 +31,32 @@ export const AppRouter = () => {
             <LeftSidebar showLeftbar={showLeftbar} />
             <div
               className="w-full bg-dark text-white"
-              style={{ height: "calc(100vh - 60px)" }}
+              style={{
+                height: "calc(100vh - 60px)",
+              }}
             >
               <div
-                style={{ overflowY: "auto", maxHeight: "calc(100vh - 60px)" }}
+                style={{
+                  overflowY: "auto",
+                  maxHeight: "calc(100vh - 60px)",
+                }}
                 className="py-3 px-4"
               >
-                <Routes>
-                  <>
-                    <Route path="/home" element={<HomePage />} />
-                    <Route path="/dollar" element={<DollarPage />} />
-                    <Route path="/createTicket" element={<CreateTicket />} />
-                    <Route path="/*" element={<HomePage />} />
-                  </>
-                </Routes>
+                <div
+                  style={{
+                    maxWidth: "calc(100vw - 480px)",
+                    margin: "0 auto",
+                  }}
+                >
+                  <Routes>
+                    <>
+                      <Route path="/home" element={<HomePage />} />
+                      <Route path="/dollar" element={<DollarPage />} />
+                      <Route path="/createTicket" element={<CreateTicket />} />
+                      <Route path="/*" element={<HomePage />} />
+                    </>
+                  </Routes>
+                </div>
               </div>
             </div>
             <RightSidebar showRightbar={showRightbar} />

@@ -2,7 +2,7 @@ export const CreateTicket = () => {
   return (
     <>
       <div
-        className="bg-white rounded-xl p-3 mt-2"
+        className="bg-white rounded-lg p-3 mt-2"
         style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.4)" }}
       >
         <div className="input-group input-group-sm  mb-3">

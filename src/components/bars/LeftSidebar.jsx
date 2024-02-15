@@ -38,25 +38,25 @@ export const LeftSidebar = ({ showLeftbar }) => {
                 <ul className="mt-3 ml-7">
                   <li className="list-disc mb-2">
                     <Link className="hover:font-bold" to="/createTicket">
-                      Circular
+                      Circulares
                     </Link>
                   </li>
                   <li className="list-disc mb-2">
                     <button className="hover:font-bold">
-                      Carta de presidencia
+                      Cartas de presidencia
                     </button>
                   </li>
                   <li className="list-disc mb-2">
                     <button className="hover:font-bold">Máximas</button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Bienvenida</button>
+                    <button className="hover:font-bold">Bienvenidas</button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Despedida</button>
+                    <button className="hover:font-bold">Despedidas</button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Reconocimiento</button>
+                    <button className="hover:font-bold">Reconocimientos</button>
                   </li>
                   <li className="list-disc mb-2">
                     <button className="hover:font-bold">
@@ -92,21 +92,6 @@ export const LeftSidebar = ({ showLeftbar }) => {
                   </li>
                   <li className="list-disc">
                     <button className="hover:font-bold">Permisos</button>
-                  </li>
-                </ul>
-              </div>
-              <div className="mb-5">
-                <h2 className="font-bold">Dpto. de capital humano</h2>
-                <ul className="mt-3 ml-7">
-                  <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/createTicket">
-                      Bienvenidas
-                    </Link>
-                  </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">
-                      Biblioteca de talentos
-                    </button>
                   </li>
                 </ul>
               </div>
