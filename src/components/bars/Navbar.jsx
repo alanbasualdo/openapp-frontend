@@ -19,7 +19,11 @@ export const Navbar = ({
         zIndex: 1000,
       }}
     >
-      <div className="text-light ml-2 text-2xl sm:text-3xl font-bold">OA</div>
+      <div className="text-light ml-2 text-2xl sm:text-3xl font-bold">
+        <Link className="nav-link text-light" to="/home">
+          OA
+        </Link>
+      </div>
       <div>
         <ul className="nav nav-underline d-inline-flex gap-4">
           <li className="nav-item" title="Inicio">

@@ -10,6 +10,7 @@ import { RightSidebar } from "../components/bars/RightSidebar";
 import { DollarPage } from "../pages/DollarPage";
 import { ForgetPassword } from "../pages/ForgetPassword";
 import { CreateTicket } from "../pages/CreateTicket";
+import { Users } from "../pages/Users";
 
 export const AppRouter = () => {
   /*  const { status } = useSelector((state) => state.auth); */
@@ -50,10 +51,11 @@ export const AppRouter = () => {
                 >
                   <Routes>
                     <>
+                      <Route path="/*" element={<HomePage />} />
                       <Route path="/home" element={<HomePage />} />
                       <Route path="/dollar" element={<DollarPage />} />
                       <Route path="/createTicket" element={<CreateTicket />} />
-                      <Route path="/*" element={<HomePage />} />
+                      <Route path="/users" element={<Users />} />
                     </>
                   </Routes>
                 </div>

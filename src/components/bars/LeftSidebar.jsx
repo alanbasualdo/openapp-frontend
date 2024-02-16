@@ -82,7 +82,9 @@ export const LeftSidebar = ({ showLeftbar }) => {
                     </button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Usuarios</button>
+                    <Link className="hover:font-bold" to="/users">
+                      Usuarios
+                    </Link>
                   </li>
                   <li className="list-disc mb-2">
                     <button className="hover:font-bold">Secciones</button>
