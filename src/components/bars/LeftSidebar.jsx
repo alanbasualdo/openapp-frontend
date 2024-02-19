@@ -24,12 +24,12 @@ export const LeftSidebar = ({ showLeftbar }) => {
                     </Link>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Ver tickets</button>
-                  </li>
-                  <li className="list-disc">
                     <button className="hover:font-bold">
                       Gestionar tickets
                     </button>
+                  </li>
+                  <li className="list-disc mb-2">
+                    <button className="hover:font-bold">Ver tickets</button>
                   </li>
                 </ul>
               </div>
@@ -37,9 +37,12 @@ export const LeftSidebar = ({ showLeftbar }) => {
                 <h2 className="font-bold">Noticias</h2>
                 <ul className="mt-3 ml-7">
                   <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/createTicket">
-                      Circulares
-                    </Link>
+                    <button className="hover:font-bold">Bienvenidas</button>
+                  </li>
+                  <li className="list-disc mb-2">
+                    <button className="hover:font-bold">
+                      Búsqueda de personal
+                    </button>
                   </li>
                   <li className="list-disc mb-2">
                     <button className="hover:font-bold">
@@ -47,24 +50,21 @@ export const LeftSidebar = ({ showLeftbar }) => {
                     </button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Máximas</button>
+                    <Link className="hover:font-bold" to="/createTicket">
+                      Circulares
+                    </Link>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Bienvenidas</button>
+                    <button className="hover:font-bold">Compliance</button>
                   </li>
                   <li className="list-disc mb-2">
                     <button className="hover:font-bold">Despedidas</button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Reconocimientos</button>
+                    <button className="hover:font-bold">Máximas</button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">
-                      Búsqueda de personal
-                    </button>
-                  </li>
-                  <li className="list-disc">
-                    <button className="hover:font-bold">Compliance</button>
+                    <button className="hover:font-bold">Reconocimientos</button>
                   </li>
                 </ul>
               </div>
@@ -72,28 +72,28 @@ export const LeftSidebar = ({ showLeftbar }) => {
                 <h2 className="font-bold">Dpto. de sistemas</h2>
                 <ul className="mt-3 ml-7">
                   <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/createTicket">
-                      Nuevos ingresos
-                    </Link>
-                  </li>
-                  <li className="list-disc mb-2">
                     <button className="hover:font-bold">
                       Bajas de cuentas
                     </button>
                   </li>
                   <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/users">
-                      Usuarios
+                    <button className="hover:font-bold">Inventario</button>
+                  </li>
+                  <li className="list-disc mb-2">
+                    <Link className="hover:font-bold" to="/createTicket">
+                      Nuevos ingresos
                     </Link>
+                  </li>
+                  <li className="list-disc mb-2">
+                    <button className="hover:font-bold">Permisos</button>
                   </li>
                   <li className="list-disc mb-2">
                     <button className="hover:font-bold">Secciones</button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Inventario</button>
-                  </li>
-                  <li className="list-disc">
-                    <button className="hover:font-bold">Permisos</button>
+                    <Link className="hover:font-bold" to="/users">
+                      Usuarios
+                    </Link>
                   </li>
                 </ul>
               </div>

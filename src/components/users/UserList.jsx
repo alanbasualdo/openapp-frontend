@@ -5,13 +5,13 @@ export const UserList = () => {
 
   return (
     <div>
-      <h1 className="text-dark mb-3 font-semibold">Lista de colaboradores</h1>
+      <h1 className="text-dark mb-3 font-semibold">Lista de usuarios</h1>
       <div className="row mx-auto justify-content-center mb-3">
-        <div className="col-md-4 d-flex align-items-center justify-content-center font-semibold text-md text-gray-400">
+        <div className="col-md-4 d-flex align-items-center justify-content-center font-semibold text-md bg-gray-50 text-gray-400 rounded-lg">
           <input
             type="text"
-            className="border-none outline-none focus:ring-0"
-            placeholder="Buscar colaborador"
+            className="border-none outline-none focus:ring-0 bg-gray-50"
+            placeholder="Buscar usuario"
             autoFocus
             value={search}
             onChange={(e) => setSearch(e.target.value)}
