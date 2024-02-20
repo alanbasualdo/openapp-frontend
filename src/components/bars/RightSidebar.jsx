@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
-export const RightSidebar = ({ showRightbar }) => {
+export const RightSidebar = ({ showRightbar, showContent }) => {
   const [searchUser, setSetSearchUser] = useState(false);
   const [openChat, setOpenChat] = useState(false);
 
@@ -47,8 +46,12 @@ export const RightSidebar = ({ showRightbar }) => {
     <>
       {showRightbar && (
         <div
-          className="offcanvas-end show bg-dark relative w-50"
-          style={{ height: "calc(100vh - 60px)" }}
+          className="offcanvas-end show bg-dark text-white relative"
+          style={{
+            height: "calc(100vh - 60px)",
+            width: showContent ? "850px" : "100vw",
+            position: !showContent && "absolute",
+          }}
           tabIndex="-1"
         >
           {openChat ? (
@@ -143,9 +146,9 @@ export const RightSidebar = ({ showRightbar }) => {
           ) : (
             /* Lista de colaboradores */
             <div className="mt-2">
-              <div className="mx-auto p-2">
+              <div className="mx-auto p-1">
                 <div className="px-2 mx-1 mb-2 row text-sm">
-                  <div className="col-md-10 d-flex align-items-start">
+                  <div className="col-md-10 col-sm-8 col-xs-6 d-flex align-items-start">
                     {searchUser ? (
                       <div className="font-bold text-md text-gray-400 py-2">
                         <input
@@ -163,7 +166,7 @@ export const RightSidebar = ({ showRightbar }) => {
                   </div>
                   {searchUser ? (
                     <div
-                      className="col-md-2 d-flex align-items-center justify-content-center py-2"
+                      className="col-md-2 col-sm-4 col-xs-6 d-flex align-items-center justify-content-center py-2"
                       onClick={() => setSetSearchUser(false)}
                       title="Cerrar"
                     >
@@ -171,7 +174,7 @@ export const RightSidebar = ({ showRightbar }) => {
                     </div>
                   ) : (
                     <div
-                      className="col-md-2 d-flex align-items-center justify-content-center py-2"
+                      className="col-md-2 col-sm-4 col-xs-6 d-flex align-items-center justify-content-center py-2"
                       onClick={() => setSetSearchUser(true)}
                       title="Buscar"
                     >
@@ -193,7 +196,7 @@ export const RightSidebar = ({ showRightbar }) => {
                     {listaUsuarios.map((usuario) => (
                       <li
                         key={usuario.id}
-                        className="flex justify-between rounded-lg py-2 px-3 cursor-pointer hover:bg-gray-700"
+                        className="flex justify-between rounded-lg py-2 px-1 cursor-pointer hover:bg-gray-700"
                         onClick={() => setOpenChat(true)}
                       >
                         <div className="flex items-center gap-x-5">

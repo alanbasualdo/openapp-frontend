@@ -1,12 +1,28 @@
 import { Link } from "react-router-dom";
 
-export const LeftSidebar = ({ showLeftbar }) => {
+export const LeftSidebar = ({
+  showLeftbar,
+  showContent,
+  setSetShowContent,
+  setShowLeftbar,
+}) => {
+  const funcCloseBar = () => {
+    if (!showContent) {
+      setSetShowContent(true);
+      setShowLeftbar(false);
+    }
+  };
+
   return (
     <>
       {showLeftbar && (
         <div
           className="offcanvas-end show bg-dark text-white relative"
-          style={{ height: "calc(100vh - 60px)", width: "550px" }}
+          style={{
+            height: "calc(100vh - 60px)",
+            width: showContent ? "550px" : "100vw",
+            position: !showContent && "absolute",
+          }}
           tabIndex="-1"
         >
           {/* Start Departamentos */}
@@ -19,7 +35,11 @@ export const LeftSidebar = ({ showLeftbar }) => {
                 <h2 className="font-bold">Tickets</h2>
                 <ul className="mt-3 ml-7">
                   <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/createTicket">
+                    <Link
+                      className="hover:font-bold"
+                      to="/createTicket"
+                      onClick={() => funcCloseBar()}
+                    >
                       Crear ticket
                     </Link>
                   </li>

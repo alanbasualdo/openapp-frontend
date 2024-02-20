@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom";
 
 export const Navbar = ({
-  showLeftbar,
+  funcShowLeftbar,
+  funcShowRightbar,
+  showContent,
+  setSetShowContent,
   setShowLeftbar,
-  showRightbar,
   setShowRightbar,
 }) => {
+  const funcCloseBar = () => {
+    if (!showContent) {
+      setSetShowContent(true);
+      setShowLeftbar(false);
+      setShowRightbar(false);
+    }
+  };
+
   return (
     <div
       className="bg-primary flex items-center justify-between"
@@ -20,21 +30,29 @@ export const Navbar = ({
       }}
     >
       <div className="text-light ml-2 text-2xl sm:text-3xl font-bold">
-        <Link className="nav-link text-light" to="/home">
+        <Link
+          className="nav-link text-light"
+          to="/home"
+          onClick={() => funcCloseBar()}
+        >
           OA
         </Link>
       </div>
       <div>
         <ul className="nav nav-underline d-inline-flex gap-4">
           <li className="nav-item" title="Inicio">
-            <Link className="nav-link text-light" to="/home">
+            <Link
+              className="nav-link text-light"
+              to="/home"
+              onClick={() => funcCloseBar()}
+            >
               <i className="ri-home-2-fill text-2xl sm:text-3xl"></i>
             </Link>
           </li>
           <li className="nav-item" title="Trabajo">
             <button
               className="nav-link text-light"
-              onClick={() => setShowLeftbar(!showLeftbar)}
+              onClick={() => funcShowLeftbar()}
             >
               <i className="ri-tools-fill text-2xl sm:text-3xl"></i>
             </button>
@@ -42,13 +60,17 @@ export const Navbar = ({
           <li className="nav-item" title="Personas">
             <button
               className="nav-link text-light"
-              onClick={() => setShowRightbar(!showRightbar)}
+              onClick={() => funcShowRightbar()}
             >
               <i className="ri-group-fill text-2xl sm:text-3xl"></i>
             </button>
           </li>
           <li className="nav-item" title="Dólar">
-            <Link className="nav-link text-light" to="/dollar">
+            <Link
+              className="nav-link text-light"
+              to="/dollar"
+              onClick={() => funcCloseBar()}
+            >
               <i className="ri-money-dollar-circle-fill text-2xl sm:text-3xl"></i>
             </Link>
           </li>

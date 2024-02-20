@@ -2,10 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import { HomePage } from "../pages/HomePage";
 import { Navbar } from "../components/bars/Navbar";
 import { useSelector } from "react-redux";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginPage } from "../pages/LoginPage";
 import { LeftSidebar } from "../components/bars/LeftSidebar";
-import { MainPage } from "../pages/MainPage";
 import { RightSidebar } from "../components/bars/RightSidebar";
 import { DollarPage } from "../pages/DollarPage";
 import { ForgetPassword } from "../pages/ForgetPassword";
@@ -17,37 +16,121 @@ export const AppRouter = () => {
   const [status, setStatus] = useState("auth");
   const [showLeftbar, setShowLeftbar] = useState(true);
   const [showRightbar, setShowRightbar] = useState(true);
+  const [showContent, setSetShowContent] = useState(true);
+
+  const funcShowLeftbar = () => {
+    if (window.innerWidth > 1240) {
+      setShowLeftbar(!showLeftbar);
+    } else if (window.innerWidth < 1240) {
+      setShowLeftbar(!showLeftbar);
+      setShowRightbar(false);
+    }
+  };
+
+  const funcShowRightbar = () => {
+    if (window.innerWidth > 1240) {
+      setShowRightbar(!showRightbar);
+    } else if (window.innerWidth < 1240) {
+      setShowLeftbar(false);
+      setShowRightbar(!showRightbar);
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1240) {
+        setShowRightbar(false);
+        setShowLeftbar(true);
+      } else {
+        setShowRightbar(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 880) {
+        setShowRightbar(false);
+        setShowLeftbar(false);
+      } else {
+        setShowLeftbar(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 880 && (showLeftbar || showRightbar)) {
+        setSetShowContent(false);
+      } else {
+        setSetShowContent(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [showContent, showLeftbar, showRightbar]);
+
+  useEffect(() => {
+    console.log("-------------------------------------");
+    console.log("Content: " + showContent);
+    console.log("Left: " + showLeftbar);
+    console.log("Right: " + showRightbar);
+  }, [showContent, showLeftbar, showRightbar]);
 
   return (
     <>
       {status === "auth" ? (
         <>
           <Navbar
-            showLeftbar={showLeftbar}
+            funcShowLeftbar={funcShowLeftbar}
+            funcShowRightbar={funcShowRightbar}
+            showContent={showContent}
+            setSetShowContent={setSetShowContent}
             setShowLeftbar={setShowLeftbar}
-            showRightbar={showRightbar}
             setShowRightbar={setShowRightbar}
           />
           <div className="flex" style={{ marginTop: "60px" }}>
-            <LeftSidebar showLeftbar={showLeftbar} />
+            <LeftSidebar
+              showLeftbar={showLeftbar}
+              showContent={showContent}
+              setSetShowContent={setSetShowContent}
+              setShowLeftbar={setShowLeftbar}
+            />
             <div
               className="w-full bg-dark text-white"
               style={{
                 height: "calc(100vh - 60px)",
               }}
             >
-              <div
-                style={{
-                  overflowY: "auto",
-                  maxHeight: "calc(100vh - 60px)",
-                }}
-                className="py-3 px-4"
-              >
+              {showContent && (
                 <div
                   style={{
-                    maxWidth: "calc(100vw - 480px)",
-                    margin: "0 auto",
+                    overflowY: "auto",
+                    maxHeight: "calc(100vh - 60px)",
                   }}
+                  className="py-2 px-2"
                 >
                   <Routes>
                     <>
@@ -59,9 +142,12 @@ export const AppRouter = () => {
                     </>
                   </Routes>
                 </div>
-              </div>
+              )}
             </div>
-            <RightSidebar showRightbar={showRightbar} />
+            <RightSidebar
+              showRightbar={showRightbar}
+              showContent={showContent}
+            />
           </div>
         </>
       ) : (
