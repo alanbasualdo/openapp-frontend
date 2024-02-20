@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useUserStore } from "../../hooks/useUserStore";
 
 export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
+  const { startCreateUser } = useUserStore();
   const [seePassword, setSeePassword] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
@@ -19,6 +21,10 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
     position: "",
     permissions: "",
   });
+
+  const createUser = async () => {
+    await startCreateUser(userData);
+  };
 
   return (
     <div>
@@ -306,7 +312,12 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
             </div>
           </div>
           <div>
-            <button className="btn btn-sm btn-success">Guardar</button>
+            <button
+              className="btn btn-sm btn-success"
+              onClick={() => createUser()}
+            >
+              Guardar
+            </button>
           </div>
         </div>
       )}
