@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useUserStore } from "../../hooks/useUserStore";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
-  const { startCreateUser } = useUserStore();
+  const { loading } = useSelector((state) => state.loader);
+  const { startCreateUser, startGetUsers } = useUserStore();
   const [seePassword, setSeePassword] = useState(false);
-  const [userData, setUserData] = useState({
+
+  const initialUserData = {
     name: "",
     lastName: "",
-    CUIL: "",
+    cuil: "",
     birthdate: "",
     gender: "",
     userName: "",
@@ -20,10 +24,43 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
     city: "",
     position: "",
     permissions: "",
-  });
+  };
+
+  const [userData, setUserData] = useState(initialUserData);
+
+  const resetForm = () => {
+    setUserData(initialUserData);
+    setSeePassword(false);
+  };
 
   const createUser = async () => {
-    await startCreateUser(userData);
+    const { success, message, data } = await startCreateUser(userData);
+    if (success) {
+      setCreateUserClick(false);
+      resetForm();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: message,
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          title: "my-swal-title-class",
+        },
+      });
+      startGetUsers();
+    } else {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: message,
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          title: "my-swal-title-class",
+        },
+      });
+    }
   };
 
   return (
@@ -32,7 +69,10 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
         {createUserClick ? (
           <button
             className="btn btn-sm btn-danger mb-3"
-            onClick={() => setCreateUserClick(false)}
+            onClick={() => {
+              resetForm();
+              setCreateUserClick(false);
+            }}
           >
             Cancelar
           </button>
@@ -74,9 +114,9 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
               <input
                 type="number"
                 className="form-control"
-                value={userData.CUIL}
+                value={userData.cuil}
                 onChange={(e) =>
-                  setUserData({ ...userData, CUIL: e.target.value })
+                  setUserData({ ...userData, cuil: e.target.value })
                 }
               />
             </div>
@@ -100,7 +140,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   setUserData({ ...userData, gender: e.target.value })
                 }
               >
-                <option defaultValue="" disabled>
+                <option value="" disabled>
                   Seleccionar género
                 </option>
                 <option value="Masculino">Masculino</option>
@@ -221,7 +261,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   setUserData({ ...userData, payroll: e.target.value })
                 }
               >
-                <option defaultValue="" disabled>
+                <option value="" disabled>
                   Seleccionar nómina
                 </option>
                 <option value="Fortecar">Fortecar</option>
@@ -237,7 +277,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   setUserData({ ...userData, branch: e.target.value })
                 }
               >
-                <option defaultValue="" disabled>
+                <option value="" disabled>
                   Seleccionar sucursal
                 </option>
                 <option value="Fortecar">Fortecar</option>
@@ -254,7 +294,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   setUserData({ ...userData, city: e.target.value })
                 }
               >
-                <option defaultValue="" disabled>
+                <option value="" disabled>
                   Seleccionar Ciudad
                 </option>
                 {[
@@ -291,7 +331,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   setUserData({ ...userData, position: e.target.value })
                 }
               >
-                <option defaultValue="" disabled>
+                <option value="" disabled>
                   Seleccionar posiciónes
                 </option>
                 <option value="Nada">Nada</option>
@@ -304,7 +344,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   setUserData({ ...userData, permissions: e.target.value })
                 }
               >
-                <option defaultValue="" disabled>
+                <option value="" disabled>
                   Seleccionar permiso
                 </option>
                 <option value="Nada">Nada</option>
@@ -315,8 +355,17 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
             <button
               className="btn btn-sm btn-success"
               onClick={() => createUser()}
+              disabled={loading}
             >
-              Guardar
+              Crear
+              {loading && (
+                <div
+                  className="spinner-border spinner-border-sm ml-2"
+                  role="status"
+                >
+                  <span className="visually-hidden">Cargando...</span>
+                </div>
+              )}
             </button>
           </div>
         </div>

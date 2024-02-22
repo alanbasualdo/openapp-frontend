@@ -9,7 +9,7 @@ import { RightSidebar } from "../components/bars/RightSidebar";
 import { DollarPage } from "../pages/DollarPage";
 import { ForgetPassword } from "../pages/ForgetPassword";
 import { CreateTicket } from "../pages/CreateTicket";
-import { Users } from "../pages/Users";
+import { UsersPage } from "../pages/UsersPage";
 
 export const AppRouter = () => {
   /*  const { status } = useSelector((state) => state.auth); */
@@ -92,13 +92,6 @@ export const AppRouter = () => {
     };
   }, [showContent, showLeftbar, showRightbar]);
 
-  useEffect(() => {
-    console.log("-------------------------------------");
-    console.log("Content: " + showContent);
-    console.log("Left: " + showLeftbar);
-    console.log("Right: " + showRightbar);
-  }, [showContent, showLeftbar, showRightbar]);
-
   return (
     <>
       {status === "auth" ? (
@@ -138,7 +131,7 @@ export const AppRouter = () => {
                       <Route path="/home" element={<HomePage />} />
                       <Route path="/dollar" element={<DollarPage />} />
                       <Route path="/createTicket" element={<CreateTicket />} />
-                      <Route path="/users" element={<Users />} />
+                      <Route path="/users" element={<UsersPage />} />
                     </>
                   </Routes>
                 </div>

@@ -1,46 +1,18 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const RightSidebar = ({ showRightbar, showContent }) => {
   const [searchUser, setSetSearchUser] = useState(false);
   const [openChat, setOpenChat] = useState(false);
+  const { users } = useSelector((state) => state.user);
+  const [search, setSearch] = useState("");
 
-  const listaUsuarios = [
-    {
-      id: 1,
-      username: "usuario1",
-      nombre: "Alan Basualdo",
-      puesto: "Desarrollador",
-    },
-    {
-      id: 2,
-      username: "usuario2",
-      nombre: "Diego Gatica",
-      puesto: "Jefe de IT",
-    },
-    {
-      id: 3,
-      username: "usuario3",
-      nombre: "Gaspar Diaz",
-      puesto: "Infraestructura y Redes",
-    },
-    {
-      id: 4,
-      username: "usuario4",
-      nombre: "Lucas Bian",
-      puesto: "Desarrollador",
-    },
-    { id: 5, username: "usuario5", nombre: "Nombre Usuario 5" },
-    { id: 6, username: "usuario1", nombre: "Nombre Usuario 1" },
-    { id: 7, username: "usuario2", nombre: "Nombre Usuario 2" },
-    { id: 8, username: "usuario3", nombre: "Nombre Usuario 3" },
-    { id: 9, username: "usuario4", nombre: "Nombre Usuario 4" },
-    { id: 10, username: "usuario5", nombre: "Nombre Usuario 5" },
-    { id: 11, username: "usuario1", nombre: "Nombre Usuario 1" },
-    { id: 12, username: "usuario2", nombre: "Nombre Usuario 2" },
-    { id: 13, username: "usuario3", nombre: "Nombre Usuario 3" },
-    { id: 14, username: "usuario4", nombre: "Nombre Usuario 4" },
-    { id: 15, username: "usuario5", nombre: "Nombre Usuario 5" },
-  ];
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(search.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(search.toLowerCase()) ||
+      user.userName.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <>
@@ -150,12 +122,14 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                 <div className="px-2 mx-1 mb-2 row text-sm">
                   <div className="col-md-10 col-sm-8 col-xs-6 d-flex align-items-start">
                     {searchUser ? (
-                      <div className="font-bold text-md text-gray-400 py-2">
+                      <div className="font-bold text-md text-gray-400 py-2 w-full">
                         <input
                           type="text"
                           className="border-none outline-none bg-transparent focus:ring-0 w-full"
                           placeholder="Buscar colaborador"
                           autoFocus
+                          value={search}
+                          onChange={(e) => setSearch(e.target.value)}
                         />
                       </div>
                     ) : (
@@ -167,7 +141,10 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                   {searchUser ? (
                     <div
                       className="col-md-2 col-sm-4 col-xs-6 d-flex align-items-center justify-content-center py-2"
-                      onClick={() => setSetSearchUser(false)}
+                      onClick={() => {
+                        setSetSearchUser(false);
+                        setSearch("");
+                      }}
                       title="Cerrar"
                     >
                       <i className="ri-close-fill cursor-pointer text-gray-400 hover:text-gray-300 font-bold text-md"></i>
@@ -193,9 +170,9 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                   }}
                 >
                   <ul>
-                    {listaUsuarios.map((usuario) => (
+                    {filteredUsers.map((user) => (
                       <li
-                        key={usuario.id}
+                        key={user._id}
                         className="flex justify-between rounded-lg py-2 px-1 cursor-pointer hover:bg-gray-700"
                         onClick={() => setOpenChat(true)}
                       >
@@ -207,13 +184,13 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                           />
                           <div className="min-w-0 flex-auto">
                             <p className="text-sm font-semibold leading-6 text-gray-200">
-                              {usuario.nombre}
+                              {user.name} {user.lastName}
                             </p>
                             <p
                               className="mt-1 truncate text-xs font-medium leading-5 text-gray-400"
                               style={{ width: "200px" }}
                             >
-                              {usuario.puesto}
+                              {user.email}
                             </p>
                           </div>
                         </div>

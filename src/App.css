@@ -19,3 +19,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.3);
 }
+
+.my-swal-title-class {
+  font-size: 16px;
+}

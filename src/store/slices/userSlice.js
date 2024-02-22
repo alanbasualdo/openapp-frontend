@@ -5,27 +5,21 @@ export const userSlice = createSlice({
   initialState: {
     user: {},
     users: [],
+    totalUsers: null,
   },
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    addUser: (state, action) => {
-      state.users.push(action.payload);
+    setTotalUsers: (state, action) => {
+      state.totalUsers = action.payload;
     },
-    updateUser: (state, action) => {
-      const { id, updatedUser } = action.payload;
-      state.users = state.users.map((user) =>
-        user.id === id ? updatedUser : user
-      );
-    },
-    removeUser: (state, action) => {
-      const userId = action.payload;
-      state.users = state.users.filter((user) => user.id !== userId);
+    getUsers: (state, action) => {
+      state.users = action.payload;
     },
   },
 });
 
-export const { setUser, addUser, updateUser, removeUser } = userSlice.actions;
+export const { setUser, setTotalUsers, getUsers } = userSlice.actions;
 
 export default userSlice;
