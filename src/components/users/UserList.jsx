@@ -22,7 +22,7 @@ export const UserList = () => {
         <div className="col-md-4 d-flex align-items-center justify-content-center font-semibold text-md bg-gray-50 text-gray-400 rounded-lg">
           <input
             type="text"
-            className="border-none outline-none focus:ring-0 bg-gray-50"
+            className="border-none outline-none focus:ring-0"
             placeholder="Buscar usuario"
             autoFocus
             value={search}

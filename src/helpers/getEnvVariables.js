@@ -3,5 +3,6 @@ export const getEnvVariables = () => {
   return {
     // ...import.meta.env
     VITE_USER_SERVICE_URL: import.meta.env.VITE_USER_SERVICE_URL,
+    VITE_AUTH_SERVICE_URL: import.meta.env.VITE_AUTH_SERVICE_URL,
   };
 };

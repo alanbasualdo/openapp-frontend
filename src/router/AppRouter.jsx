@@ -10,13 +10,16 @@ import { DollarPage } from "../pages/DollarPage";
 import { ForgetPassword } from "../pages/ForgetPassword";
 import { CreateTicket } from "../pages/CreateTicket";
 import { UsersPage } from "../pages/UsersPage";
+import { useUserStore } from "../hooks/useUserStore";
+import { useAuthStore } from "../hooks/useAuthStore";
 
 export const AppRouter = () => {
-  /*  const { status } = useSelector((state) => state.auth); */
-  const [status, setStatus] = useState("auth");
+  const { authStatus } = useSelector((state) => state.auth);
   const [showLeftbar, setShowLeftbar] = useState(true);
   const [showRightbar, setShowRightbar] = useState(true);
   const [showContent, setSetShowContent] = useState(true);
+  const { startGetUsers } = useUserStore();
+  const { checkAuth } = useAuthStore();
 
   const funcShowLeftbar = () => {
     if (window.innerWidth > 1240) {
@@ -92,9 +95,14 @@ export const AppRouter = () => {
     };
   }, [showContent, showLeftbar, showRightbar]);
 
+  useEffect(() => {
+    startGetUsers();
+    checkAuth();
+  }, []);
+
   return (
     <>
-      {status === "auth" ? (
+      {authStatus === "auth" ? (
         <>
           <Navbar
             funcShowLeftbar={funcShowLeftbar}

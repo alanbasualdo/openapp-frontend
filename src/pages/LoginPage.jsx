@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../hooks/useAuthStore";
+import { useSelector } from "react-redux";
 
 export const LoginPage = () => {
+  const { authLoading } = useSelector((state) => state.auth);
   const [loginData, setLoginData] = useState({
-    username: "",
+    userName: "",
     password: "",
   });
   const [seePassword, setSeePassword] = useState(false);
+  const { startLogin } = useAuthStore();
+
+  const login = async () => {
+    await startLogin(loginData);
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-blue-600">
@@ -20,9 +28,9 @@ export const LoginPage = () => {
           <input
             type="text"
             className="form-control"
-            value={loginData.username}
+            value={loginData.userName}
             onChange={(e) =>
-              setLoginData({ ...loginData, username: e.target.value })
+              setLoginData({ ...loginData, userName: e.target.value })
             }
           />
         </div>
@@ -52,7 +60,22 @@ export const LoginPage = () => {
         </div>
 
         <div className="text-center mt-4">
-          <button className="btn btn-dark">Ingresar</button>
+          <button
+            className="btn btn-dark"
+            onClick={() => login()}
+            disabled={!loginData.userName || !loginData.password || authLoading}
+          >
+            {authLoading ? (
+              <div
+                className="spinner-border spinner-border-sm"
+                role="status"
+              >
+                <span className="visually-hidden">Cargando...</span>
+              </div>
+            ) : (
+              "Ingresar"
+            )}
+          </button>
         </div>
 
         <div className="text-center mt-3">

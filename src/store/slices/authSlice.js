@@ -3,26 +3,25 @@ import { createSlice } from "@reduxjs/toolkit";
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    status: "checking",
+    authStatus: "not-auth",
     user: null,
+    authLoading: false,
   },
   reducers: {
-    onChecking: (state) => {
-      state.status = "checking";
-      state.user = null;
-      state.errorMessage = undefined;
-    },
-    onLogin: (state, { payload }) => {
-      state.status = "auth";
+    setLogin: (state, { payload }) => {
+      state.authStatus = "auth";
       state.user = payload.user;
     },
-    onLogout: (state) => {
-      state.status = "not-auth";
+    setLogout: (state) => {
+      state.authStatus = "not-auth";
       state.user = null;
+    },
+    setAuthLoading: (state, action) => {
+      state.authLoading = action.payload;
     },
   },
 });
 
-export const { onChecking, onLogin, onLogout } = authSlice.actions;
+export const { setLogin, setLogout, setAuthLoading } = authSlice.actions;
 
 export default authSlice;

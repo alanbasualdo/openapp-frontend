@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
-  const { loading } = useSelector((state) => state.loader);
+  const { userLoading } = useSelector((state) => state.user);
   const { startCreateUser, startGetUsers } = useUserStore();
   const [seePassword, setSeePassword] = useState(false);
 
@@ -34,7 +34,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
   };
 
   const createUser = async () => {
-    const { success, message, data } = await startCreateUser(userData);
+    const { success, message } = await startCreateUser(userData);
     if (success) {
       setCreateUserClick(false);
       resetForm();
@@ -355,16 +355,17 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
             <button
               className="btn btn-sm btn-success"
               onClick={() => createUser()}
-              disabled={loading}
+              disabled={userLoading}
             >
-              Crear
-              {loading && (
+              {userLoading ? (
                 <div
-                  className="spinner-border spinner-border-sm ml-2"
+                  className="spinner-border spinner-border-sm"
                   role="status"
                 >
                   <span className="visually-hidden">Cargando...</span>
                 </div>
+              ) : (
+                "Crear"
               )}
             </button>
           </div>
