@@ -8,6 +8,14 @@ const userService = axios.create({
   baseURL: VITE_USER_SERVICE_URL,
 });
 
-tokenInterceptor();
+userService.interceptors.request.use((config) => {
+  config.headers = {
+    ...config.headers,
+    token: localStorage.getItem("token"),
+    // 'Content-Type': 'multipart/form-data'
+  };
+
+  return config;
+});
 
 export default userService;

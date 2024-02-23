@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const Navbar = ({
   funcShowLeftbar,
@@ -8,6 +9,8 @@ export const Navbar = ({
   setShowLeftbar,
   setShowRightbar,
 }) => {
+  const { startLogout } = useAuthStore();
+
   const funcCloseBar = () => {
     if (!showContent) {
       setSetShowContent(true);
@@ -108,8 +111,8 @@ export const Navbar = ({
               <Link to="/createTicket">Foto de perfil</Link>
             </li>
             <hr className="mb-1" />
-            <li className="dropdown-item">
-              <Link to="/createTicket">Cerra sesión</Link>
+            <li className="dropdown-item" onClick={() => startLogout()}>
+              <Link to="/login">Cerra sesión</Link>
             </li>
           </ul>
         </div>

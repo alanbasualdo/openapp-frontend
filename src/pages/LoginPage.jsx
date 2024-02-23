@@ -66,10 +66,7 @@ export const LoginPage = () => {
             disabled={!loginData.userName || !loginData.password || authLoading}
           >
             {authLoading ? (
-              <div
-                className="spinner-border spinner-border-sm"
-                role="status"
-              >
+              <div className="spinner-border spinner-border-sm" role="status">
                 <span className="visually-hidden">Cargando...</span>
               </div>
             ) : (

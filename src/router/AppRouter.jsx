@@ -12,9 +12,11 @@ import { CreateTicket } from "../pages/CreateTicket";
 import { UsersPage } from "../pages/UsersPage";
 import { useUserStore } from "../hooks/useUserStore";
 import { useAuthStore } from "../hooks/useAuthStore";
+import { Loader } from "../components/Loader";
 
 export const AppRouter = () => {
   const { authStatus } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.loader);
   const [showLeftbar, setShowLeftbar] = useState(true);
   const [showRightbar, setShowRightbar] = useState(true);
   const [showContent, setSetShowContent] = useState(true);
@@ -102,62 +104,71 @@ export const AppRouter = () => {
 
   return (
     <>
-      {authStatus === "auth" ? (
-        <>
-          <Navbar
-            funcShowLeftbar={funcShowLeftbar}
-            funcShowRightbar={funcShowRightbar}
-            showContent={showContent}
-            setSetShowContent={setSetShowContent}
-            setShowLeftbar={setShowLeftbar}
-            setShowRightbar={setShowRightbar}
-          />
-          <div className="flex" style={{ marginTop: "60px" }}>
-            <LeftSidebar
-              showLeftbar={showLeftbar}
-              showContent={showContent}
-              setSetShowContent={setSetShowContent}
-              setShowLeftbar={setShowLeftbar}
-            />
-            <div
-              className="w-full bg-dark text-white"
-              style={{
-                height: "calc(100vh - 60px)",
-              }}
-            >
-              {showContent && (
-                <div
-                  style={{
-                    overflowY: "auto",
-                    maxHeight: "calc(100vh - 60px)",
-                  }}
-                  className="py-2 px-2"
-                >
-                  <Routes>
-                    <>
-                      <Route path="/*" element={<HomePage />} />
-                      <Route path="/home" element={<HomePage />} />
-                      <Route path="/dollar" element={<DollarPage />} />
-                      <Route path="/createTicket" element={<CreateTicket />} />
-                      <Route path="/users" element={<UsersPage />} />
-                    </>
-                  </Routes>
-                </div>
-              )}
-            </div>
-            <RightSidebar
-              showRightbar={showRightbar}
-              showContent={showContent}
-            />
-          </div>
-        </>
+      {loading ? (
+        <Loader />
       ) : (
-        <Routes>
-          <>
-            <Route path="/*" element={<LoginPage />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
-          </>
-        </Routes>
+        <>
+          {authStatus === "auth" ? (
+            <>
+              <Navbar
+                funcShowLeftbar={funcShowLeftbar}
+                funcShowRightbar={funcShowRightbar}
+                showContent={showContent}
+                setSetShowContent={setSetShowContent}
+                setShowLeftbar={setShowLeftbar}
+                setShowRightbar={setShowRightbar}
+              />
+              <div className="flex" style={{ marginTop: "60px" }}>
+                <LeftSidebar
+                  showLeftbar={showLeftbar}
+                  showContent={showContent}
+                  setSetShowContent={setSetShowContent}
+                  setShowLeftbar={setShowLeftbar}
+                />
+                <div
+                  className="w-full bg-dark text-white"
+                  style={{
+                    height: "calc(100vh - 60px)",
+                  }}
+                >
+                  {showContent && (
+                    <div
+                      style={{
+                        overflowY: "auto",
+                        maxHeight: "calc(100vh - 60px)",
+                      }}
+                      className="py-2 px-2"
+                    >
+                      <Routes>
+                        <>
+                          <Route path="/*" element={<HomePage />} />
+                          <Route path="/home" element={<HomePage />} />
+                          <Route path="/dollar" element={<DollarPage />} />
+                          <Route
+                            path="/createTicket"
+                            element={<CreateTicket />}
+                          />
+                          <Route path="/users" element={<UsersPage />} />
+                        </>
+                      </Routes>
+                    </div>
+                  )}
+                </div>
+                <RightSidebar
+                  showRightbar={showRightbar}
+                  showContent={showContent}
+                />
+              </div>
+            </>
+          ) : (
+            <Routes>
+              <>
+                <Route path="/*" element={<LoginPage />} />
+                <Route path="/forgetPassword" element={<ForgetPassword />} />
+              </>
+            </Routes>
+          )}
+        </>
       )}
     </>
   );
