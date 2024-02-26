@@ -8,6 +8,7 @@ export const Navbar = ({
   setSetShowContent,
   setShowLeftbar,
   setShowRightbar,
+  user,
 }) => {
   const { startLogout } = useAuthStore();
 
@@ -82,7 +83,7 @@ export const Navbar = ({
       <div className="text-end me-2">
         <div className="offcanvas-header dropdown">
           <img
-            src="https://api.opencars.com.ar/api/download/usuarios/20382826001"
+            src={`https://api.opencars.com.ar/api/download/usuarios/${user.cuil}`}
             alt="Imagen de perfil"
             className="rounded-full cursor-pointer dropdown-toggle"
             data-bs-toggle="dropdown"

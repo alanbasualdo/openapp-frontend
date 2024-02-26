@@ -28,7 +28,7 @@ export const useAuthStore = () => {
         });
         localStorage.setItem("token", data.token);
         localStorage.setItem("token-init-date", new Date().getTime());
-        dispatch(setLogin(data.user));
+        dispatch(setLogin(data));
       } else {
         Swal.fire({
           position: "top-end",
@@ -81,7 +81,7 @@ export const useAuthStore = () => {
       if (data.success) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("token-init-date", new Date().getTime());
-        dispatch(setLogin(data.user));
+        dispatch(setLogin(data));
       } else {
         dispatch(setLogout(data));
       }

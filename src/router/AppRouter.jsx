@@ -15,7 +15,7 @@ import { useAuthStore } from "../hooks/useAuthStore";
 import { Loader } from "../components/Loader";
 
 export const AppRouter = () => {
-  const { authStatus } = useSelector((state) => state.auth);
+  const { authStatus, user } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.loader);
   const [showLeftbar, setShowLeftbar] = useState(true);
   const [showRightbar, setShowRightbar] = useState(true);
@@ -117,6 +117,7 @@ export const AppRouter = () => {
                 setSetShowContent={setSetShowContent}
                 setShowLeftbar={setShowLeftbar}
                 setShowRightbar={setShowRightbar}
+                user={user}
               />
               <div className="flex" style={{ marginTop: "60px" }}>
                 <LeftSidebar
@@ -157,6 +158,7 @@ export const AppRouter = () => {
                 <RightSidebar
                   showRightbar={showRightbar}
                   showContent={showContent}
+                  user={user}
                 />
               </div>
             </>

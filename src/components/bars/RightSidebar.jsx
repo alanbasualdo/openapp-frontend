@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export const RightSidebar = ({ showRightbar, showContent }) => {
+export const RightSidebar = ({ showRightbar, showContent, user }) => {
   const [searchUser, setSetSearchUser] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const { users } = useSelector((state) => state.user);
@@ -18,7 +18,7 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
     <>
       {showRightbar && (
         <div
-          className="offcanvas-end show bg-dark text-white relative"
+          className="offcanvas-end show bg-dark text-white relative px-1"
           style={{
             height: "calc(100vh - 60px)",
             width: showContent ? "850px" : "100vw",
@@ -36,10 +36,10 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                     height: "50px",
                   }}
                 >
-                  <div className="col-md-3 d-flex align-items-center justify-content-center">
+                  <div className="col-md-10 col-10 d-flex align-items-center">
                     <img
                       className="rounded-full bg-gray-50"
-                      src="https://api.opencars.com.ar/api/download/usuarios/20382826001"
+                      src={`https://api.opencars.com.ar/api/download/usuarios/${user.cuil}`}
                       alt="Foto de perfil"
                       style={{
                         objectFit: "cover",
@@ -47,14 +47,12 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                         height: "45px",
                       }}
                     />
-                  </div>
-                  <div className="col-md-7 d-flex align-items-center justify-content-start">
-                    <p className="text-gray-400 font-bold text-md">
+                    <p className="text-gray-400 font-bold text-md ml-4">
                       Alan Basualdo
                     </p>
                   </div>
                   <div
-                    className="col-md-2 d-flex align-items-center justify-content-center"
+                    className="col-md-2 col-2 d-flex align-items-center justify-content-center"
                     onClick={() => setOpenChat(false)}
                     title="Cerrar"
                   >
@@ -120,7 +118,7 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
             <div className="mt-2">
               <div className="mx-auto p-1">
                 <div className="px-2 mx-1 mb-2 row text-sm">
-                  <div className="col-md-10 col-sm-8 col-xs-6 d-flex align-items-start">
+                  <div className="col-md-10 col-10 d-flex align-items-center">
                     {searchUser ? (
                       <div className="font-bold text-md text-gray-400 py-2 w-full">
                         <input
@@ -140,7 +138,7 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                   </div>
                   {searchUser ? (
                     <div
-                      className="col-md-2 col-sm-4 col-xs-6 d-flex align-items-center justify-content-center py-2"
+                      className="col-md-2 col-2 d-flex align-items-center"
                       onClick={() => {
                         setSetSearchUser(false);
                         setSearch("");
@@ -151,7 +149,7 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                     </div>
                   ) : (
                     <div
-                      className="col-md-2 col-sm-4 col-xs-6 d-flex align-items-center justify-content-center py-2"
+                      className="col-md-2 col-2 d-flex align-items-center"
                       onClick={() => setSetSearchUser(true)}
                       title="Buscar"
                     >
@@ -163,7 +161,7 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                 <hr className="text-gray-400 mb-2" />
 
                 <div
-                  className="offcanvas-body pr-2"
+                  className="offcanvas-body"
                   style={{
                     overflowY: "auto",
                     maxHeight: "calc(95vh - 100px)",
@@ -173,13 +171,13 @@ export const RightSidebar = ({ showRightbar, showContent }) => {
                     {filteredUsers.map((user) => (
                       <li
                         key={user._id}
-                        className="flex justify-between rounded-lg py-2 px-1 cursor-pointer hover:bg-gray-700"
+                        className="flex justify-between rounded-lg py-2 px-2 cursor-pointer hover:bg-gray-700"
                         onClick={() => setOpenChat(true)}
                       >
                         <div className="flex items-center gap-x-5">
                           <img
                             className="h-12 w-12 flex-none rounded-full bg-gray-50 object-cover"
-                            src="https://api.opencars.com.ar/api/download/usuarios/20382826001"
+                            src={`https://api.opencars.com.ar/api/download/usuarios/${user.cuil}`}
                             alt="Foto de perfil"
                           />
                           <div className="min-w-0 flex-auto">

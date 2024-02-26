@@ -13,15 +13,12 @@ export const UsersPage = () => {
   }, []);
 
   return (
-    <div
-      className="bg-white rounded-lg p-3 mt-2 text-center"
-      style={{ boxShadow: "0px 0px 5px 0px rgba(255, 255, 255, 0.4)" }}
-    >
+    <div>
       <ManageUsers
         createUserClick={createUserClick}
         setCreateUserClick={setCreateUserClick}
       />
-      <hr className="text-dark mb-3" />
+      <hr className="text-dark" />
       <UserList />
     </div>
   );

@@ -13,7 +13,10 @@ export const UserList = () => {
   );
 
   return (
-    <div>
+    <div
+      className="bg-white rounded-lg p-3 mt-2 text-center"
+      style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.7)" }}
+    >
       <h1 className="text-dark mb-1 font-semibold">Lista de usuarios</h1>
       <p className="text-gray-500 mb-3 text-sm font-semibold">
         Total: {totalUsers}
