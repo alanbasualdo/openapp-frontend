@@ -108,7 +108,9 @@ export const LeftSidebar = ({
                     <button className="hover:font-bold">Permisos</button>
                   </li>
                   <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Secciones</button>
+                    <Link className="hover:font-bold" to="/sections">
+                      Secciones
+                    </Link>
                   </li>
                   <li className="list-disc mb-2">
                     <Link className="hover:font-bold" to="/users">

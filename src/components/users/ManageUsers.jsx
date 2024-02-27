@@ -8,7 +8,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
   const { startCreateUser, startGetUsers } = useUserStore();
   const [seePassword, setSeePassword] = useState(false);
 
-  const initialUserData = {
+  const initialStateUserData = {
     name: "",
     lastName: "",
     cuil: "",
@@ -26,10 +26,10 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
     permissions: "",
   };
 
-  const [userData, setUserData] = useState(initialUserData);
+  const [userData, setUserData] = useState(initialStateUserData);
 
   const resetForm = () => {
-    setUserData(initialUserData);
+    setUserData(initialStateUserData);
     setSeePassword(false);
   };
 

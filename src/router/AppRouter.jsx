@@ -9,10 +9,11 @@ import { RightSidebar } from "../components/bars/RightSidebar";
 import { DollarPage } from "../pages/DollarPage";
 import { ForgetPassword } from "../pages/ForgetPassword";
 import { CreateTicket } from "../pages/CreateTicket";
-import { UsersPage } from "../pages/UsersPage";
 import { useUserStore } from "../hooks/useUserStore";
 import { useAuthStore } from "../hooks/useAuthStore";
 import { Loader } from "../components/Loader";
+import { UsersPage } from "../pages/SystemDep/UsersPage";
+import { Sections } from "../pages/SystemDep/Sections";
 
 export const AppRouter = () => {
   const { authStatus, user } = useSelector((state) => state.auth);
@@ -150,6 +151,7 @@ export const AppRouter = () => {
                             element={<CreateTicket />}
                           />
                           <Route path="/users" element={<UsersPage />} />
+                          <Route path="/sections" element={<Sections />} />
                         </>
                       </Routes>
                     </div>
