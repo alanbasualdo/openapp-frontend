@@ -1,12 +1,13 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const Brands = ({ setBtnActivated }) => {
+  const { companies } = useSelector((state) => state.companySection);
+
   const [brand, setBrand] = useState({
     company: "",
     name: "",
   });
-
-  console.log(brand);
 
   return (
     <>
@@ -27,10 +28,11 @@ export const Brands = ({ setBtnActivated }) => {
           <option value="" disabled>
             Seleccionar compañía
           </option>
-          <option value="Fortecar">Fortecar</option>
-          <option value="Granville">Granville</option>
-          <option value="Pampawagen">Pampawagen</option>
-          <option value="Opencars">Opencars</option>
+          {companies.map((company) => (
+            <option value={company.name} key={company._id}>
+              {company.name}
+            </option>
+          ))}
         </select>
         <span className="input-group-text font-semibold">Marca</span>
         <input

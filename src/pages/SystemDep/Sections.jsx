@@ -43,7 +43,7 @@ export const Sections = () => {
           <div className="text-center">
             <h1 className="mb-2 font-medium">Configuración de empresas</h1>
             <hr className="mb-2" />
-            <div className="d-flex gap-1 justify-content-center">
+            <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
                 className="btn btn-sm btn-primary"
                 onClick={() => {
@@ -53,7 +53,6 @@ export const Sections = () => {
               >
                 Compañías
               </button>
-
               <button
                 className="btn btn-sm btn-primary"
                 onClick={() => {

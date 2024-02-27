@@ -21,7 +21,7 @@ export const useAuthStore = () => {
           icon: "success",
           title: data.message,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1000,
           customClass: {
             title: "my-swal-title-class",
           },
@@ -35,7 +35,7 @@ export const useAuthStore = () => {
           icon: "error",
           title: data.message,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1000,
           customClass: {
             title: "my-swal-title-class",
           },
@@ -49,7 +49,7 @@ export const useAuthStore = () => {
         icon: "error",
         title: error.response.data.message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
         customClass: {
           title: "my-swal-title-class",
         },
