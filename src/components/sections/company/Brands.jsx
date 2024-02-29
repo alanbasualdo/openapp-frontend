@@ -44,20 +44,22 @@ export const Brands = ({ setBtnActivated }) => {
         />
         <button className="btn btn-sm btn-success">Guardar</button>
       </div>
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Compañía</th>
-            <th scope="col">Marca</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="cursor-pointer">
-            <td>asd</td>
-            <td>asd</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="bg-dark p-1 rounded-xl">
+        <table className="table table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Compañía</th>
+              <th scope="col">Marca</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="cursor-pointer">
+              <td>asd</td>
+              <td>asd</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };

@@ -18,7 +18,7 @@ export const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-blue-600">
-      <div className="border p-5 rounded-lg mx-2">
+      <div className="border p-5 rounded-xl mx-2">
         <div className="text-center mb-4">
           <h1 className="text-white font-bold text-3xl">OpenApp</h1>
         </div>

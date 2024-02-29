@@ -17,8 +17,11 @@ export const Sections = () => {
 
   return (
     <div
-      className="bg-white rounded-lg p-3 mt-2 text-dark"
-      style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.7)" }}
+      className="rounded-xl p-3 text-center text-light"
+      style={{
+        boxShadow: "inset 0px 0px 10px 0px rgba(0, 0, 0, 0.8)",
+        backgroundColor: "rgb(43, 47, 51)",
+      }}
     >
       {btnActivated ? (
         <div className="text-center">
@@ -106,6 +109,171 @@ export const Sections = () => {
                 }}
               >
                 Puestos
+              </button>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <h1 className="mb-2 font-medium">Configuración de PC's</h1>
+            <hr className="mb-2" />
+            <div className="btn-group btn-group-sm flex-wrap gap-1">
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("brands");
+                }}
+              >
+                Marcas
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("disks");
+                }}
+              >
+                Discos
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("memories");
+                }}
+              >
+                Memorias
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("models");
+                }}
+              >
+                Modelos
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("types");
+                }}
+              >
+                Tipos
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("processors");
+                }}
+              >
+                Procesadores
+              </button>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <h1 className="mb-2 font-medium">Configuración de celulares</h1>
+            <hr className="mb-2" />
+            <div className="btn-group btn-group-sm flex-wrap gap-1">
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("brands");
+                }}
+              >
+                Marcas
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("models");
+                }}
+              >
+                Modelos
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("plans");
+                }}
+              >
+                Planes
+              </button>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <h1 className="mb-2 font-medium">Configuración de redes</h1>
+            <hr className="mb-2" />
+            <div className="btn-group btn-group-sm flex-wrap gap-1">
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("types");
+                }}
+              >
+                Tipo de dispositivos
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("devices");
+                }}
+              >
+                Dispositivos
+              </button>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <h1 className="mb-2 font-medium">Configuración de líneas</h1>
+            <hr className="mb-2" />
+            <div className="btn-group btn-group-sm flex-wrap gap-1">
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("types");
+                }}
+              >
+                Tipo de líneas
+              </button>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <h1 className="mb-2 font-medium">Configuración de tickets</h1>
+            <hr className="mb-2" />
+            <div className="btn-group btn-group-sm flex-wrap gap-1">
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("areas");
+                }}
+              >
+                Áreas
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("categories");
+                }}
+              >
+                Categorías
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("subcategories");
+                }}
+              >
+                Subcategorías
               </button>
             </div>
           </div>

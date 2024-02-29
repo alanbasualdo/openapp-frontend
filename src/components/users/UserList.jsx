@@ -13,56 +13,57 @@ export const UserList = () => {
   );
 
   return (
-    <div
-      className="bg-white rounded-lg p-3 mt-2 text-center"
-      style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.7)" }}
-    >
-      <h1 className="text-dark mb-1 font-semibold">Lista de usuarios</h1>
-      <p className="text-gray-500 mb-3 text-sm font-semibold">
+    <>
+      <h1 className="mb-1 font-semibold">Lista de usuarios</h1>
+      <p className="text-gray-400 mb-3 text-sm font-semibold">
         Total: {totalUsers}
       </p>
       <div className="row mx-auto justify-content-center mb-3">
-        <div className="col-md-4 d-flex align-items-center justify-content-center font-semibold text-md bg-gray-50 text-gray-400 rounded-lg">
+        <div className="col-md-4 d-flex align-items-center justify-content-center font-medium">
           <input
             type="text"
-            className="border-none outline-none focus:ring-0"
+            className="border-none outline-none bg-transparent focus:ring-0 w-full text-center"
             placeholder="Buscar usuario"
             autoFocus
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div
-          className="col-md-1 d-flex align-items-center justify-content-center"
-          onClick={() => setSearch("")}
-          title="Borrar"
-        >
-          <i className="ri-close-fill cursor-pointer text-gray-400 hover:text-red-400 font-bold text-md"></i>
-        </div>
+        {search && (
+          <div
+            className="col-md-1 d-flex align-items-center justify-content-center"
+            onClick={() => setSearch("")}
+            title="Borrar"
+          >
+            <i className="ri-close-fill cursor-pointer text-gray-400 hover:text-red-400 font-bold text-md"></i>
+          </div>
+        )}
       </div>
 
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Usuario</th>
-            <th scope="col">Ciudad</th>
-            <th scope="col">Sucursal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers.map((user) => (
-            <tr key={user._id} className="cursor-pointer">
-              <td>{user.name}</td>
-              <td>{user.lastName}</td>
-              <td>{user.userName}</td>
-              <td>{user.city}</td>
-              <td>{user.branch}</td>
+      <div className="bg-dark p-1 rounded-xl">
+        <table className="table table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Ciudad</th>
+              <th scope="col">Sucursal</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {filteredUsers.map((user) => (
+              <tr key={user._id} className="cursor-pointer">
+                <td>{user.name}</td>
+                <td>{user.lastName}</td>
+                <td>{user.userName}</td>
+                <td>{user.city}</td>
+                <td>{user.branch}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };

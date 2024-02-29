@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
+import { gsap } from "gsap";
+import { useRef } from "react";
+import { TextPlugin } from "gsap/TextPlugin";
 
 export const Navbar = ({
   funcShowLeftbar,
@@ -11,6 +14,8 @@ export const Navbar = ({
   user,
 }) => {
   const { startLogout } = useAuthStore();
+  const textRef = useRef(null);
+  gsap.registerPlugin(TextPlugin);
 
   const funcCloseBar = () => {
     if (!showContent) {
@@ -18,6 +23,26 @@ export const Navbar = ({
       setShowLeftbar(false);
       setShowRightbar(false);
     }
+  };
+
+  const handleHover = () => {
+    gsap.to(textRef.current, {
+      duration: 0.5,
+      text: "OpenApp",
+      x: 20,
+      opacity: 1,
+      ease: "power2.inOut",
+    });
+  };
+
+  const handleLeave = () => {
+    gsap.to(textRef.current, {
+      duration: 0.5,
+      text: "OA",
+      x: 0,
+      opacity: 1,
+      ease: "power2.inOut",
+    });
   };
 
   return (
@@ -33,13 +58,17 @@ export const Navbar = ({
         zIndex: 1000,
       }}
     >
-      <div className="text-light ml-2 text-2xl sm:text-3xl font-bold">
+      <div
+        className="text-light ml-2 text-2xl sm:text-3xl font-bold"
+        onMouseEnter={window.innerWidth > 768 ? handleHover : undefined}
+        onMouseLeave={window.innerWidth > 768 ? handleLeave : undefined}
+      >
         <Link
           className="nav-link text-light"
           to="/home"
           onClick={() => funcCloseBar()}
         >
-          OA
+          <span ref={textRef}>OA</span>
         </Link>
       </div>
       <div>

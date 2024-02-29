@@ -40,14 +40,15 @@ export const Subareas = ({ setBtnActivated }) => {
         />
         <button className="btn btn-sm btn-success">Guardar</button>
       </div>
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Área</th>
-            <th scope="col">Subárea</th>
-          </tr>
-        </thead>
-        {/* <tbody>
+      <div className="bg-dark p-1 rounded-xl">
+        <table className="table table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Área</th>
+              <th scope="col">Subárea</th>
+            </tr>
+          </thead>
+          {/* <tbody>
         {filteredUsers.map((user) => (
         <tr key={user._id} className="cursor-pointer">
             <td>{user.name}</td>
@@ -58,7 +59,8 @@ export const Subareas = ({ setBtnActivated }) => {
         </tr>
         ))}
         </tbody> */}
-      </table>
+        </table>
+      </div>
     </>
   );
 };

@@ -65,7 +65,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
 
   return (
     <>
-      <div className="text-center my-3">
+      <div className="text-center mb-3">
         {createUserClick ? (
           <button
             className="btn btn-sm btn-danger"
@@ -86,16 +86,15 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
         )}
       </div>
       {createUserClick && (
-        <div
-          className="bg-white rounded-lg p-3 mt-2 text-center"
-          style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.7)" }}
-        >
+        <div>
           <div className="px-3">
             {/* Datos personales */}
             <div>
-              <h1 className="text-dark mb-3 font-semibold">Datos personales</h1>
+              <h1 className="text-light mb-3 font-semibold">
+                Datos personales
+              </h1>
               <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-semibold">Nombre</span>
+                <span className="input-group-text font-medium">Nombre</span>
                 <input
                   type="text"
                   className="form-control"
@@ -105,7 +104,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                     setUserData({ ...userData, name: e.target.value })
                   }
                 />
-                <span className="input-group-text font-semibold">Apellido</span>
+                <span className="input-group-text font-medium">Apellido</span>
                 <input
                   type="text"
                   className="form-control"
@@ -114,7 +113,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                     setUserData({ ...userData, lastName: e.target.value })
                   }
                 />
-                <span className="input-group-text font-semibold">CUIL</span>
+                <span className="input-group-text font-medium">CUIL</span>
                 <input
                   type="number"
                   className="form-control"
@@ -125,7 +124,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 />
               </div>
               <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-semibold">
+                <span className="input-group-text font-medium">
                   Fecha de nacimiento
                 </span>
                 <input
@@ -136,7 +135,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                     setUserData({ ...userData, birthdate: e.target.value })
                   }
                 />
-                <label className="input-group-text font-semibold">Género</label>
+                <label className="input-group-text font-medium">Género</label>
                 <select
                   className="form-select"
                   value={userData.gender}
@@ -152,20 +151,20 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 </select>
               </div>
               <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-semibold">
+                <span className="input-group-text font-medium">
                   Foto de perfil
                 </span>
                 <input type="file" className="form-control" />
               </div>
             </div>
-            <hr className="text-dark mb-3" />
+            <hr className="text-light mb-3" />
             {/* Datos coportativos */}
             <div>
-              <h1 className="text-dark mb-3 font-semibold">
+              <h1 className="text-light mb-3 font-semibold">
                 Datos corporativos
               </h1>
               <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-semibold">Usuario</span>
+                <span className="input-group-text font-medium">Usuario</span>
                 <input
                   type="text"
                   className="form-control"
@@ -174,7 +173,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                     setUserData({ ...userData, userName: e.target.value })
                   }
                 />
-                <span className="input-group-text font-semibold">Email</span>
+                <span className="input-group-text font-medium">Email</span>
                 <input
                   type="email"
                   className="form-control"
@@ -186,9 +185,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
               </div>
 
               <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-semibold">
-                  Contaseña
-                </span>
+                <span className="input-group-text font-medium">Contaseña</span>
                 <input
                   type={seePassword ? "text" : "password"}
                   className="form-control"
@@ -198,19 +195,19 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   }
                 />
                 <button
-                  className="btn btn-sm btn-secondary"
+                  className="btn btn-sm btn-outline-secondary"
                   type="button"
                   title={seePassword ? "Ocultar" : "Ver"}
                   onClick={() => setSeePassword(!seePassword)}
                 >
                   {seePassword ? (
-                    <i className="ri-eye-off-line text-black"></i>
+                    <i className="ri-eye-off-line text-light"></i>
                   ) : (
-                    <i className="ri-eye-line text-black"></i>
+                    <i className="ri-eye-line text-light"></i>
                   )}
                 </button>
 
-                <span className="input-group-text font-semibold">
+                <span className="input-group-text font-medium">
                   Repetir contaseña
                 </span>
                 <input
@@ -222,21 +219,21 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   }
                 />
                 <button
-                  className="btn btn-sm btn-secondary"
+                  className="btn btn-sm btn-outline-secondary"
                   type="button"
                   title={seePassword ? "Ocultar" : "Ver"}
                   onClick={() => setSeePassword(!seePassword)}
                 >
                   {seePassword ? (
-                    <i className="ri-eye-off-line text-black"></i>
+                    <i className="ri-eye-off-line text-light"></i>
                   ) : (
-                    <i className="ri-eye-line text-black"></i>
+                    <i className="ri-eye-line text-light"></i>
                   )}
                 </button>
               </div>
 
               <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-semibold">
+                <span className="input-group-text font-medium">
                   Fecha de ingreso
                 </span>
                 <input
@@ -247,7 +244,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                     setUserData({ ...userData, admissionDate: e.target.value })
                   }
                 />
-                <span className="input-group-text font-semibold">
+                <span className="input-group-text font-medium">
                   Fecha de egreso
                 </span>
                 <input
@@ -261,7 +258,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
               </div>
 
               <div className="input-group input-group-sm mb-3">
-                <label className="input-group-text font-semibold">Nómina</label>
+                <label className="input-group-text font-medium">Nómina</label>
                 <select
                   className="form-select"
                   value={userData.payroll}
@@ -277,9 +274,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   <option value="Pampawagen">Pampawagen</option>
                   <option value="Opencars">Opencars</option>
                 </select>
-                <label className="input-group-text font-semibold">
-                  Sucursal
-                </label>
+                <label className="input-group-text font-medium">Sucursal</label>
                 <select
                   className="form-select"
                   value={userData.branch}
@@ -296,7 +291,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   <option value="Pampawagen">Pampawagen</option>
                   <option value="Opencars">Opencars</option>
                 </select>
-                <label className="input-group-text font-semibold">Ciudad</label>
+                <label className="input-group-text font-medium">Ciudad</label>
                 <select
                   className="form-select"
                   value={userData.city}
@@ -333,9 +328,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
               </div>
 
               <div className="input-group input-group-sm mb-3">
-                <label className="input-group-text font-semibold">
-                  Posición
-                </label>
+                <label className="input-group-text font-medium">Posición</label>
                 <select
                   className="form-select"
                   value={userData.position}
@@ -348,9 +341,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   </option>
                   <option value="Nada">Nada</option>
                 </select>
-                <label className="input-group-text font-semibold">
-                  Permisos
-                </label>
+                <label className="input-group-text font-medium">Permisos</label>
                 <select
                   className="form-select"
                   value={userData.permissions}

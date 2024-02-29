@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const LeftSidebar = ({
   showLeftbar,
@@ -6,6 +6,11 @@ export const LeftSidebar = ({
   setSetShowContent,
   setShowLeftbar,
 }) => {
+  const location = useLocation();
+  const isActive = (path) => {
+    return location.pathname === path ? "font-bold" : "";
+  };
+
   const funcCloseBar = () => {
     if (!showContent) {
       setSetShowContent(true);
@@ -34,85 +39,113 @@ export const LeftSidebar = ({
               <div className="mb-5">
                 <h2 className="font-bold">Tickets</h2>
                 <ul className="mt-3 ml-7">
-                  <li className="list-disc mb-2">
+                  <li className={`list-disc mb-2 ${isActive("/createticket")}`}>
                     <Link
                       className="hover:font-bold"
-                      to="/createTicket"
+                      to="/createticket"
                       onClick={() => funcCloseBar()}
                     >
                       Crear ticket
                     </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">
+                  <li
+                    className={`list-disc mb-2 ${isActive("/managetickets")}`}
+                  >
+                    <Link className="hover:font-bold" to="/managetickets">
                       Gestionar tickets
-                    </button>
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Ver tickets</button>
+                  <li className={`list-disc mb-2 ${isActive("/seetickets")}`}>
+                    <Link className="hover:font-bold" to="/seetickets">
+                      Ver tickets
+                    </Link>
                   </li>
                 </ul>
               </div>
               <div className="mb-5">
                 <h2 className="font-bold">Noticias</h2>
                 <ul className="mt-3 ml-7">
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Bienvenidas</button>
+                  <li className={`list-disc mb-2 ${isActive("/welcomes")}`}>
+                    <Link className="hover:font-bold" to="/welcomes">
+                      Bienvenidas
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">
+                  <li
+                    className={`list-disc mb-2 ${isActive(
+                      "/staffrecruitment"
+                    )}`}
+                  >
+                    <Link className="hover:font-bold" to="/staffrecruitment">
                       Búsqueda de personal
-                    </button>
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">
+                  <li
+                    className={`list-disc mb-2 ${isActive(
+                      "/presidencyletters"
+                    )}`}
+                  >
+                    <Link className="hover:font-bold" to="/presidencyletters">
                       Cartas de presidencia
-                    </button>
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/createTicket">
+                  <li className={`list-disc mb-2 ${isActive("/circulars")}`}>
+                    <Link className="hover:font-bold" to="/circulars">
                       Circulares
                     </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Compliance</button>
+                  <li className={`list-disc mb-2 ${isActive("/compliance")}`}>
+                    <Link className="hover:font-bold" to="/compliance">
+                      Compliance
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Despedidas</button>
+                  <li className={`list-disc mb-2 ${isActive("/goodbyes")}`}>
+                    <Link className="hover:font-bold" to="/goodbyes">
+                      Despedidas
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Máximas</button>
+                  <li className={`list-disc mb-2 ${isActive("/maxims")}`}>
+                    <Link className="hover:font-bold" to="/maxims">
+                      Máximas
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Reconocimientos</button>
+                  <li className={`list-disc mb-2 ${isActive("/recognitions")}`}>
+                    <Link className="hover:font-bold" to="/recognitions">
+                      Reconocimientos
+                    </Link>
                   </li>
                 </ul>
               </div>
               <div className="mb-5">
                 <h2 className="font-bold">Dpto. de sistemas</h2>
                 <ul className="mt-3 ml-7">
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">
+                  <li
+                    className={`list-disc mb-2 ${isActive("/accountclosures")}`}
+                  >
+                    <Link className="hover:font-bold" to="/accountclosures">
                       Bajas de cuentas
-                    </button>
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Inventario</button>
+                  <li className={`list-disc mb-2 ${isActive("/inventory")}`}>
+                    <Link className="hover:font-bold" to="/inventory">
+                      Inventario
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/createTicket">
+                  <li className={`list-disc mb-2 ${isActive("/newentries")}`}>
+                    <Link className="hover:font-bold" to="/newentries">
                       Nuevos ingresos
                     </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Permisos</button>
+                  <li className={`list-disc mb-2 ${isActive("/permissions")}`}>
+                    <Link className="hover:font-bold" to="/permissions">
+                      Permisos
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
+                  <li className={`list-disc mb-2 ${isActive("/sections")}`}>
                     <Link className="hover:font-bold" to="/sections">
                       Secciones
                     </Link>
                   </li>
-                  <li className="list-disc mb-2">
+                  <li className={`list-disc mb-2 ${isActive("/users")}`}>
                     <Link className="hover:font-bold" to="/users">
                       Usuarios
                     </Link>
@@ -122,18 +155,26 @@ export const LeftSidebar = ({
               <div className="mb-5">
                 <h2 className="font-bold">Otros</h2>
                 <ul className="mt-3 ml-7">
-                  <li className="list-disc mb-2">
-                    <Link className="hover:font-bold" to="/createTicket">
+                  <li className={`list-disc mb-2 ${isActive("/wifinetworks")}`}>
+                    <Link className="hover:font-bold" to="/wifinetworks">
                       Redes WiFi
                     </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">
+                  <li
+                    className={`list-disc mb-2 ${isActive("/ourtelephones")}`}
+                  >
+                    <Link className="hover:font-bold" to="/ourtelephones">
                       Nuestros teléfonos
-                    </button>
+                    </Link>
                   </li>
-                  <li className="list-disc mb-2">
-                    <button className="hover:font-bold">Organigrama</button>
+                  <li
+                    className={`list-disc mb-2 ${isActive(
+                      "/organizationchart"
+                    )}`}
+                  >
+                    <Link className="hover:font-bold" to="/organizationchart">
+                      Organigrama
+                    </Link>
                   </li>
                 </ul>
               </div>
