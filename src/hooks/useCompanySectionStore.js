@@ -17,7 +17,7 @@ export const useCompanySectionStore = () => {
           icon: "success",
           title: data.message,
           showConfirmButton: false,
-          timer: 1000,
+          timer: 1300,
           customClass: {
             title: "my-swal-title-class",
           },
@@ -29,7 +29,7 @@ export const useCompanySectionStore = () => {
           icon: "error",
           title: data.message,
           showConfirmButton: false,
-          timer: 1000,
+          timer: 1300,
           customClass: {
             title: "my-swal-title-class",
           },
@@ -43,7 +43,7 @@ export const useCompanySectionStore = () => {
         icon: "error",
         title: error.response.data.message,
         showConfirmButton: false,
-        timer: 1000,
+        timer: 1300,
         customClass: {
           title: "my-swal-title-class",
         },
@@ -74,7 +74,7 @@ export const useCompanySectionStore = () => {
           icon: "success",
           title: data.message,
           showConfirmButton: false,
-          timer: 1000,
+          timer: 1300,
           customClass: {
             title: "my-swal-title-class",
           },
@@ -89,7 +89,7 @@ export const useCompanySectionStore = () => {
         icon: "error",
         title: error.response.data.message,
         showConfirmButton: false,
-        timer: 1000,
+        timer: 1300,
         customClass: {
           title: "my-swal-title-class",
         },

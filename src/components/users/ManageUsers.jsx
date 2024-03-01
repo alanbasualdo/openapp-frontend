@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserStore } from "../../hooks/useUserStore";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { getEnvVariables } from "../../helpers/getEnvVariables";
 
 export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
   const { userLoading } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const { startCreateUser, startGetUsers } = useUserStore();
   const [seePassword, setSeePassword] = useState(false);
+  const [secondPassword, setSecondPassword] = useState("");
+
+  const { VITE_USER_SERVICE_URL } = getEnvVariables();
 
   const initialStateUserData = {
     name: "",
@@ -43,7 +48,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
         icon: "success",
         title: message,
         showConfirmButton: false,
-        timer: 1000,
+        timer: 1300,
         customClass: {
           title: "my-swal-title-class",
         },
@@ -55,7 +60,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
         icon: "error",
         title: message,
         showConfirmButton: false,
-        timer: 1000,
+        timer: 1300,
         customClass: {
           title: "my-swal-title-class",
         },
@@ -87,14 +92,27 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
       </div>
       {createUserClick && (
         <div>
+          <hr className="text-light mb-3" />
           <div className="px-3">
+            {/* Foto de usuario */}
+            <div className="flex flex-col items-center justify-center my-4">
+              <img
+                className="h-48 w-48 flex-none rounded-full object-cover"
+                src={`https://api.opencars.com.ar/api/download/usuarios/${user.cuil}`}
+              />
+              <label className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer mt-3">
+                Subir foto
+                <input type="file" className="hidden" />
+              </label>
+            </div>
+
             {/* Datos personales */}
             <div>
               <h1 className="text-light mb-3 font-semibold">
                 Datos personales
               </h1>
               <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-medium">Nombre</span>
+                <span className="input-group-text font-medium">Nombre/s</span>
                 <input
                   type="text"
                   className="form-control"
@@ -104,7 +122,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                     setUserData({ ...userData, name: e.target.value })
                   }
                 />
-                <span className="input-group-text font-medium">Apellido</span>
+                <span className="input-group-text font-medium">Apellido/s</span>
                 <input
                   type="text"
                   className="form-control"
@@ -149,12 +167,6 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                 </select>
-              </div>
-              <div className="input-group input-group-sm mb-3">
-                <span className="input-group-text font-medium">
-                  Foto de perfil
-                </span>
-                <input type="file" className="form-control" />
               </div>
             </div>
             <hr className="text-light mb-3" />
@@ -212,11 +224,11 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 </span>
                 <input
                   type={seePassword ? "text" : "password"}
-                  className="form-control"
-                  value={userData.password}
-                  onChange={(e) =>
-                    setUserData({ ...userData, password: e.target.value })
-                  }
+                  className={`form-control ${
+                    userData.password !== secondPassword && "border-red-500"
+                  }`}
+                  value={secondPassword}
+                  onChange={(e) => setSecondPassword(e.target.value)}
                 />
                 <button
                   className="btn btn-sm btn-outline-secondary"
@@ -231,6 +243,12 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   )}
                 </button>
               </div>
+
+              {userData.password !== secondPassword && (
+                <div className="text-sm text-red-500 mb-3">
+                  Las contraseñas no coinciden
+                </div>
+              )}
 
               <div className="input-group input-group-sm mb-3">
                 <span className="input-group-text font-medium">

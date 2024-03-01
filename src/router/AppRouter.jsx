@@ -139,7 +139,7 @@ export const AppRouter = () => {
                         overflowY: "auto",
                         maxHeight: "calc(100vh - 60px)",
                       }}
-                      className="py-2 px-2"
+                      className="py-3 px-2"
                     >
                       <Routes>
                         <>

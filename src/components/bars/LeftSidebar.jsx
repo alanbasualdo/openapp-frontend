@@ -184,7 +184,7 @@ export const LeftSidebar = ({
           <div
             className="absolute bottom-0 w-full p-3 bg-dark"
             style={{
-              boxShadow: "0px -10px 7px -5px rgba(255, 255, 255, 0.1)",
+              boxShadow: "0px -10px 10px -5px rgba(255, 255, 255, 0.2)",
             }}
           >
             <p className="text-white italic text-xs px-3">
