@@ -39,7 +39,7 @@ export const Companies = ({ setBtnActivated }) => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        startDeleteCompany(company);
+        startDeleteCompany(company._id);
         Swal.fire({
           title: "Eliminado!",
           text: "Ha sido eliminado correctamente",
@@ -55,7 +55,7 @@ export const Companies = ({ setBtnActivated }) => {
 
   return (
     <>
-      <div className="row d-flex flex-wrap justify-content-center align-items-center">
+      <div className="row d-flex flex-wrap justify-content-center align-items-center mb-2">
         <div className="col-3 rounded-xl">
           <button
             onClick={() => setBtnActivated(false)}
@@ -95,7 +95,7 @@ export const Companies = ({ setBtnActivated }) => {
           )}
         </div>
       </div>
-      <hr className="my-2" />
+      <hr />
       {addBtn && (
         <>
           <div className="input-group input-group-sm my-3">
@@ -151,7 +151,10 @@ export const Companies = ({ setBtnActivated }) => {
             <span className="visually-hidden">Cargando...</span>
           </div>
         ) : (
-          <div className="bg-dark p-1 rounded-xl">
+          <div
+            className="bg-dark p-1 rounded-xl"
+            style={{ boxShadow: "0px 0px 5px 0px rgba(0, 0, 0, 0.8)" }}
+          >
             <table className="table table-hover table-dark">
               <thead>
                 <tr>
