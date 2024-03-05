@@ -3,6 +3,7 @@ import { useUserStore } from "../../hooks/useUserStore";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getEnvVariables } from "../../helpers/getEnvVariables";
+import { showErrorMessage, showSuccessMessage } from "../../utils/showMessages";
 
 export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
   const { userLoading } = useSelector((state) => state.user);
@@ -39,32 +40,18 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
   };
 
   const createUser = async () => {
-    const { success, message } = await startCreateUser(userData);
-    if (success) {
-      setCreateUserClick(false);
-      resetForm();
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: message,
-        showConfirmButton: false,
-        timer: 1300,
-        customClass: {
-          title: "my-swal-title-class",
-        },
-      });
-      startGetUsers();
-    } else {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: message,
-        showConfirmButton: false,
-        timer: 1300,
-        customClass: {
-          title: "my-swal-title-class",
-        },
-      });
+    try {
+      const data = await startCreateUser(userData);
+      if (data.success) {
+        showSuccessMessage(data.message);
+        setCreateUserClick(false);
+        resetForm();
+        startGetUsers();
+      } else {
+        showErrorMessage(data.message);
+      }
+    } catch (error) {
+      showErrorMessage(error.response.data.message);
     }
   };
 

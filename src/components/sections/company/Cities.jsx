@@ -34,7 +34,7 @@ export const Cities = ({ setBtnActivated }) => {
         />
         <button className="btn btn-sm btn-success">Guardar</button>
       </div>
-      <div className="bg-dark p-1 rounded-xl">
+      <div className="bg-dark p-1 rounded-lg">
         <table className="table table-hover table-dark">
           <thead>
             <tr>

@@ -40,7 +40,7 @@ export const UserList = () => {
         )}
       </div>
 
-      <div className="bg-dark p-1 rounded-xl">
+      <div className="bg-dark p-1 rounded-lg">
         <table className="table table-hover table-dark">
           <thead>
             <tr>

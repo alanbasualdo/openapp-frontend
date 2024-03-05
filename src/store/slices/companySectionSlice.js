@@ -17,25 +17,25 @@ export const companySectionSlice = createSlice({
       state.companies = action.payload;
     },
     setBrands: (state, action) => {
-      state.brands == action.payload;
+      state.brands = action.payload;
     },
     setCities: (state, action) => {
-      state.cities == action.payload;
+      state.cities = action.payload;
     },
     setBranches: (state, action) => {
-      state.branches == action.payload;
+      state.branches = action.payload;
     },
     setAreas: (state, action) => {
-      state.areas == action.payload;
+      state.areas = action.payload;
     },
     setSubareas: (state, action) => {
-      state.subareas == action.payload;
+      state.subareas = action.payload;
     },
     setPositions: (state, action) => {
-      state.positions == action.payload;
+      state.positions = action.payload;
     },
     setLoading: (state, action) => {
-      state.loading == action.payload;
+      state.loading = action.payload;
     },
   },
 });

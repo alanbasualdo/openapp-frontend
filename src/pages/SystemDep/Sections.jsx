@@ -16,13 +16,7 @@ export const Sections = () => {
   };
 
   return (
-    <div
-      className="rounded-xl p-4 text-center text-light"
-      style={{
-        boxShadow: "inset 0px 0px 10px 0px rgba(0, 0, 0, 0.8)",
-        backgroundColor: "rgb(43, 47, 51)",
-      }}
-    >
+    <div className="rounded-lg p-4 text-center text-light inset-black-shadow bg-gray">
       {btnActivated ? (
         <div className="text-center">
           {section === "companies" && (

@@ -74,12 +74,12 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                 >
                   <div className="p-2 flex-grow">
                     {/* Mensaje recibio */}
-                    <div className="bg-light px-2 py-1 rounded-xl max-w-60 mb-1">
+                    <div className="bg-light px-2 py-1 rounded-lg max-w-60 mb-1">
                       <p className="text-dark font-medium w-full">hola mundo</p>
                       <p className="text-right text-xs text-gray-500">12:00</p>
                     </div>
                     {/* Mensaje enviado */}
-                    <div className="bg-primary px-2 py-1 rounded-xl max-w-60 mb-1 ml-auto">
+                    <div className="bg-primary px-2 py-1 rounded-lg max-w-60 mb-1 ml-auto">
                       <p className="text-light font-medium text-right w-full">
                         hola mundo
                       </p>
@@ -171,7 +171,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                     {filteredUsers.map((user) => (
                       <li
                         key={user._id}
-                        className="flex justify-between rounded-xl py-2 px-2 cursor-pointer hover:bg-gray-700"
+                        className="flex justify-between rounded-lg py-2 px-2 cursor-pointer hover:bg-gray-700"
                         onClick={() => setOpenChat(true)}
                       >
                         <div className="flex items-center gap-x-5">
