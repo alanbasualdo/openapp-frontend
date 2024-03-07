@@ -139,6 +139,7 @@ export const Brands = ({ setBtnActivated }) => {
             placeholder="Marca"
             value={brand.name}
             onChange={(e) => setBrand({ ...brand, name: e.target.value })}
+            autoFocus
           />
           <button
             className="btn btn-sm btn-success"
@@ -183,8 +184,8 @@ export const Brands = ({ setBtnActivated }) => {
             <table className="table table-hover table-dark">
               <thead>
                 <tr>
-                  <th scope="col">Compañía</th>
                   <th scope="col">Marca</th>
+                  <th scope="col">Compañía</th>
                 </tr>
               </thead>
               <tbody>
@@ -194,8 +195,8 @@ export const Brands = ({ setBtnActivated }) => {
                     className="cursor-pointer"
                     onClick={() => deleteBrand(brand)}
                   >
-                    <td>{brand.company}</td>
                     <td>{brand.name}</td>
+                    <td>{brand.company}</td>
                   </tr>
                 ))}
               </tbody>

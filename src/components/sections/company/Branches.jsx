@@ -153,7 +153,6 @@ export const Branches = ({ setBtnActivated }) => {
               </option>
             ))}
           </select>
-
           <select
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
             value={branch.brand}

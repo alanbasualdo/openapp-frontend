@@ -115,6 +115,7 @@ export const Companies = ({ setBtnActivated }) => {
             placeholder="CUIT"
             value={company.cuit}
             onChange={(e) => setCompany({ ...company, cuit: e.target.value })}
+            autoFocus
           />
           <input
             type="text"
