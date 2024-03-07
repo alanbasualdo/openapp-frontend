@@ -19,8 +19,10 @@ export const Cities = ({ setBtnActivated }) => {
   const [provincias, setProvincias] = useState([]);
   const [localidades, setLocalidades] = useState([]);
 
-  const filteredCities = cities.filter((city) =>
-    city.name.toLowerCase().includes(search.toLowerCase())
+  const filteredCities = cities.filter(
+    (city) =>
+      city.name.toLowerCase().includes(search.toLowerCase()) ||
+      city.province.toLowerCase().includes(search.toLowerCase())
   );
 
   const cityInitialState = {

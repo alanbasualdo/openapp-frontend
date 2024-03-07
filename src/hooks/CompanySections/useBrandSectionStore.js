@@ -8,7 +8,7 @@ export const useBrandSectionStore = () => {
   const startPostBrand = async (brand) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post("/brands/post", brand);
+      const { data } = await sectionsService.post("/brands/post-brand", brand);
       dispatch(setLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useBrandSectionStore = () => {
   const startGetBrands = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/brands/get");
+      const { data } = await sectionsService.get("/brands/get-brands");
       dispatch(setBrands(data.brands));
       dispatch(setLoading(false));
     } catch (error) {
@@ -32,7 +32,9 @@ export const useBrandSectionStore = () => {
   const startDeleteBrand = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(`/brands/delete/${id}`);
+      const { data } = await sectionsService.delete(
+        `/brands/delete-brand/${id}`
+      );
       dispatch(setLoading(false));
       return data;
     } catch (error) {

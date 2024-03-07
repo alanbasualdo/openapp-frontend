@@ -1,19 +1,19 @@
 import { useDispatch } from "react-redux";
 import sectionsService from "../../api/sectionsService";
 import {
-  setCompanies,
+  setBranches,
   setLoading,
 } from "../../store/slices/companySectionSlice";
 
-export const useCompanySectionStore = () => {
+export const useBranchSectionStore = () => {
   const dispatch = useDispatch();
 
-  const startPostCompany = async (company) => {
+  const startPostBrach = async (branch) => {
     try {
       dispatch(setLoading(true));
       const { data } = await sectionsService.post(
-        "/companies/post-company",
-        company
+        "/branches/post-branch",
+        branch
       );
       dispatch(setLoading(false));
       return data;
@@ -23,11 +23,11 @@ export const useCompanySectionStore = () => {
     }
   };
 
-  const startGetCompanies = async () => {
+  const startGetBranches = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/companies/get-companies");
-      dispatch(setCompanies(data.companies));
+      const { data } = await sectionsService.get("/branches/get-branches");
+      dispatch(setBranches(data.branches));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false));
@@ -35,11 +35,11 @@ export const useCompanySectionStore = () => {
     }
   };
 
-  const startDeleteCompany = async (id) => {
+  const startDeleteBranch = async (id) => {
     try {
       dispatch(setLoading(true));
       const { data } = await sectionsService.delete(
-        `/companies/delete-company/${id}`
+        `/branches/delete-branch/${id}`
       );
       dispatch(setLoading(false));
       return data;
@@ -50,8 +50,8 @@ export const useCompanySectionStore = () => {
   };
 
   return {
-    startPostCompany,
-    startGetCompanies,
-    startDeleteCompany,
+    startPostBrach,
+    startGetBranches,
+    startDeleteBranch,
   };
 };

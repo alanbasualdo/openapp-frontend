@@ -18,8 +18,10 @@ export const Brands = ({ setBtnActivated }) => {
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
 
-  const filteredBrands = brands.filter((brand) =>
-    brand.name.toLowerCase().includes(search.toLowerCase())
+  const filteredBrands = brands.filter(
+    (brand) =>
+      brand.name.toLowerCase().includes(search.toLowerCase()) ||
+      brand.company.toLowerCase().includes(search.toLowerCase())
   );
 
   const brandInitialState = {
@@ -126,7 +128,7 @@ export const Brands = ({ setBtnActivated }) => {
               Seleccionar compañía
             </option>
             {companies.map((company) => (
-              <option value={company._id} key={company._id}>
+              <option value={company.name} key={company._id}>
                 {company.name}
               </option>
             ))}
@@ -192,7 +194,7 @@ export const Brands = ({ setBtnActivated }) => {
                     className="cursor-pointer"
                     onClick={() => deleteBrand(brand)}
                   >
-                    <td>{brand.company.name}</td>
+                    <td>{brand.company}</td>
                     <td>{brand.name}</td>
                   </tr>
                 ))}

@@ -14,8 +14,10 @@ export const Companies = ({ setBtnActivated }) => {
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
 
-  const filteredCompanies = companies.filter((company) =>
-    company.name.toLowerCase().includes(search.toLowerCase())
+  const filteredCompanies = companies.filter(
+    (company) =>
+      company.name.toLowerCase().includes(search.toLowerCase()) ||
+      company.cuit.toString().includes(search)
   );
 
   const companyInitialState = {

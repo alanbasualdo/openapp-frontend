@@ -8,7 +8,7 @@ export const useCitySectionStore = () => {
   const startPostCity = async (city) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post("/cities/post", city);
+      const { data } = await sectionsService.post("/cities/post-city", city);
       dispatch(setLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useCitySectionStore = () => {
   const startGetCities = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/cities/get");
+      const { data } = await sectionsService.get("/cities/get-cities");
       dispatch(setCities(data.cities));
       dispatch(setLoading(false));
     } catch (error) {
@@ -32,7 +32,9 @@ export const useCitySectionStore = () => {
   const startDeleteCity = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(`/cities/delete/${id}`);
+      const { data } = await sectionsService.delete(
+        `/cities/delete-city/${id}`
+      );
       dispatch(setLoading(false));
       return data;
     } catch (error) {
