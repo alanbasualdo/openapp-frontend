@@ -1,36 +1,45 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSubareaSectionStore } from "../../../hooks/PositionsSections/useSubareaSectionStore";
 import {
   showConfirmDialog,
   showErrorMessage,
   showSuccessMessage,
 } from "../../../utils/showMessages";
-import { useAreaSectionStore } from "../../../hooks/CompanySections/useAreaSectionStore";
+import { useAreaSectionStore } from "../../../hooks/PositionsSections/useAreaSectionStore";
+import { useSelector } from "react-redux";
 
-export const Areas = ({ setBtnActivated }) => {
-  const { startPostArea, startGetAreas, startDeleteArea } =
-    useAreaSectionStore();
-  const { areas, loading } = useSelector((state) => state.companySection);
+export const Subareas = ({ setBtnActivated }) => {
+  const { startPostSubarea, startGetSubareas, startDeleteSubarea } =
+    useSubareaSectionStore();
+  const { startGetAreas } = useAreaSectionStore();
+  const { areas, subareas, loading } = useSelector(
+    (state) => state.companySection
+  );
 
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
 
-  const filteredAreas = areas.filter((area) =>
-    area.name.toLowerCase().includes(search.toLowerCase())
+  const filteredSubareas = subareas.filter(
+    (subarea) =>
+      subarea.name.toLowerCase().includes(search.toLowerCase()) ||
+      subarea.area.toLowerCase().includes(search.toLowerCase())
   );
 
-  const areaInitialState = { name: "" };
+  const subareaInitialState = {
+    area: "",
+    name: "",
+  };
 
-  const [area, setArea] = useState(areaInitialState);
+  const [subarea, setSubarea] = useState(subareaInitialState);
 
-  const postArea = async (area) => {
+  const postSubarea = async (subarea) => {
     try {
-      const data = await startPostArea(area);
+      const data = await startPostSubarea(subarea);
       if (data.success) {
         showSuccessMessage(data.message);
         setAddBtn(false);
-        setArea(areaInitialState);
-        startGetAreas();
+        setSubarea(subareaInitialState);
+        startGetSubareas();
       } else {
         showErrorMessage(data.message);
       }
@@ -39,13 +48,13 @@ export const Areas = ({ setBtnActivated }) => {
     }
   };
 
-  const deleteArea = async (area) => {
+  const deleteSubarea = async (subarea) => {
     const result = await showConfirmDialog();
     if (result.isConfirmed) {
       try {
-        const data = await startDeleteArea(area._id);
+        const data = await startDeleteSubarea(subarea._id);
         if (data.success) {
-          startGetAreas();
+          startGetSubareas();
           showSuccessMessage(data.message);
         } else {
           showErrorMessage(data.message);
@@ -57,7 +66,13 @@ export const Areas = ({ setBtnActivated }) => {
   };
 
   useEffect(() => {
-    startGetAreas();
+    if (addBtn) {
+      startGetAreas();
+    }
+  }, [addBtn]);
+
+  useEffect(() => {
+    startGetSubareas();
   }, []);
 
   return (
@@ -74,9 +89,9 @@ export const Areas = ({ setBtnActivated }) => {
         </div>
         <div className="col-6">
           {addBtn ? (
-            <h1 className="font-medium">Agregar área</h1>
+            <h1 className="font-medium">Agregar subárea</h1>
           ) : (
-            <h1 className="font-medium">Áreas</h1>
+            <h1 className="font-medium">Subáreas</h1>
           )}
         </div>
         <div className="col-3 rounded-lg">
@@ -84,7 +99,7 @@ export const Areas = ({ setBtnActivated }) => {
             <button
               onClick={() => {
                 setAddBtn(false);
-                setArea(areaInitialState);
+                setSubarea(subareaInitialState);
               }}
               title="Cancelar"
               className="px-2"
@@ -105,18 +120,32 @@ export const Areas = ({ setBtnActivated }) => {
       <hr />
       {addBtn && (
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
+          <select
+            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            value={subarea.area}
+            onChange={(e) => setSubarea({ ...subarea, area: e.target.value })}
+          >
+            <option value="" disabled>
+              Seleccionar área
+            </option>
+            {areas.map((area) => (
+              <option value={area.name} key={area._id}>
+                {area.name}
+              </option>
+            ))}
+          </select>
           <input
             type="text"
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
             placeholder="Área"
-            value={area.name}
-            onChange={(e) => setArea({ ...area, name: e.target.value })}
+            value={subarea.name}
+            onChange={(e) => setSubarea({ ...subarea, name: e.target.value })}
             autoFocus
           />
           <button
             className="btn btn-sm btn-success"
-            onClick={() => postArea(area)}
-            disabled={!area.name}
+            onClick={() => postSubarea(subarea)}
+            disabled={!subarea.name || !subarea.area}
           >
             {loading ? (
               <div className="spinner-border spinner-border-sm" role="status">
@@ -156,17 +185,19 @@ export const Areas = ({ setBtnActivated }) => {
             <table className="table table-hover table-dark">
               <thead>
                 <tr>
+                  <th scope="col">Subárea</th>
                   <th scope="col">Área</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredAreas.map((area) => (
+                {filteredSubareas.map((subarea) => (
                   <tr
-                    key={area._id}
+                    key={subarea._id}
                     className="cursor-pointer"
-                    onClick={() => deleteArea(area)}
+                    onClick={() => deleteSubarea(subarea)}
                   >
-                    <td>{area.name}</td>
+                    <td>{subarea.name}</td>
+                    <td>{subarea.area}</td>
                   </tr>
                 ))}
               </tbody>

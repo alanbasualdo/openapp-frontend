@@ -1,45 +1,39 @@
 import { useEffect, useState } from "react";
-import { useSubareaSectionStore } from "../../../hooks/CompanySections/useSubareaSectionStore";
 import {
   showConfirmDialog,
   showErrorMessage,
   showSuccessMessage,
 } from "../../../utils/showMessages";
-import { useAreaSectionStore } from "../../../hooks/CompanySections/useAreaSectionStore";
 import { useSelector } from "react-redux";
+import { usePositionSectionStore } from "../../../hooks/PositionsSections/usePositionSectionStore";
 
-export const Subareas = ({ setBtnActivated }) => {
-  const { startPostSubarea, startGetSubareas, startDeleteSubarea } =
-    useSubareaSectionStore();
-  const { startGetAreas } = useAreaSectionStore();
-  const { areas, subareas, loading } = useSelector(
-    (state) => state.companySection
-  );
+export const Positions = ({ setBtnActivated }) => {
+  const { startPostPosition, startGetPositions, startDeletePosition } =
+    usePositionSectionStore();
+  const { positions, loading } = useSelector((state) => state.companySection);
 
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
 
-  const filteredSubareas = subareas.filter(
-    (subarea) =>
-      subarea.name.toLowerCase().includes(search.toLowerCase()) ||
-      subarea.area.toLowerCase().includes(search.toLowerCase())
+  const filteredPositions = positions.filter((position) =>
+    position.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const subareaInitialState = {
-    area: "",
+  const positionInitialState = {
     name: "",
+    level: 0,
   };
 
-  const [subarea, setSubarea] = useState(subareaInitialState);
+  const [position, setPosition] = useState(positionInitialState);
 
-  const postSubarea = async (subarea) => {
+  const postPosition = async (position) => {
     try {
-      const data = await startPostSubarea(subarea);
+      const data = await startPostPosition(position);
       if (data.success) {
         showSuccessMessage(data.message);
         setAddBtn(false);
-        setSubarea(subareaInitialState);
-        startGetSubareas();
+        setPosition(positionInitialState);
+        startGetPositions();
       } else {
         showErrorMessage(data.message);
       }
@@ -48,13 +42,13 @@ export const Subareas = ({ setBtnActivated }) => {
     }
   };
 
-  const deleteSubarea = async (area) => {
+  const deletePosition = async (position) => {
     const result = await showConfirmDialog();
     if (result.isConfirmed) {
       try {
-        const data = await startDeleteSubarea(area._id);
+        const data = await startDeletePosition(position._id);
         if (data.success) {
-          startGetSubareas();
+          startGetPositions();
           showSuccessMessage(data.message);
         } else {
           showErrorMessage(data.message);
@@ -66,13 +60,7 @@ export const Subareas = ({ setBtnActivated }) => {
   };
 
   useEffect(() => {
-    if (addBtn) {
-      startGetAreas();
-    }
-  }, [addBtn]);
-
-  useEffect(() => {
-    startGetSubareas();
+    startGetPositions();
   }, []);
 
   return (
@@ -89,9 +77,9 @@ export const Subareas = ({ setBtnActivated }) => {
         </div>
         <div className="col-6">
           {addBtn ? (
-            <h1 className="font-medium">Agregar subárea</h1>
+            <h1 className="font-medium">Agregar puesto</h1>
           ) : (
-            <h1 className="font-medium">Subáreas</h1>
+            <h1 className="font-medium">Puestos</h1>
           )}
         </div>
         <div className="col-3 rounded-lg">
@@ -99,7 +87,7 @@ export const Subareas = ({ setBtnActivated }) => {
             <button
               onClick={() => {
                 setAddBtn(false);
-                setSubarea(subareaInitialState);
+                setPosition(positionInitialState);
               }}
               title="Cancelar"
               className="px-2"
@@ -122,30 +110,32 @@ export const Subareas = ({ setBtnActivated }) => {
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
           <select
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
-            value={subarea.area}
-            onChange={(e) => setSubarea({ ...subarea, area: e.target.value })}
+            value={position.level}
+            onChange={(e) =>
+              setPosition({ ...position, level: e.target.value })
+            }
           >
             <option value="" disabled>
-              Seleccionar área
+              Seleccionar nivel
             </option>
-            {areas.map((area) => (
-              <option value={area.name} key={area._id}>
-                {area.name}
+            {[...Array(50).keys()].map((num) => (
+              <option value={num + 1} key={num + 1}>
+                {num + 1}
               </option>
             ))}
           </select>
           <input
             type="text"
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
-            placeholder="Área"
-            value={subarea.name}
-            onChange={(e) => setSubarea({ ...subarea, name: e.target.value })}
+            placeholder="Puesto"
+            value={position.name}
+            onChange={(e) => setPosition({ ...position, name: e.target.value })}
             autoFocus
           />
           <button
             className="btn btn-sm btn-success"
-            onClick={() => postSubarea(subarea)}
-            disabled={!subarea.name || !subarea.area}
+            onClick={() => postPosition(position)}
+            disabled={!position.name || !position.level}
           >
             {loading ? (
               <div className="spinner-border spinner-border-sm" role="status">
@@ -185,20 +175,19 @@ export const Subareas = ({ setBtnActivated }) => {
             <table className="table table-hover table-dark">
               <thead>
                 <tr>
-                  <th scope="col">Subárea</th>
-                  <th scope="col">Área</th>
+                  <th scope="col">Nivel</th>
+                  <th scope="col">Puesto</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredSubareas.map((subarea) => (
+                {filteredPositions.map((position) => (
                   <tr
-                    key={subarea._id}
+                    key={position._id}
                     className="cursor-pointer"
-                    onClick={() => deleteSubarea(subarea)}
+                    onClick={() => deletePosition(position)}
                   >
-                    {" "}
-                    <td>{subarea.name}</td>
-                    <td>{subarea.area}</td>
+                    <td>{position.level}</td>
+                    <td>{position.name}</td>
                   </tr>
                 ))}
               </tbody>

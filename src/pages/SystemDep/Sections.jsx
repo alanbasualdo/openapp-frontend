@@ -3,9 +3,9 @@ import { Companies } from "../../components/sections/company/Companies";
 import { Brands } from "../../components/sections/company/Brands";
 import { Branches } from "../../components/sections/company/Branches";
 import { Cities } from "../../components/sections/company/Cities";
-import { Areas } from "../../components/sections/company/Areas";
-import { Subareas } from "../../components/sections/company/Subareas";
-import { Positions } from "../../components/sections/company/Positions";
+import { Areas } from "../../components/sections/positions/Areas";
+import { Subareas } from "../../components/sections/positions/Subareas";
+import { Positions } from "../../components/sections/positions/Positions";
 
 export const Sections = () => {
   const [btnActivated, setBtnActivated] = useState(false);
@@ -77,6 +77,12 @@ export const Sections = () => {
               >
                 Sucursales
               </button>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <h1 className="mb-2 font-medium">Configuración de puestos</h1>
+            <hr className="mb-2" />
+            <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
                 className="btn btn-sm btn-primary"
                 onClick={() => {
