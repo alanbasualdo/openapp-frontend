@@ -22,7 +22,9 @@ export const Sections = () => {
           {section === "companies" && (
             <Companies setBtnActivated={setBtnActivated} />
           )}
-          {section === "brands" && <Brands setBtnActivated={setBtnActivated} />}
+          {section === "companyBrands" && (
+            <Brands setBtnActivated={setBtnActivated} />
+          )}
           {section === "cities" && <Cities setBtnActivated={setBtnActivated} />}
           {section === "branches" && (
             <Branches setBtnActivated={setBtnActivated} />
@@ -54,7 +56,7 @@ export const Sections = () => {
                 className="btn btn-sm btn-primary"
                 onClick={() => {
                   activeBtn();
-                  setSection("brands");
+                  setSection("companyBrands");
                 }}
               >
                 Marcas
@@ -120,7 +122,7 @@ export const Sections = () => {
                 className="btn btn-sm btn-primary"
                 onClick={() => {
                   activeBtn();
-                  setSection("brands");
+                  setSection("computerBrands");
                 }}
               >
                 Marcas

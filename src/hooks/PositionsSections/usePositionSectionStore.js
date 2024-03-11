@@ -49,9 +49,25 @@ export const usePositionSectionStore = () => {
     }
   };
 
+  const startPutPosition = async (position) => {
+    try {
+      dispatch(setLoading(true));
+      const { data } = await sectionsService.put(
+        `/positions/put-position/${position._id}`,
+        { level: position.level }
+      );
+      dispatch(setLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
   return {
     startPostPosition,
     startGetPositions,
     startDeletePosition,
+    startPutPosition,
   };
 };

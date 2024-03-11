@@ -8,9 +8,16 @@ import { useSelector } from "react-redux";
 import { usePositionSectionStore } from "../../../hooks/PositionsSections/usePositionSectionStore";
 
 export const Positions = ({ setBtnActivated }) => {
-  const { startPostPosition, startGetPositions, startDeletePosition } =
-    usePositionSectionStore();
+  const {
+    startPostPosition,
+    startGetPositions,
+    startDeletePosition,
+    startPutPosition,
+  } = usePositionSectionStore();
   const { positions, loading } = useSelector((state) => state.companySection);
+
+  const [editingPositionId, setEditingPositionId] = useState(null);
+  const [editingPosition, setEditingPosition] = useState(null);
 
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
@@ -56,6 +63,23 @@ export const Positions = ({ setBtnActivated }) => {
       } catch (error) {
         showErrorMessage(error.response.data.message);
       }
+    }
+  };
+
+  const putPosition = async () => {
+    if (!editingPosition) return;
+    try {
+      const data = await startPutPosition(editingPosition);
+      if (data.success) {
+        startGetPositions();
+        showSuccessMessage(data.message);
+        setEditingPosition(null);
+        setEditingPositionId(null);
+      } else {
+        showErrorMessage(data.message);
+      }
+    } catch (error) {
+      showErrorMessage(error.response.data.message);
     }
   };
 
@@ -175,19 +199,63 @@ export const Positions = ({ setBtnActivated }) => {
             <table className="table table-hover table-dark">
               <thead>
                 <tr>
+                  <th scope="col">Editar</th>
                   <th scope="col">Nivel</th>
                   <th scope="col">Puesto</th>
+                  <th scope="col">Eliminar</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredPositions.map((position) => (
-                  <tr
-                    key={position._id}
-                    className="cursor-pointer"
-                    onClick={() => deletePosition(position)}
-                  >
-                    <td>{position.level}</td>
+                  <tr key={position._id}>
+                    <td>
+                      {editingPositionId === position._id ? (
+                        <>
+                          <i
+                            className="ri-close-line text-danger text-xl cursor-pointer"
+                            onClick={() => setEditingPositionId(null)}
+                          ></i>
+                          <i
+                            className="ri-check-line text-success text-xl ml-2 cursor-pointer"
+                            onClick={putPosition}
+                          ></i>
+                        </>
+                      ) : (
+                        <i
+                          className="ri-pencil-fill text-primary cursor-pointer"
+                          onClick={() => {
+                            setEditingPositionId(position._id);
+                            setEditingPosition({ ...position });
+                          }}
+                        ></i>
+                      )}
+                    </td>
+                    {editingPositionId === position._id ? (
+                      <td>
+                        <input
+                          type="number"
+                          className="input-none bg-dark black-shadow rounded-lg text-center"
+                          placeholder="Puesto"
+                          value={editingPosition?.level}
+                          onChange={(e) =>
+                            setEditingPosition({
+                              ...editingPosition,
+                              level: e.target.value,
+                            })
+                          }
+                          autoFocus
+                        />
+                      </td>
+                    ) : (
+                      <td>{position.level}</td>
+                    )}
                     <td>{position.name}</td>
+                    <td>
+                      <i
+                        className="ri-delete-bin-line text-danger cursor-pointer"
+                        onClick={() => deletePosition(position)}
+                      ></i>
+                    </td>
                   </tr>
                 ))}
               </tbody>
