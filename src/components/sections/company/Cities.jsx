@@ -150,7 +150,7 @@ export const Cities = ({ setBtnActivated }) => {
             onChange={(e) => setCity({ ...city, name: e.target.value })}
           >
             <option value="" disabled>
-              Seleccionar provincia
+              Seleccionar ciudad
             </option>
             {localidades?.map((localidad) => (
               <option value={localidad.nombre} key={localidad.i}>

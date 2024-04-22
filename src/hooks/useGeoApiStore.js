@@ -29,6 +29,7 @@ export const useGeoApiStore = () => {
           throw new Error(`Error al obtener las localidades: ${resp.status}`);
         }
         const data = await resp.json();
+        console.log(data)
         const localidadesOrdenadas = data.localidades.sort((a, b) =>
           a.nombre.localeCompare(b.nombre)
         );

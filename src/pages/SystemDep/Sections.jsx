@@ -6,6 +6,7 @@ import { Cities } from "../../components/sections/company/Cities";
 import { Areas } from "../../components/sections/positions/Areas";
 import { Subareas } from "../../components/sections/positions/Subareas";
 import { Positions } from "../../components/sections/positions/Positions";
+import { Processors } from "../../components/sections/pcs/Processors";
 
 export const Sections = () => {
   const [btnActivated, setBtnActivated] = useState(false);
@@ -16,7 +17,7 @@ export const Sections = () => {
   };
 
   return (
-    <div className="rounded-lg p-4 text-center text-light inset-black-shadow bg-gray">
+    <div className="rounded-lg p-4 text-center text-light inset-black-shadow bg-gray mx-3">
       {btnActivated ? (
         <div className="text-center">
           {section === "companies" && (
@@ -35,6 +36,9 @@ export const Sections = () => {
           )}
           {section === "positions" && (
             <Positions setBtnActivated={setBtnActivated} />
+          )}
+          {section === "processors" && (
+            <Processors setBtnActivated={setBtnActivated} />
           )}
         </div>
       ) : (
@@ -122,10 +126,19 @@ export const Sections = () => {
                 className="btn btn-sm btn-primary"
                 onClick={() => {
                   activeBtn();
-                  setSection("computerBrands");
+                  setSection("processors");
                 }}
               >
-                Marcas
+                Procesadores
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => {
+                  activeBtn();
+                  setSection("memories");
+                }}
+              >
+                Memorias
               </button>
               <button
                 className="btn btn-sm btn-primary"
@@ -140,10 +153,10 @@ export const Sections = () => {
                 className="btn btn-sm btn-primary"
                 onClick={() => {
                   activeBtn();
-                  setSection("memories");
+                  setSection("computerBrands");
                 }}
               >
-                Memorias
+                Marcas
               </button>
               <button
                 className="btn btn-sm btn-primary"
@@ -162,15 +175,6 @@ export const Sections = () => {
                 }}
               >
                 Tipos
-              </button>
-              <button
-                className="btn btn-sm btn-primary"
-                onClick={() => {
-                  activeBtn();
-                  setSection("processors");
-                }}
-              >
-                Procesadores
               </button>
             </div>
           </div>
