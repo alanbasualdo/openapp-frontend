@@ -39,7 +39,10 @@ export const UserList = () => {
           </div>
         )}
       </div>
-      <div className="bg-dark p-1 rounded-lg black-shadow">
+      <div
+        className="bg-dark p-1 rounded-lg black-shadow"
+        style={{ overflowX: "auto" }}
+      >
         <table className="table table-hover table-dark">
           <thead>
             <tr>

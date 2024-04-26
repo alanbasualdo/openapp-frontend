@@ -222,7 +222,7 @@ export const Positions = ({ setBtnActivated }) => {
                         </>
                       ) : (
                         <i
-                          className="ri-pencil-fill text-primary cursor-pointer"
+                          className="ri-pencil-fill text-opencars cursor-pointer"
                           onClick={() => {
                             setEditingPositionId(position._id);
                             setEditingPosition({ ...position });

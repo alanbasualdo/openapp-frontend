@@ -1,4 +1,3 @@
-import { useProcessorsSectionStore } from "../../../hooks/PCs/useProcessorsSectionStore";
 import {
   showConfirmDialog,
   showErrorMessage,
@@ -6,38 +5,38 @@ import {
 } from "../../../utils/showMessages";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useDisksSectionStore } from "../../../hooks/PCs/useDisksSectionStore";
 
-export const Processors = ({ setBtnActivated }) => {
-  const { startGetProcessors, startPostProcessor, startDeleteProcessor } =
-    useProcessorsSectionStore();
-  const { pcsLoading, processors } = useSelector((state) => state.pcsSection);
+export const Disks = ({ setBtnActivated }) => {
+  const { startPostDisk, startGetDisks, startDeleteDisk } =
+    useDisksSectionStore();
+  const { pcsLoading, disks } = useSelector((state) => state.pcsSection);
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
 
-  const filteredProcessors = processors.filter(
-    (processor) =>
-      processor.brand.toLowerCase().includes(search.toLowerCase()) ||
-      processor.model.toLowerCase().includes(search.toLowerCase())
+  const filteredDisks = disks.filter(
+    (disk) =>
+      disk.brand.toLowerCase().includes(search.toLowerCase()) ||
+      disk.model.toLowerCase().includes(search.toLowerCase())
   );
 
-  const processorsInitialState = {
+  const disksInitialState = {
     brand: "",
     model: "",
-    speed: "",
-    graph: "",
-    cores: "",
+    type: "",
+    volume: "",
   };
 
-  const [processor, setProcessor] = useState(processorsInitialState);
+  const [disk, setDisk] = useState(disksInitialState);
 
-  const postProcessor = async (processor) => {
+  const postDisk = async (disk) => {
     try {
-      const data = await startPostProcessor(processor);
+      const data = await startPostDisk(disk);
       if (data.success) {
         showSuccessMessage(data.message);
         setAddBtn(false);
-        setProcessor(processorsInitialState);
-        startGetProcessors();
+        setDisk(disksInitialState);
+        startGetDisks();
       } else {
         showErrorMessage(data.message);
       }
@@ -46,13 +45,13 @@ export const Processors = ({ setBtnActivated }) => {
     }
   };
 
-  const deleteProcessor = async (processor) => {
+  const deleteDisk = async (disk) => {
     const result = await showConfirmDialog();
     if (result.isConfirmed) {
       try {
-        const data = await startDeleteProcessor(processor._id);
+        const data = await startDeleteDisk(disk._id);
         if (data.success) {
-          startGetProcessors();
+          startGetDisks();
           showSuccessMessage(data.message);
         } else {
           showErrorMessage(data.message);
@@ -64,7 +63,7 @@ export const Processors = ({ setBtnActivated }) => {
   };
 
   useEffect(() => {
-    startGetProcessors();
+    startGetDisks();
   }, []);
 
   return (
@@ -81,9 +80,9 @@ export const Processors = ({ setBtnActivated }) => {
         </div>
         <div className="col-6">
           {addBtn ? (
-            <h1 className="font-medium">Agregar procesador</h1>
+            <h1 className="font-medium">Agregar disco</h1>
           ) : (
-            <h1 className="font-medium">Procesadores</h1>
+            <h1 className="font-medium">Discos</h1>
           )}
         </div>
         <div className="col-3 rounded-lg">
@@ -91,7 +90,7 @@ export const Processors = ({ setBtnActivated }) => {
             <button
               onClick={() => {
                 setAddBtn(false);
-                setProcessor(processorsInitialState);
+                setDisk(disksInitialState);
               }}
               title="Cancelar"
               className="px-2"
@@ -115,94 +114,61 @@ export const Processors = ({ setBtnActivated }) => {
           {/* BRAND */}
           <select
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.brand}
-            onChange={(e) =>
-              setProcessor({ ...processor, brand: e.target.value })
-            }
+            value={disk.brand}
+            onChange={(e) => setDisk({ ...disk, brand: e.target.value })}
           >
             <option value="" disabled>
               Seleccionar marca
             </option>
-            <option value="AMD">AMD</option>
-            <option value="Apple">Apple</option>
-            <option value="IBM">IBM</option>
-            <option value="Intel">Intel</option>
-            <option value="MediaTek">MediaTek</option>
-            <option value="NVIDIA">NVIDIA</option>
-            <option value="Qualcomm">Qualcomm</option>
+            <option value="ADATA">ADATA</option>
+            <option value="Corsair">Corsair</option>
+            <option value="Crucial">Crucial</option>
+            <option value="Dell">Dell</option>
+            <option value="Hitachi">Hitachi</option>
+            <option value="HP">HP</option>
+            <option value="Kingston">Kingston</option>
+            <option value="LaCie">LaCie</option>
             <option value="Samsung">Samsung</option>
+            <option value="SanDisk">SanDisk</option>
+            <option value="Seagate">Seagate</option>
+            <option value="Sony">Sony</option>
+            <option value="Toshiba">Toshiba</option>
+            <option value="Transcend">Transcend</option>
+            <option value="Western Digital">Western Digital</option>
           </select>
           {/* MODEL */}
           <input
             type="text"
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
             placeholder="Modelo"
-            value={processor.model}
-            onChange={(e) =>
-              setProcessor({ ...processor, model: e.target.value })
-            }
+            value={disk.model}
+            onChange={(e) => setDisk({ ...disk, model: e.target.value })}
           />
-          {/* SPEED */}
+          {/* TYPE */}
+          <select
+            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
+            value={disk.type}
+            onChange={(e) => setDisk({ ...disk, type: e.target.value })}
+          >
+            <option value="" disabled>
+              Seleccionar tipo de disco
+            </option>
+            <option value="HDD">HDD</option>
+            <option value="SSD">SSD</option>
+            <option value="SSD NVMe">SSD NVMe</option>
+          </select>
+          {/* VOLUME */}
           <input
             type="number"
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
-            placeholder="Velocidad GHz"
-            value={processor.speed}
-            onChange={(e) =>
-              setProcessor({ ...processor, speed: e.target.value })
-            }
+            placeholder="Capacidad GB"
+            value={disk.volume}
+            onChange={(e) => setDisk({ ...disk, volume: e.target.value })}
           />
-          {/* GRAPH */}
-          <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.graph}
-            onChange={(e) =>
-              setProcessor({ ...processor, graph: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              ¿Tiene gráfica integrada?
-            </option>
-            <option value="Si">Si</option>
-            <option value="No">No</option>
-          </select>
-          {/* CORES */}
-          <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.cores}
-            onChange={(e) =>
-              setProcessor({ ...processor, cores: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              Cantidad de núcleos
-            </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-          </select>
           <button
             className="btn btn-sm btn-success"
-            onClick={() => postProcessor(processor)}
-            disabled={
-              !processor.brand ||
-              !processor.model ||
-              !processor.speed ||
-              !processor.graph ||
-              !processor.cores
-            }
+            onClick={() => postDisk(disk)}
+            disabled={!disk.brand || !disk.model || !disk.type || !disk.volume}
           >
             {pcsLoading ? (
               <div className="spinner-border spinner-border-sm" role="status">
@@ -244,23 +210,21 @@ export const Processors = ({ setBtnActivated }) => {
                 <tr>
                   <th scope="col">Marca</th>
                   <th scope="col">Modelo</th>
-                  <th scope="col">Velocidad</th>
-                  <th scope="col">Gráfica integrada</th>
-                  <th scope="col">Núcleos</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Capacidad</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredProcessors.map((processor) => (
+                {filteredDisks.map((disk) => (
                   <tr
-                    key={processor._id}
+                    key={disk._id}
                     className="cursor-pointer"
-                    onClick={() => deleteProcessor(processor)}
+                    onClick={() => deleteDisk(disk)}
                   >
-                    <td>{processor.brand}</td>
-                    <td>{processor.model}</td>
-                    <td>{processor.speed} GHz</td>
-                    <td>{processor.graph}</td>
-                    <td>{processor.cores}</td>
+                    <td>{disk.brand}</td>
+                    <td>{disk.model}</td>
+                    <td>{disk.type}</td>
+                    <td>{disk.volume} GB</td>
                   </tr>
                 ))}
               </tbody>

@@ -1,4 +1,3 @@
-import { useProcessorsSectionStore } from "../../../hooks/PCs/useProcessorsSectionStore";
 import {
   showConfirmDialog,
   showErrorMessage,
@@ -6,38 +5,36 @@ import {
 } from "../../../utils/showMessages";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useModelsSectionStore } from "../../../hooks/PCs/useModelsSectionStore";
 
-export const Processors = ({ setBtnActivated }) => {
-  const { startGetProcessors, startPostProcessor, startDeleteProcessor } =
-    useProcessorsSectionStore();
-  const { pcsLoading, processors } = useSelector((state) => state.pcsSection);
+export const Models = ({ setBtnActivated }) => {
+  const { startPostModel, startGetModels, startDeleteModel } =
+    useModelsSectionStore();
+  const { pcsLoading, models } = useSelector((state) => state.pcsSection);
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
 
-  const filteredProcessors = processors.filter(
-    (processor) =>
-      processor.brand.toLowerCase().includes(search.toLowerCase()) ||
-      processor.model.toLowerCase().includes(search.toLowerCase())
+  const filteredModels = models.filter(
+    (model) =>
+      model.brand.toLowerCase().includes(search.toLowerCase()) ||
+      model.model.toLowerCase().includes(search.toLowerCase())
   );
 
-  const processorsInitialState = {
+  const modelsInitialState = {
     brand: "",
     model: "",
-    speed: "",
-    graph: "",
-    cores: "",
   };
 
-  const [processor, setProcessor] = useState(processorsInitialState);
+  const [model, setModel] = useState(modelsInitialState);
 
-  const postProcessor = async (processor) => {
+  const postModel = async (model) => {
     try {
-      const data = await startPostProcessor(processor);
+      const data = await startPostModel(model);
       if (data.success) {
         showSuccessMessage(data.message);
         setAddBtn(false);
-        setProcessor(processorsInitialState);
-        startGetProcessors();
+        setModel(modelsInitialState);
+        startGetModels();
       } else {
         showErrorMessage(data.message);
       }
@@ -46,13 +43,13 @@ export const Processors = ({ setBtnActivated }) => {
     }
   };
 
-  const deleteProcessor = async (processor) => {
+  const deleteModel = async (model) => {
     const result = await showConfirmDialog();
     if (result.isConfirmed) {
       try {
-        const data = await startDeleteProcessor(processor._id);
+        const data = await startDeleteModel(model._id);
         if (data.success) {
-          startGetProcessors();
+          startGetModels();
           showSuccessMessage(data.message);
         } else {
           showErrorMessage(data.message);
@@ -64,7 +61,7 @@ export const Processors = ({ setBtnActivated }) => {
   };
 
   useEffect(() => {
-    startGetProcessors();
+    startGetModels();
   }, []);
 
   return (
@@ -81,9 +78,9 @@ export const Processors = ({ setBtnActivated }) => {
         </div>
         <div className="col-6">
           {addBtn ? (
-            <h1 className="font-medium">Agregar procesador</h1>
+            <h1 className="font-medium">Agregar modelo</h1>
           ) : (
-            <h1 className="font-medium">Procesadores</h1>
+            <h1 className="font-medium">Modelos</h1>
           )}
         </div>
         <div className="col-3 rounded-lg">
@@ -91,7 +88,7 @@ export const Processors = ({ setBtnActivated }) => {
             <button
               onClick={() => {
                 setAddBtn(false);
-                setProcessor(processorsInitialState);
+                setModel(modelsInitialState);
               }}
               title="Cancelar"
               className="px-2"
@@ -115,94 +112,51 @@ export const Processors = ({ setBtnActivated }) => {
           {/* BRAND */}
           <select
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.brand}
-            onChange={(e) =>
-              setProcessor({ ...processor, brand: e.target.value })
-            }
+            value={model.brand}
+            onChange={(e) => setModel({ ...model, brand: e.target.value })}
           >
             <option value="" disabled>
               Seleccionar marca
             </option>
-            <option value="AMD">AMD</option>
+            <option value="Acer">Acer</option>
             <option value="Apple">Apple</option>
-            <option value="IBM">IBM</option>
-            <option value="Intel">Intel</option>
-            <option value="MediaTek">MediaTek</option>
-            <option value="NVIDIA">NVIDIA</option>
-            <option value="Qualcomm">Qualcomm</option>
+            <option value="Asus">Asus</option>
+            <option value="Bangho">Banghó</option>
+            <option value="Commodore">Commodore</option>
+            <option value="Compaq">Compaq</option>
+            <option value="CX">CX</option>
+            <option value="Dell">Dell</option>
+            <option value="Epcom">Epcom</option>
+            <option value="Eurocase">Eurocase</option>
+            <option value="Exo">Exo</option>
+            <option value="Gateway">Gateway</option>
+            <option value="Gigabyte">Gigabyte</option>
+            <option value="HP">HP</option>
+            <option value="Huawei">Huawei</option>
+            <option value="Lenovo">Lenovo</option>
+            <option value="LG">LG</option>
+            <option value="MSI">MSI</option>
+            <option value="Nexxt">Nexxt</option>
+            <option value="Noblex">Noblex</option>
+            <option value="Positivo BGH">Positivo BGH</option>
+            <option value="Razer">Razer</option>
             <option value="Samsung">Samsung</option>
+            <option value="Sony">Sony</option>
+            <option value="Toshiba">Toshiba</option>
+            <option value="VAIO">VAIO</option>
           </select>
           {/* MODEL */}
           <input
             type="text"
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
             placeholder="Modelo"
-            value={processor.model}
-            onChange={(e) =>
-              setProcessor({ ...processor, model: e.target.value })
-            }
+            value={model.model}
+            onChange={(e) => setModel({ ...model, model: e.target.value })}
           />
-          {/* SPEED */}
-          <input
-            type="number"
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
-            placeholder="Velocidad GHz"
-            value={processor.speed}
-            onChange={(e) =>
-              setProcessor({ ...processor, speed: e.target.value })
-            }
-          />
-          {/* GRAPH */}
-          <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.graph}
-            onChange={(e) =>
-              setProcessor({ ...processor, graph: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              ¿Tiene gráfica integrada?
-            </option>
-            <option value="Si">Si</option>
-            <option value="No">No</option>
-          </select>
-          {/* CORES */}
-          <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.cores}
-            onChange={(e) =>
-              setProcessor({ ...processor, cores: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              Cantidad de núcleos
-            </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-          </select>
           <button
             className="btn btn-sm btn-success"
-            onClick={() => postProcessor(processor)}
-            disabled={
-              !processor.brand ||
-              !processor.model ||
-              !processor.speed ||
-              !processor.graph ||
-              !processor.cores
-            }
+            onClick={() => postModel(model)}
+            disabled={!model.brand || !model.model}
           >
             {pcsLoading ? (
               <div className="spinner-border spinner-border-sm" role="status">
@@ -244,23 +198,17 @@ export const Processors = ({ setBtnActivated }) => {
                 <tr>
                   <th scope="col">Marca</th>
                   <th scope="col">Modelo</th>
-                  <th scope="col">Velocidad</th>
-                  <th scope="col">Gráfica integrada</th>
-                  <th scope="col">Núcleos</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredProcessors.map((processor) => (
+                {filteredModels.map((model) => (
                   <tr
-                    key={processor._id}
+                    key={model._id}
                     className="cursor-pointer"
-                    onClick={() => deleteProcessor(processor)}
+                    onClick={() => deleteModel(model)}
                   >
-                    <td>{processor.brand}</td>
-                    <td>{processor.model}</td>
-                    <td>{processor.speed} GHz</td>
-                    <td>{processor.graph}</td>
-                    <td>{processor.cores}</td>
+                    <td>{model.brand}</td>
+                    <td>{model.model}</td>
                   </tr>
                 ))}
               </tbody>

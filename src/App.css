@@ -10,6 +10,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 2px;
+  height: 2px;
 }
 
 ::-webkit-scrollbar-track {
@@ -40,4 +41,26 @@ body {
   border: none;
   background-color: transparent;
   outline: none;
+}
+
+.text-opencars {
+  color: #0071b8;
+}
+
+.bg-opencars {
+  background-color: #0071b8;
+}
+
+.btn-opencars {
+  color: white;
+  background-color: #0071b8;
+}
+
+.btn-opencars:hover {
+  color: white;
+  background-color: #0072b887;
+}
+
+.app-router-padding {
+  /*  padding: 0 100px 0 100px; */
 }

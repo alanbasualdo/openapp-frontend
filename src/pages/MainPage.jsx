@@ -1,4 +1,3 @@
-import React from "react";
 import { LeftSidebar } from "../components/bars/LeftSidebar";
 import { RightSidebar } from "../components/bars/RightSidebar";
 import { Navbar } from "../components/bars/Navbar";

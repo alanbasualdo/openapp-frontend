@@ -70,7 +70,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
           </button>
         ) : (
           <button
-            className="btn btn-sm btn-primary"
+            className="btn btn-sm btn-opencars"
             onClick={() => setCreateUserClick(true)}
           >
             Crear nuevo usuario

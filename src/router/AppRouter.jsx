@@ -128,9 +128,10 @@ export const AppRouter = () => {
                   setShowLeftbar={setShowLeftbar}
                 />
                 <div
-                  className="w-full bg-dark text-white"
+                  className="w-full bg-dark text-white app-router-padding justify-center align-center d-flex"
                   style={{
                     height: "calc(100vh - 60px)",
+                    width: "100vw",
                   }}
                 >
                   {showContent && (

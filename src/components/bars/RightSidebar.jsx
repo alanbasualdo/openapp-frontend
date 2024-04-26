@@ -21,7 +21,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
           className="offcanvas-end show bg-dark text-white relative px-1"
           style={{
             height: "calc(100vh - 60px)",
-            width: showContent ? "850px" : "100vw",
+            width: showContent ? "700px" : "100vw",
             position: !showContent && "absolute",
           }}
           tabIndex="-1"
@@ -79,7 +79,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                       <p className="text-right text-xs text-gray-500">12:00</p>
                     </div>
                     {/* Mensaje enviado */}
-                    <div className="bg-primary px-2 py-1 rounded-lg max-w-60 mb-1 ml-auto">
+                    <div className="bg-opencars px-2 py-1 rounded-lg max-w-60 mb-1 ml-auto">
                       <p className="text-light font-medium text-right w-full">
                         hola mundo
                       </p>
@@ -176,29 +176,43 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                       >
                         <div className="flex items-center gap-x-5">
                           <img
-                            className="h-12 w-12 flex-none rounded-full bg-gray-50 object-cover"
+                            className="flex-none rounded-full"
                             src={`https://api.opencars.com.ar/api/download/usuarios/${user.cuil}`}
                             alt="Foto de perfil"
+                            style={{
+                              objectFit: "cover",
+                              width: "50px",
+                              height: "50px",
+                            }}
                           />
                           <div className="min-w-0 flex-auto">
-                            <p className="text-sm font-semibold leading-6 text-gray-200">
-                              {user.name} {user.lastName}
-                            </p>
-                            <p
-                              className="mt-1 truncate text-xs font-medium leading-5 text-gray-400"
-                              style={{ width: "200px" }}
-                            >
-                              {user.email}
-                            </p>
+                            <div className="d-flex gap-2">
+                              <p className="text-sm font-semibold leading-6 text-gray-200">
+                                {user.name} {user.lastName}
+                              </p>
+                              <div className="flex items-center gap-x-1.5">
+                                <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                </div>
+                              </div>
+                              {/* <div className="flex items-center gap-x-1.5">
+                                <div className="flex-none rounded-full bg-red-500/20 p-1">
+                                  <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                </div>
+                                <p className="text-xs leading-5 text-gray-700 font-medium truncate">
+                                  {useLastSeenFormat(user?.lastSeen)}
+                                </p>
+                              </div> */}
+                            </div>
+                            <div>
+                              <p
+                                className="mt-1 truncate text-xs font-medium leading-5 text-gray-400"
+                                style={{ width: "200px" }}
+                              >
+                                {user.email}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-x-1.5">
-                          <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                          </div>
-                          <p className="text-xs leading-5 font-medium text-gray-400">
-                            En línea
-                          </p>
                         </div>
                       </li>
                     ))}

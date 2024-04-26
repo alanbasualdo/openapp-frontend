@@ -4,9 +4,9 @@ export const pcsSectionSlice = createSlice({
   name: "pcsSection",
   initialState: {
     processors: [],
-    ram: [],
+    rams: [],
     disks: [],
-    types: [],
+    models: [],
     pcs: [],
     pcsLoading: false,
   },
@@ -14,14 +14,14 @@ export const pcsSectionSlice = createSlice({
     setProcessors: (state, action) => {
       state.processors = action.payload;
     },
-    setRam: (state, action) => {
-      state.ram = action.payload;
+    setRams: (state, action) => {
+      state.rams = action.payload;
     },
     setDisks: (state, action) => {
       state.disks = action.payload;
     },
-    setTypes: (state, action) => {
-      state.types = action.payload;
+    setModels: (state, action) => {
+      state.models = action.payload;
     },
     setPCs: (state, action) => {
       state.pcs = action.payload;
@@ -34,9 +34,9 @@ export const pcsSectionSlice = createSlice({
 
 export const {
   setProcessors,
-  setRam,
+  setRams,
   setDisks,
-  setTypes,
+  setModels,
   setPCs,
   setPCsLoading,
 } = pcsSectionSlice.actions;

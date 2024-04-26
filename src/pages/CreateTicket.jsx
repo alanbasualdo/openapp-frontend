@@ -19,7 +19,7 @@ export const CreateTicket = () => {
 
   return (
     <>
-      <div className="rounded-lg p-4 text-center text-light inset-black-shadow bg-gray mx-3">
+      <div className="rounded-lg p-4 text-center text-light bg-gray mx-3">
         <div className="input-group input-group-sm  mb-3">
           <label className="input-group-text font-semibold">Área</label>
           <select
@@ -116,7 +116,7 @@ export const CreateTicket = () => {
             Limpiar campos
           </button>
           <button
-            className="btn btn-sm btn-primary"
+            className="btn btn-sm btn-success"
             onClick={() => createTicket()}
           >
             Crear ticket

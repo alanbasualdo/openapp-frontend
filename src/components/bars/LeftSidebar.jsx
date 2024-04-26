@@ -25,7 +25,7 @@ export const LeftSidebar = ({
           className="offcanvas-end show bg-dark text-white relative"
           style={{
             height: "calc(100vh - 60px)",
-            width: showContent ? "550px" : "100vw",
+            width: showContent ? "600px" : "100vw",
             position: !showContent && "absolute",
           }}
           tabIndex="-1"
@@ -35,9 +35,31 @@ export const LeftSidebar = ({
             style={{ overflowY: "auto", maxHeight: "calc(100vh - 100px)" }}
             className="text-sm"
           >
-            <div className="p-3 mt-3">
+            <div className="ml-3 mt-3">
               <div className="mb-5">
                 <h2 className="font-bold">Tickets</h2>
+
+                <div className="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    Acciones
+                  </button>
+                  <div className="collapse" id="collapseExample">
+                    <ul className="list-group">
+                      <li className="list-group-item">Opción 1</li>
+                      <li className="list-group-item">Opción 2</li>
+                      <li className="list-group-item">Opción 3</li>
+                    </ul>
+                  </div>
+                </div>
+
                 <ul className="mt-3 ml-7">
                   <li className={`list-disc mb-2 ${isActive("/createticket")}`}>
                     <Link

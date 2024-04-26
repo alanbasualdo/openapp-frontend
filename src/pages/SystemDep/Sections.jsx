@@ -7,6 +7,9 @@ import { Areas } from "../../components/sections/positions/Areas";
 import { Subareas } from "../../components/sections/positions/Subareas";
 import { Positions } from "../../components/sections/positions/Positions";
 import { Processors } from "../../components/sections/pcs/Processors";
+import { Ram } from "../../components/sections/pcs/Ram";
+import { Disks } from "../../components/sections/pcs/Disks";
+import { Models } from "../../components/sections/pcs/Models";
 
 export const Sections = () => {
   const [btnActivated, setBtnActivated] = useState(false);
@@ -17,7 +20,7 @@ export const Sections = () => {
   };
 
   return (
-    <div className="rounded-lg p-4 text-center text-light inset-black-shadow bg-gray mx-3">
+    <div className="rounded-lg p-4 text-center text-light bg-gray mx-3">
       {btnActivated ? (
         <div className="text-center">
           {section === "companies" && (
@@ -40,6 +43,9 @@ export const Sections = () => {
           {section === "processors" && (
             <Processors setBtnActivated={setBtnActivated} />
           )}
+          {section === "rams" && <Ram setBtnActivated={setBtnActivated} />}
+          {section === "disks" && <Disks setBtnActivated={setBtnActivated} />}
+          {section === "models" && <Models setBtnActivated={setBtnActivated} />}
         </div>
       ) : (
         <>
@@ -48,7 +54,7 @@ export const Sections = () => {
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("companies");
@@ -57,7 +63,7 @@ export const Sections = () => {
                 Compañías
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("companyBrands");
@@ -66,7 +72,7 @@ export const Sections = () => {
                 Marcas
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("cities");
@@ -75,7 +81,7 @@ export const Sections = () => {
                 Ciudades
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("branches");
@@ -90,7 +96,7 @@ export const Sections = () => {
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("areas");
@@ -99,7 +105,7 @@ export const Sections = () => {
                 Áreas
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("subareas");
@@ -108,7 +114,7 @@ export const Sections = () => {
                 Subáreas
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("positions");
@@ -123,7 +129,7 @@ export const Sections = () => {
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("processors");
@@ -132,16 +138,16 @@ export const Sections = () => {
                 Procesadores
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
-                  setSection("memories");
+                  setSection("rams");
                 }}
               >
-                Memorias
+                Memorias ram
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("disks");
@@ -150,16 +156,7 @@ export const Sections = () => {
                 Discos
               </button>
               <button
-                className="btn btn-sm btn-primary"
-                onClick={() => {
-                  activeBtn();
-                  setSection("computerBrands");
-                }}
-              >
-                Marcas
-              </button>
-              <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("models");
@@ -168,13 +165,13 @@ export const Sections = () => {
                 Modelos
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
-                  setSection("types");
+                  setSection("computers");
                 }}
               >
-                Tipos
+                Computadoras
               </button>
             </div>
           </div>
@@ -183,7 +180,7 @@ export const Sections = () => {
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("brands");
@@ -192,7 +189,7 @@ export const Sections = () => {
                 Marcas
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("models");
@@ -201,7 +198,7 @@ export const Sections = () => {
                 Modelos
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("plans");
@@ -216,7 +213,7 @@ export const Sections = () => {
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("types");
@@ -225,7 +222,7 @@ export const Sections = () => {
                 Tipo de dispositivos
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("devices");
@@ -240,7 +237,7 @@ export const Sections = () => {
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("types");
@@ -255,7 +252,7 @@ export const Sections = () => {
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("areas");
@@ -264,7 +261,7 @@ export const Sections = () => {
                 Áreas
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("categories");
@@ -273,7 +270,7 @@ export const Sections = () => {
                 Categorías
               </button>
               <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
                   setSection("subcategories");

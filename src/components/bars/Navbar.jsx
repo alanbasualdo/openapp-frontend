@@ -47,7 +47,7 @@ export const Navbar = ({
 
   return (
     <div
-      className="bg-primary flex items-center justify-between"
+      className="bg-gray flex items-center justify-between border-b border-secondary"
       style={{
         height: "60px",
         position: "fixed",
@@ -64,7 +64,7 @@ export const Navbar = ({
         onMouseLeave={window.innerWidth > 768 ? handleLeave : undefined}
       >
         <Link
-          className="nav-link text-light"
+          className="nav-link text-opencars"
           to="/home"
           onClick={() => funcCloseBar()}
         >
@@ -75,7 +75,7 @@ export const Navbar = ({
         <ul className="nav nav-underline d-inline-flex gap-4">
           <li className="nav-item" title="Inicio">
             <Link
-              className="nav-link text-light"
+              className="nav-link text-opencars"
               to="/home"
               onClick={() => funcCloseBar()}
             >
@@ -84,7 +84,7 @@ export const Navbar = ({
           </li>
           <li className="nav-item" title="Trabajo">
             <button
-              className="nav-link text-light"
+              className="nav-link text-opencars"
               onClick={() => funcShowLeftbar()}
             >
               <i className="ri-tools-fill text-2xl sm:text-3xl"></i>
@@ -92,7 +92,7 @@ export const Navbar = ({
           </li>
           <li className="nav-item" title="Personas">
             <button
-              className="nav-link text-light"
+              className="nav-link text-opencars"
               onClick={() => funcShowRightbar()}
             >
               <i className="ri-group-fill text-2xl sm:text-3xl"></i>
@@ -100,7 +100,7 @@ export const Navbar = ({
           </li>
           <li className="nav-item" title="Dólar">
             <Link
-              className="nav-link text-light"
+              className="nav-link text-opencars"
               to="/dollar"
               onClick={() => funcCloseBar()}
             >

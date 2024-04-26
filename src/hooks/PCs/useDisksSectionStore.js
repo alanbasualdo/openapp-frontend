@@ -1,14 +1,14 @@
 import { useDispatch } from "react-redux";
-import { setRams, setPCsLoading } from "../../store/slices/pcsSectionSlice";
+import { setPCsLoading, setDisks } from "../../store/slices/pcsSectionSlice";
 import sectionsService from "../../api/sectionsService";
 
-export const useRamSectionStore = () => {
+export const useDisksSectionStore = () => {
   const dispatch = useDispatch();
 
-  const startPostRam = async (memorie) => {
+  const startPostDisk = async (processor) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.post("/pcs/post-ram", memorie);
+      const { data } = await sectionsService.post("/pcs/post-disk", processor);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {
@@ -17,11 +17,11 @@ export const useRamSectionStore = () => {
     }
   };
 
-  const startGetRams = async () => {
+  const startGetDisks = async () => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.get("/pcs/get-rams");
-      dispatch(setRams(data.rams));
+      const { data } = await sectionsService.get("/pcs/get-disks");
+      dispatch(setDisks(data.disks));
       dispatch(setPCsLoading(false));
     } catch (error) {
       dispatch(setPCsLoading(false));
@@ -29,10 +29,10 @@ export const useRamSectionStore = () => {
     }
   };
 
-  const startDeleteRam = async (id) => {
+  const startDeleteDisk = async (id) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.delete(`/pcs/delete-ram/${id}`);
+      const { data } = await sectionsService.delete(`/pcs/delete-disk/${id}`);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {
@@ -42,8 +42,8 @@ export const useRamSectionStore = () => {
   };
 
   return {
-    startPostRam,
-    startGetRams,
-    startDeleteRam,
+    startPostDisk,
+    startGetDisks,
+    startDeleteDisk,
   };
 };

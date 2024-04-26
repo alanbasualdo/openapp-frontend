@@ -1,21 +1,25 @@
-import React from "react";
-import { useMemoriesSectionStore } from "../../../hooks/PCs/useMemoriesSectionStore";
-import { setMemories } from "../../../store/slices/pcsSectionSlice";
+import { useSelector } from "react-redux";
+import { useRamSectionStore } from "../../../hooks/PCs/useRamSectionStore";
+import { useEffect, useState } from "react";
+import {
+  showConfirmDialog,
+  showErrorMessage,
+  showSuccessMessage,
+} from "../../../utils/showMessages";
 
-export const Memories = () => {
-  const { startPostMemorie, startGetMemories, startDeleteMemorie } =
-    useMemoriesSectionStore();
-  const { pcsLoading, memories } = useSelector((state) => state.pcsSection);
+export const Ram = ({ setBtnActivated }) => {
+  const { startPostRam, startGetRams, startDeleteRam } = useRamSectionStore();
+  const { pcsLoading, rams } = useSelector((state) => state.pcsSection);
   const [search, setSearch] = useState("");
   const [addBtn, setAddBtn] = useState(false);
 
-  const filteredMemories = memories.filter(
-    (memorie) =>
-      memorie.brand.toLowerCase().includes(search.toLowerCase()) ||
-      memorie.model.toLowerCase().includes(search.toLowerCase())
+  const filteredRams = rams.filter(
+    (ram) =>
+      ram.brand.toLowerCase().includes(search.toLowerCase()) ||
+      ram.model.toLowerCase().includes(search.toLowerCase())
   );
 
-  const memoriesInitialState = {
+  const ramsInitialState = {
     brand: "",
     model: "",
     ddr: "",
@@ -23,16 +27,16 @@ export const Memories = () => {
     volume: "",
   };
 
-  const [memorie, setMemorie] = useState(memoriesInitialState);
+  const [ram, setRam] = useState(ramsInitialState);
 
-  const postMemorie = async (memorie) => {
+  const postRam = async (ram) => {
     try {
-      const data = await startPostMemorie(memorie);
+      const data = await startPostRam(ram);
       if (data.success) {
         showSuccessMessage(data.message);
         setAddBtn(false);
-        setMemories(memoriesInitialState);
-        startGetMemories();
+        setRam(ramsInitialState);
+        startGetRams();
       } else {
         showErrorMessage(data.message);
       }
@@ -41,13 +45,13 @@ export const Memories = () => {
     }
   };
 
-  const deleteMemorie = async (memorie) => {
+  const deleteRam = async (ram) => {
     const result = await showConfirmDialog();
     if (result.isConfirmed) {
       try {
-        const data = await startDeleteMemorie(memorie._id);
+        const data = await startDeleteRam(ram._id);
         if (data.success) {
-          startGetMemories();
+          startGetRams();
           showSuccessMessage(data.message);
         } else {
           showErrorMessage(data.message);
@@ -59,7 +63,7 @@ export const Memories = () => {
   };
 
   useEffect(() => {
-    startGetMemories();
+    startGetRams();
   }, []);
 
   return (
@@ -86,7 +90,7 @@ export const Memories = () => {
             <button
               onClick={() => {
                 setAddBtn(false);
-                setMemorie(memoriesInitialState);
+                setRam(ramsInitialState);
               }}
               title="Cancelar"
               className="px-2"
@@ -107,91 +111,71 @@ export const Memories = () => {
       <hr />
       {addBtn && (
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
+          {/* BRAND */}
           <select
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.brand}
-            onChange={(e) =>
-              setProcessor({ ...processor, brand: e.target.value })
-            }
+            value={ram.brand}
+            onChange={(e) => setRam({ ...ram, brand: e.target.value })}
           >
             <option value="" disabled>
               Seleccionar marca
             </option>
-            <option value="AMD">AMD</option>
-            <option value="Apple">Apple</option>
-            <option value="IBM">IBM</option>
-            <option value="Intel">Intel</option>
-            <option value="MediaTek">MediaTek</option>
-            <option value="NVIDIA">NVIDIA</option>
-            <option value="Qualcomm">Qualcomm</option>
+            <option value="ADATA">ADATA</option>
+            <option value="Corsair">Corsair</option>
+            <option value="Crucial">Crucial</option>
+            <option value="G.Skill">G.Skill</option>
+            <option value="HyperX">HyperX</option>
+            <option value="Kingston">Kingston</option>
+            <option value="Patriot">Patriot</option>
             <option value="Samsung">Samsung</option>
+            <option value="TeamGroup">TeamGroup</option>
+            <option value="Transcend">Transcend</option>
           </select>
-          <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.graph}
-            onChange={(e) =>
-              setProcessor({ ...processor, graph: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              ¿Tiene gráfica integrada?
-            </option>
-            <option value="Si">Si</option>
-            <option value="No">No</option>
-          </select>
-          <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
-            value={processor.cores}
-            onChange={(e) =>
-              setProcessor({ ...processor, cores: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              Cantidad de núcleos
-            </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-          </select>
+          {/* MODEL */}
           <input
             type="text"
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
             placeholder="Modelo"
-            value={processor.model}
-            onChange={(e) =>
-              setProcessor({ ...processor, model: e.target.value })
-            }
+            value={ram.model}
+            onChange={(e) => setRam({ ...ram, model: e.target.value })}
           />
+          {/* DDR */}
+          <select
+            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
+            value={ram.ddr}
+            onChange={(e) => setRam({ ...ram, ddr: e.target.value })}
+          >
+            <option value="" disabled>
+              Seleccionar DDR
+            </option>
+            <option value="DDR1">DDR1</option>
+            <option value="DDR2">DDR2</option>
+            <option value="DDR3">DDR3</option>
+            <option value="DDR4">DDR4</option>
+            <option value="DDR5">DDR5</option>
+            <option value="DDR6">DDR6</option>
+          </select>
+          {/* SPEED */}
           <input
             type="number"
             className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
-            placeholder="Velocidad GHz"
-            value={processor.speed}
-            onChange={(e) =>
-              setProcessor({ ...processor, speed: e.target.value })
-            }
+            placeholder="Velocidad MHz"
+            value={ram.speed}
+            onChange={(e) => setRam({ ...ram, speed: e.target.value })}
+          />
+          {/* VOLUME */}
+          <input
+            type="number"
+            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            placeholder="Capacidad GB"
+            value={ram.volume}
+            onChange={(e) => setRam({ ...ram, volume: e.target.value })}
           />
           <button
             className="btn btn-sm btn-success"
-            onClick={() => postProcessor(processor)}
+            onClick={() => postRam(ram)}
             disabled={
-              !processor.brand ||
-              !processor.model ||
-              !processor.speed ||
-              !processor.graph ||
-              !processor.cores
+              !ram.brand || !ram.model || !ram.ddr || !ram.speed || !ram.volume
             }
           >
             {pcsLoading ? (
@@ -234,23 +218,23 @@ export const Memories = () => {
                 <tr>
                   <th scope="col">Marca</th>
                   <th scope="col">Modelo</th>
+                  <th scope="col">DDR</th>
                   <th scope="col">Velocidad</th>
-                  <th scope="col">Gráfica integrada</th>
-                  <th scope="col">Núcleos</th>
+                  <th scope="col">Capacidad</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredProcessors.map((processor) => (
+                {filteredRams.map((ram) => (
                   <tr
-                    key={processor._id}
+                    key={ram._id}
                     className="cursor-pointer"
-                    onClick={() => deleteProcessor(processor)}
+                    onClick={() => deleteRam(ram)}
                   >
-                    <td>{processor.brand}</td>
-                    <td>{processor.model}</td>
-                    <td>{processor.speed} GHz</td>
-                    <td>{processor.graph}</td>
-                    <td>{processor.cores}</td>
+                    <td>{ram.brand}</td>
+                    <td>{ram.model}</td>
+                    <td>{ram.ddr}</td>
+                    <td>{ram.speed} MHz</td>
+                    <td>{ram.volume} GB</td>
                   </tr>
                 ))}
               </tbody>
