@@ -47,7 +47,7 @@ export const Navbar = ({
 
   return (
     <div
-      className="bg-gray flex items-center justify-between border-b border-secondary"
+      className="bg-gray flex items-center justify-between"
       style={{
         height: "60px",
         position: "fixed",
@@ -59,12 +59,12 @@ export const Navbar = ({
       }}
     >
       <div
-        className="text-light ml-2 text-2xl sm:text-3xl font-bold"
+        className="text-white ml-2 text-2xl sm:text-3xl font-bold"
         onMouseEnter={window.innerWidth > 768 ? handleHover : undefined}
         onMouseLeave={window.innerWidth > 768 ? handleLeave : undefined}
       >
         <Link
-          className="nav-link text-opencars"
+          className="nav-link text-white"
           to="/home"
           onClick={() => funcCloseBar()}
         >

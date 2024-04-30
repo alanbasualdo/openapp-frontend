@@ -80,7 +80,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                     </div>
                     {/* Mensaje enviado */}
                     <div className="bg-opencars px-2 py-1 rounded-lg max-w-60 mb-1 ml-auto">
-                      <p className="text-light font-medium text-right w-full">
+                      <p className="text-white font-medium text-right w-full">
                         hola mundo
                       </p>
                       <p className="text-xs text-gray-300">12:00</p>
@@ -91,7 +91,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                 <hr className="text-gray-400 mx-2" />
 
                 <div
-                  className="flex items-center justify-center text-light px-2 bg-dark"
+                  className="flex items-center justify-center text-white px-2 bg-dark"
                   style={{ height: "50px" }}
                 >
                   <div className="w-full max-w-lg mx-auto">

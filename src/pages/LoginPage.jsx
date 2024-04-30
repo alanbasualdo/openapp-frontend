@@ -83,7 +83,7 @@ export const LoginPage = () => {
         </div>
 
         <div className="text-center mt-3">
-          <Link className="text-light hover:underline" to="/forgetPassword">
+          <Link className="text-white hover:underline" to="/forgetPassword">
             Olvidé mi contraseña
           </Link>
         </div>

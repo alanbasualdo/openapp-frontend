@@ -114,7 +114,7 @@ export const Processors = ({ setBtnActivated }) => {
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
           {/* BRAND */}
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
+            className="input-none bg-dark  rounded-lg py-1 px-3 text-white"
             value={processor.brand}
             onChange={(e) =>
               setProcessor({ ...processor, brand: e.target.value })
@@ -135,7 +135,7 @@ export const Processors = ({ setBtnActivated }) => {
           {/* MODEL */}
           <input
             type="text"
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             placeholder="Modelo"
             value={processor.model}
             onChange={(e) =>
@@ -145,7 +145,7 @@ export const Processors = ({ setBtnActivated }) => {
           {/* SPEED */}
           <input
             type="number"
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             placeholder="Velocidad GHz"
             value={processor.speed}
             onChange={(e) =>
@@ -154,7 +154,7 @@ export const Processors = ({ setBtnActivated }) => {
           />
           {/* GRAPH */}
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
+            className="input-none bg-dark  rounded-lg py-1 px-3 text-white"
             value={processor.graph}
             onChange={(e) =>
               setProcessor({ ...processor, graph: e.target.value })
@@ -168,7 +168,7 @@ export const Processors = ({ setBtnActivated }) => {
           </select>
           {/* CORES */}
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
+            className="input-none bg-dark  rounded-lg py-1 px-3 text-white"
             value={processor.cores}
             onChange={(e) =>
               setProcessor({ ...processor, cores: e.target.value })
@@ -216,7 +216,7 @@ export const Processors = ({ setBtnActivated }) => {
       )}
       <div>
         <div className="input-group input-group-sm my-3 d-flex flex-col align-items-center">
-          <div className="rounded-lg py-2 px-3 bg-dark d-flex black-shadow">
+          <div className="rounded-lg py-2 px-3 bg-dark d-flex ">
             <input
               type="text"
               className="border-none outline-none bg-transparent focus:ring-0 text-center w-48"
@@ -238,7 +238,7 @@ export const Processors = ({ setBtnActivated }) => {
             <span className="visually-hidden">Cargando...</span>
           </div>
         ) : (
-          <div className="bg-dark p-1 rounded-lg black-shadow">
+          <div className="bg-dark p-1 rounded-lg ">
             <table className="table table-hover table-dark">
               <thead>
                 <tr>

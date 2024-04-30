@@ -13,12 +13,12 @@ export const UsersPage = () => {
   }, []);
 
   return (
-    <div className="rounded-lg p-4 text-center text-light bg-gray">
+    <div className="rounded-lg p-4 text-center text-white bg-gray">
       <ManageUsers
         createUserClick={createUserClick}
         setCreateUserClick={setCreateUserClick}
       />
-      <hr className="text-light my-3" />
+      <hr className="text-white my-3" />
       <UserList />
     </div>
   );

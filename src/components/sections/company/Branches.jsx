@@ -130,7 +130,7 @@ export const Branches = ({ setBtnActivated }) => {
       {addBtn && (
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             value={branch.city}
             onChange={(e) => {
               const selectedCityName = e.target.value;
@@ -154,7 +154,7 @@ export const Branches = ({ setBtnActivated }) => {
             ))}
           </select>
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             value={branch.brand}
             onChange={(e) => {
               const selectedBrand = brands.find(
@@ -198,7 +198,7 @@ export const Branches = ({ setBtnActivated }) => {
       )}
       <div>
         <div className="input-group input-group-sm my-3 d-flex flex-col align-items-center">
-          <div className="rounded-lg py-2 px-3 bg-dark d-flex black-shadow">
+          <div className="rounded-lg py-2 px-3 bg-dark d-flex ">
             <input
               type="text"
               className="border-none outline-none bg-transparent focus:ring-0 text-center w-48"
@@ -220,7 +220,7 @@ export const Branches = ({ setBtnActivated }) => {
             <span className="visually-hidden">Cargando...</span>
           </div>
         ) : (
-          <div className="bg-dark p-1 rounded-lg black-shadow">
+          <div className="bg-dark p-1 rounded-lg ">
             <table className="table table-hover table-dark">
               <thead>
                 <tr>

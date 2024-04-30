@@ -18,19 +18,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .my-swal-title-class {
   font-size: 18px;
-}
-
-.black-shadow {
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.8);
-}
-
-.inset-black-shadow {
-  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.8);
 }
 
 .bg-gray {
@@ -45,6 +37,10 @@ body {
 
 .text-opencars {
   color: #0071b8;
+}
+
+.text-opencars:hover {
+  color: rgba(0, 113, 184, 0.5);
 }
 
 .bg-opencars {

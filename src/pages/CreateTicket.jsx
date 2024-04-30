@@ -19,7 +19,7 @@ export const CreateTicket = () => {
 
   return (
     <>
-      <div className="rounded-lg p-4 text-center text-light bg-gray mx-3">
+      <div className="rounded-lg p-4 text-center text-white bg-gray mx-3">
         <div className="input-group input-group-sm  mb-3">
           <label className="input-group-text font-semibold">Área</label>
           <select

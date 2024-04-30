@@ -29,7 +29,7 @@ export const ForgetPassword = () => {
         </div>
 
         <div className="text-center mt-3">
-          <Link className="text-light hover:underline" to="/login">
+          <Link className="text-white hover:underline" to="/login">
             Volver
           </Link>
         </div>

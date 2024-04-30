@@ -113,7 +113,7 @@ export const Disks = ({ setBtnActivated }) => {
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
           {/* BRAND */}
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
+            className="input-none bg-dark  rounded-lg py-1 px-3 text-white"
             value={disk.brand}
             onChange={(e) => setDisk({ ...disk, brand: e.target.value })}
           >
@@ -139,14 +139,14 @@ export const Disks = ({ setBtnActivated }) => {
           {/* MODEL */}
           <input
             type="text"
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             placeholder="Modelo"
             value={disk.model}
             onChange={(e) => setDisk({ ...disk, model: e.target.value })}
           />
           {/* TYPE */}
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3 text-light"
+            className="input-none bg-dark  rounded-lg py-1 px-3 text-white"
             value={disk.type}
             onChange={(e) => setDisk({ ...disk, type: e.target.value })}
           >
@@ -160,7 +160,7 @@ export const Disks = ({ setBtnActivated }) => {
           {/* VOLUME */}
           <input
             type="number"
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             placeholder="Capacidad GB"
             value={disk.volume}
             onChange={(e) => setDisk({ ...disk, volume: e.target.value })}
@@ -182,7 +182,7 @@ export const Disks = ({ setBtnActivated }) => {
       )}
       <div>
         <div className="input-group input-group-sm my-3 d-flex flex-col align-items-center">
-          <div className="rounded-lg py-2 px-3 bg-dark d-flex black-shadow">
+          <div className="rounded-lg py-2 px-3 bg-dark d-flex ">
             <input
               type="text"
               className="border-none outline-none bg-transparent focus:ring-0 text-center w-48"
@@ -204,7 +204,7 @@ export const Disks = ({ setBtnActivated }) => {
             <span className="visually-hidden">Cargando...</span>
           </div>
         ) : (
-          <div className="bg-dark p-1 rounded-lg black-shadow">
+          <div className="bg-dark p-1 rounded-lg ">
             <table className="table table-hover table-dark">
               <thead>
                 <tr>

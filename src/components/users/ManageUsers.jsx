@@ -79,7 +79,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
       </div>
       {createUserClick && (
         <div>
-          <hr className="text-light mb-3" />
+          <hr className="text-white mb-3" />
           <div className="px-3">
             {/* Foto de usuario */}
             <div className="flex flex-col items-center justify-center my-4">
@@ -95,7 +95,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
 
             {/* Datos personales */}
             <div>
-              <h1 className="text-light mb-3 font-semibold">
+              <h1 className="text-white mb-3 font-semibold">
                 Datos personales
               </h1>
               <div className="input-group input-group-sm mb-3">
@@ -156,10 +156,10 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 </select>
               </div>
             </div>
-            <hr className="text-light mb-3" />
+            <hr className="text-white mb-3" />
             {/* Datos coportativos */}
             <div>
-              <h1 className="text-light mb-3 font-semibold">
+              <h1 className="text-white mb-3 font-semibold">
                 Datos corporativos
               </h1>
               <div className="input-group input-group-sm mb-3">
@@ -200,9 +200,9 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   onClick={() => setSeePassword(!seePassword)}
                 >
                   {seePassword ? (
-                    <i className="ri-eye-off-line text-light"></i>
+                    <i className="ri-eye-off-line text-white"></i>
                   ) : (
-                    <i className="ri-eye-line text-light"></i>
+                    <i className="ri-eye-line text-white"></i>
                   )}
                 </button>
 
@@ -224,9 +224,9 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                   onClick={() => setSeePassword(!seePassword)}
                 >
                   {seePassword ? (
-                    <i className="ri-eye-off-line text-light"></i>
+                    <i className="ri-eye-off-line text-white"></i>
                   ) : (
-                    <i className="ri-eye-line text-light"></i>
+                    <i className="ri-eye-line text-white"></i>
                   )}
                 </button>
               </div>

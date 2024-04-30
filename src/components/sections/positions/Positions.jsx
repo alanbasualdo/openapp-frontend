@@ -133,7 +133,7 @@ export const Positions = ({ setBtnActivated }) => {
       {addBtn && (
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             value={position.level}
             onChange={(e) =>
               setPosition({ ...position, level: e.target.value })
@@ -150,7 +150,7 @@ export const Positions = ({ setBtnActivated }) => {
           </select>
           <input
             type="text"
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             placeholder="Puesto"
             value={position.name}
             onChange={(e) => setPosition({ ...position, name: e.target.value })}
@@ -173,7 +173,7 @@ export const Positions = ({ setBtnActivated }) => {
       )}
       <div>
         <div className="input-group input-group-sm my-3 d-flex flex-col align-items-center">
-          <div className="rounded-lg py-2 px-3 bg-dark d-flex black-shadow">
+          <div className="rounded-lg py-2 px-3 bg-dark d-flex ">
             <input
               type="text"
               className="border-none outline-none bg-transparent focus:ring-0 text-center w-48"
@@ -195,7 +195,7 @@ export const Positions = ({ setBtnActivated }) => {
             <span className="visually-hidden">Cargando...</span>
           </div>
         ) : (
-          <div className="bg-dark p-1 rounded-lg black-shadow">
+          <div className="bg-dark p-1 rounded-lg ">
             <table className="table table-hover table-dark">
               <thead>
                 <tr>
@@ -234,7 +234,7 @@ export const Positions = ({ setBtnActivated }) => {
                       <td>
                         <input
                           type="number"
-                          className="input-none bg-dark black-shadow rounded-lg text-center"
+                          className="input-none bg-dark  rounded-lg text-center"
                           placeholder="Puesto"
                           value={editingPosition?.level}
                           onChange={(e) =>

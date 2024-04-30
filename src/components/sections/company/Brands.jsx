@@ -120,7 +120,7 @@ export const Brands = ({ setBtnActivated }) => {
       {addBtn && (
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
           <select
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             value={brand.company}
             onChange={(e) => setBrand({ ...brand, company: e.target.value })}
           >
@@ -135,7 +135,7 @@ export const Brands = ({ setBtnActivated }) => {
           </select>
           <input
             type="text"
-            className="input-none bg-dark black-shadow rounded-lg py-1 px-3"
+            className="input-none bg-dark  rounded-lg py-1 px-3"
             placeholder="Marca"
             value={brand.name}
             onChange={(e) => setBrand({ ...brand, name: e.target.value })}
@@ -158,7 +158,7 @@ export const Brands = ({ setBtnActivated }) => {
       )}
       <div>
         <div className="input-group input-group-sm my-3 d-flex flex-col align-items-center">
-          <div className="rounded-lg py-2 px-3 bg-dark d-flex black-shadow">
+          <div className="rounded-lg py-2 px-3 bg-dark d-flex ">
             <input
               type="text"
               className="border-none outline-none bg-transparent focus:ring-0 text-center w-48"
@@ -180,7 +180,7 @@ export const Brands = ({ setBtnActivated }) => {
             <span className="visually-hidden">Cargando...</span>
           </div>
         ) : (
-          <div className="bg-dark p-1 rounded-lg black-shadow">
+          <div className="bg-dark p-1 rounded-lg ">
             <table className="table table-hover table-dark">
               <thead>
                 <tr>
