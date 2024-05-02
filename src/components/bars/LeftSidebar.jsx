@@ -32,7 +32,7 @@ export const LeftSidebar = ({
         >
           {/* Start Departamentos */}
           <div
-            /* style={{ overflowY: "auto", maxHeight: "calc(100vh - 100px)" }} */
+            style={{ overflowY: "auto", maxHeight: "calc(100vh - 100px)" }}
             className="text-sm"
           >
             <div className="ml-3 mt-3">
@@ -181,7 +181,7 @@ export const LeftSidebar = ({
             </div>
           </div>
           {/* End Departamentos */}
-          {/* <div
+          <div
             className="absolute bottom-0 w-full p-3 bg-dark"
             style={{
               boxShadow: "0px -10px 10px -5px rgba(255, 255, 255, 0.2)",
@@ -191,7 +191,7 @@ export const LeftSidebar = ({
               "Lo importante no es ser iguales, lo importante es formar un buen
               equipo."
             </p>
-          </div> */}
+          </div>
         </div>
       )}
     </>

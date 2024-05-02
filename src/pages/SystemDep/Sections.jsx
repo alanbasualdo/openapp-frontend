@@ -10,6 +10,7 @@ import { Processors } from "../../components/sections/pcs/Processors";
 import { Ram } from "../../components/sections/pcs/Ram";
 import { Disks } from "../../components/sections/pcs/Disks";
 import { Models } from "../../components/sections/pcs/Models";
+import { Computers } from "../../components/sections/pcs/Computers";
 
 export const Sections = () => {
   const [btnActivated, setBtnActivated] = useState(false);
@@ -46,6 +47,9 @@ export const Sections = () => {
           {section === "rams" && <Ram setBtnActivated={setBtnActivated} />}
           {section === "disks" && <Disks setBtnActivated={setBtnActivated} />}
           {section === "models" && <Models setBtnActivated={setBtnActivated} />}
+          {section === "computers" && (
+            <Computers setBtnActivated={setBtnActivated} />
+          )}
         </div>
       ) : (
         <>

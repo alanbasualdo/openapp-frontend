@@ -7,7 +7,7 @@ export const pcsSectionSlice = createSlice({
     rams: [],
     disks: [],
     models: [],
-    pcs: [],
+    computers: [],
     pcsLoading: false,
   },
   reducers: {
@@ -23,8 +23,8 @@ export const pcsSectionSlice = createSlice({
     setModels: (state, action) => {
       state.models = action.payload;
     },
-    setPCs: (state, action) => {
-      state.pcs = action.payload;
+    setComputers: (state, action) => {
+      state.computers = action.payload;
     },
     setPCsLoading: (state, action) => {
       state.pcsLoading = action.payload;
@@ -37,7 +37,7 @@ export const {
   setRams,
   setDisks,
   setModels,
-  setPCs,
+  setComputers,
   setPCsLoading,
 } = pcsSectionSlice.actions;
 
