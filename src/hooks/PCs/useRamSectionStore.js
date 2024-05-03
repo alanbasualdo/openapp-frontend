@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setRams, setPCsLoading } from "../../store/slices/pcsSectionSlice";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 
 export const useRamSectionStore = () => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export const useRamSectionStore = () => {
   const startPostRam = async (memorie) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.post("/pcs/post-ram", memorie);
+      const { data } = await apiConn.post("/pcs/post-ram", memorie);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useRamSectionStore = () => {
   const startGetRams = async () => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.get("/pcs/get-rams");
+      const { data } = await apiConn.get("/pcs/get-rams");
       dispatch(setRams(data.rams));
       dispatch(setPCsLoading(false));
     } catch (error) {
@@ -32,7 +32,7 @@ export const useRamSectionStore = () => {
   const startDeleteRam = async (id) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.delete(`/pcs/delete-ram/${id}`);
+      const { data } = await apiConn.delete(`/pcs/delete-ram/${id}`);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {

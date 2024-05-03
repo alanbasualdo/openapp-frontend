@@ -1,13 +1,13 @@
 import axios from "axios";
 import { getEnvVariables } from "../helpers/getEnvVariables";
 
-const { VITE_USER_SERVICE_URL } = getEnvVariables();
+const { VITE_BACKEND } = getEnvVariables();
 
-const userService = axios.create({
-  baseURL: VITE_USER_SERVICE_URL,
+const apiConn = axios.create({
+  baseURL: VITE_BACKEND,
 });
 
-userService.interceptors.request.use((config) => {
+apiConn.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
     token: localStorage.getItem("token"),
@@ -17,4 +17,4 @@ userService.interceptors.request.use((config) => {
   return config;
 });
 
-export default userService;
+export default apiConn;

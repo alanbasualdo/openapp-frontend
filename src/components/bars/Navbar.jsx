@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuthStore } from "../../hooks/useAuthStore";
+import { useAuthStore } from "../../hooks/Users/useAuthStore";
 import { gsap } from "gsap";
 import { useRef } from "react";
 import { TextPlugin } from "gsap/TextPlugin";
@@ -59,12 +59,12 @@ export const Navbar = ({
       }}
     >
       <div
-        className="text-white ml-2 text-2xl sm:text-3xl font-bold"
+        className="ml-2 text-2xl sm:text-3xl font-semibold"
         onMouseEnter={window.innerWidth > 768 ? handleHover : undefined}
         onMouseLeave={window.innerWidth > 768 ? handleLeave : undefined}
       >
         <Link
-          className="nav-link text-white"
+          className="nav-link text-opencars"
           to="/home"
           onClick={() => funcCloseBar()}
         >

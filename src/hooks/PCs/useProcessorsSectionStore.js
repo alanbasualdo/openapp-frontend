@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setPCsLoading, setProcessors } from "../../store/slices/pcsSectionSlice";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 
 export const useProcessorsSectionStore = () => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export const useProcessorsSectionStore = () => {
   const startPostProcessor = async (processor) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.post(
+      const { data } = await apiConn.post(
         "/pcs/post-processor",
         processor
       );
@@ -23,7 +23,7 @@ export const useProcessorsSectionStore = () => {
   const startGetProcessors = async () => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.get("/pcs/get-processors");
+      const { data } = await apiConn.get("/pcs/get-processors");
       dispatch(setProcessors(data.processors));
       dispatch(setPCsLoading(false));
     } catch (error) {
@@ -35,7 +35,7 @@ export const useProcessorsSectionStore = () => {
   const startDeleteProcessor = async (id) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/pcs/delete-processor/${id}`
       );
       dispatch(setPCsLoading(false));

@@ -3,7 +3,7 @@ import {
   setSubareas,
   setLoading,
 } from "../../store/slices/companySectionSlice";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 
 export const useSubareaSectionStore = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const useSubareaSectionStore = () => {
   const startPostSubarea = async (subarea) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post(
+      const { data } = await apiConn.post(
         "/subareas/post-subarea",
         subarea
       );
@@ -26,7 +26,7 @@ export const useSubareaSectionStore = () => {
   const startGetSubareas = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/subareas/get-subareas");
+      const { data } = await apiConn.get("/subareas/get-subareas");
       dispatch(setSubareas(data.subareas));
       dispatch(setLoading(false));
     } catch (error) {
@@ -38,7 +38,7 @@ export const useSubareaSectionStore = () => {
   const startDeleteSubarea = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/subareas/delete-subarea/${id}`
       );
       dispatch(setLoading(false));

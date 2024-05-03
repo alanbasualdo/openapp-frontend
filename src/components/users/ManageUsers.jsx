@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { useUserStore } from "../../hooks/useUserStore";
+import {useState } from "react";
+import { useUserStore } from "../../hooks/Users/useUserStore";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 import { getEnvVariables } from "../../helpers/getEnvVariables";
 import { showErrorMessage, showSuccessMessage } from "../../utils/showMessages";
 

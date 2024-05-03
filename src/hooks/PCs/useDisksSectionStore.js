@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setPCsLoading, setDisks } from "../../store/slices/pcsSectionSlice";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 
 export const useDisksSectionStore = () => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export const useDisksSectionStore = () => {
   const startPostDisk = async (processor) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.post("/pcs/post-disk", processor);
+      const { data } = await apiConn.post("/pcs/post-disk", processor);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useDisksSectionStore = () => {
   const startGetDisks = async () => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.get("/pcs/get-disks");
+      const { data } = await apiConn.get("/pcs/get-disks");
       dispatch(setDisks(data.disks));
       dispatch(setPCsLoading(false));
     } catch (error) {
@@ -32,7 +32,7 @@ export const useDisksSectionStore = () => {
   const startDeleteDisk = async (id) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.delete(`/pcs/delete-disk/${id}`);
+      const { data } = await apiConn.delete(`/pcs/delete-disk/${id}`);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {

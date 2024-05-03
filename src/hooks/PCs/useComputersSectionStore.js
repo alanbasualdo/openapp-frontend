@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 import {
   setPCsLoading,
   setComputers,
@@ -11,7 +11,7 @@ export const useComputersSectionStore = () => {
   const startPostComputer = async (computer) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.post(
+      const { data } = await apiConn.post(
         "/pcs/post-computer",
         computer
       );
@@ -26,7 +26,7 @@ export const useComputersSectionStore = () => {
   const startGetComputers = async () => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.get("/pcs/get-computers");
+      const { data } = await apiConn.get("/pcs/get-computers");
       dispatch(setComputers(data.pcs));
       dispatch(setPCsLoading(false));
     } catch (error) {
@@ -38,7 +38,7 @@ export const useComputersSectionStore = () => {
   const startDeleteComputer = async (id) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/pcs/delete-computer/${id}`
       );
       dispatch(setPCsLoading(false));

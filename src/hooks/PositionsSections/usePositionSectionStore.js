@@ -3,7 +3,7 @@ import {
   setLoading,
   setPositions,
 } from "../../store/slices/companySectionSlice";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 
 export const usePositionSectionStore = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const usePositionSectionStore = () => {
   const startPostPosition = async (position) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post(
+      const { data } = await apiConn.post(
         "/positions/post-position",
         position
       );
@@ -26,7 +26,7 @@ export const usePositionSectionStore = () => {
   const startGetPositions = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/positions/get-positions");
+      const { data } = await apiConn.get("/positions/get-positions");
       dispatch(setPositions(data.positions));
       dispatch(setLoading(false));
     } catch (error) {
@@ -38,7 +38,7 @@ export const usePositionSectionStore = () => {
   const startDeletePosition = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/positions/delete-position/${id}`
       );
       dispatch(setLoading(false));
@@ -52,7 +52,7 @@ export const usePositionSectionStore = () => {
   const startPutPosition = async (position) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.put(
+      const { data } = await apiConn.put(
         `/positions/put-position/${position._id}`,
         { level: position.level }
       );

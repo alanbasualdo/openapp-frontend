@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setAreas, setLoading } from "../../store/slices/companySectionSlice";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 
 export const useAreaSectionStore = () => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export const useAreaSectionStore = () => {
   const startPostArea = async (area) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post("/areas/post-area", area);
+      const { data } = await apiConn.post("/areas/post-area", area);
       dispatch(setLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useAreaSectionStore = () => {
   const startGetAreas = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/areas/get-areas");
+      const { data } = await apiConn.get("/areas/get-areas");
       dispatch(setAreas(data.areas));
       dispatch(setLoading(false));
     } catch (error) {
@@ -32,7 +32,7 @@ export const useAreaSectionStore = () => {
   const startDeleteArea = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(`/areas/delete-area/${id}`);
+      const { data } = await apiConn.delete(`/areas/delete-area/${id}`);
       dispatch(setLoading(false));
       return data;
     } catch (error) {

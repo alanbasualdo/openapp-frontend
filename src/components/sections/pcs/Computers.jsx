@@ -10,7 +10,7 @@ import {
   showErrorMessage,
   showSuccessMessage,
 } from "../../../utils/showMessages";
-import { useUserStore } from "../../../hooks/useUserStore";
+import { useUserStore } from "../../../hooks/Users/useUserStore";
 
 export const Computers = ({ setBtnActivated }) => {
   const { startPostComputer, startGetComputers, startDeleteComputer } =
@@ -85,6 +85,8 @@ export const Computers = ({ setBtnActivated }) => {
     startGetRams();
     startGetUsers();
   }, []);
+
+  console.log(computers);
 
   return (
     <>
@@ -357,7 +359,9 @@ export const Computers = ({ setBtnActivated }) => {
                     <td>{computer.serialNumber || ""}</td>
                     <td>{computer.graphicCard || "No tiene"}</td>
                     <td>{computer.processor.graph}</td>
-                    <td>{computer.employee}</td>
+                    <td>
+                      {computer.employee.name} {computer.employee.lastName}
+                    </td>
                   </tr>
                 ))}
               </tbody>

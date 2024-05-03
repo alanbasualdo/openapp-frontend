@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { setAuthLoading, setLogin, setLogout } from "../store/slices/authSlice";
-import userService from "../api/userService";
+import { setAuthLoading, setLogin, setLogout } from "../../store/slices/authSlice";
 import Swal from "sweetalert2";
-import { setLoading } from "../store/slices/loaderSlice";
+import { setLoading } from "../../store/slices/loaderSlice";
+import apiConn from "../../api/apiConn";
 
 export const useAuthStore = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export const useAuthStore = () => {
   const startLogin = async ({ userName, password }) => {
     try {
       dispatch(setAuthLoading(true));
-      const { data } = await userService.post("/auth/login", {
+      const { data } = await apiConn.post("/auth/login", {
         userName,
         password,
       });
@@ -77,7 +77,7 @@ export const useAuthStore = () => {
       return dispatch(setLoading(false));
     }
     try {
-      const { data } = await userService.get("/auth/renew");
+      const { data } = await apiConn.get("/auth/renew");
       if (data.success) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("token-init-date", new Date().getTime());

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 import {
   setBranches,
   setLoading,
@@ -11,7 +11,7 @@ export const useBranchSectionStore = () => {
   const startPostBrach = async (branch) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post(
+      const { data } = await apiConn.post(
         "/branches/post-branch",
         branch
       );
@@ -26,7 +26,7 @@ export const useBranchSectionStore = () => {
   const startGetBranches = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/branches/get-branches");
+      const { data } = await apiConn.get("/branches/get-branches");
       dispatch(setBranches(data.branches));
       dispatch(setLoading(false));
     } catch (error) {
@@ -38,7 +38,7 @@ export const useBranchSectionStore = () => {
   const startDeleteBranch = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/branches/delete-branch/${id}`
       );
       dispatch(setLoading(false));

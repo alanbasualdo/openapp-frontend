@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setModels, setPCsLoading } from "../../store/slices/pcsSectionSlice";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 
 export const useModelsSectionStore = () => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export const useModelsSectionStore = () => {
   const startPostModel = async (model) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.post("/pcs/post-model", model);
+      const { data } = await apiConn.post("/pcs/post-model", model);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useModelsSectionStore = () => {
   const startGetModels = async () => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.get("/pcs/get-models");
+      const { data } = await apiConn.get("/pcs/get-models");
       dispatch(setModels(data.models));
       dispatch(setPCsLoading(false));
     } catch (error) {
@@ -32,7 +32,7 @@ export const useModelsSectionStore = () => {
   const startDeleteModel = async (id) => {
     try {
       dispatch(setPCsLoading(true));
-      const { data } = await sectionsService.delete(`/pcs/delete-model/${id}`);
+      const { data } = await apiConn.delete(`/pcs/delete-model/${id}`);
       dispatch(setPCsLoading(false));
       return data;
     } catch (error) {

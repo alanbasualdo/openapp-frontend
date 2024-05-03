@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 import {
   setCompanies,
   setLoading,
@@ -11,7 +11,7 @@ export const useCompanySectionStore = () => {
   const startPostCompany = async (company) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post(
+      const { data } = await apiConn.post(
         "/companies/post-company",
         company
       );
@@ -26,7 +26,7 @@ export const useCompanySectionStore = () => {
   const startGetCompanies = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/companies/get-companies");
+      const { data } = await apiConn.get("/companies/get-companies");
       dispatch(setCompanies(data.companies));
       dispatch(setLoading(false));
     } catch (error) {
@@ -38,7 +38,7 @@ export const useCompanySectionStore = () => {
   const startDeleteCompany = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/companies/delete-company/${id}`
       );
       dispatch(setLoading(false));

@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import userService from "../api/userService";
+import apiConn from "../../api/apiConn";
 import {
   setUsers,
   setTotalUsers,
   setUserLoading,
-} from "../store/slices/userSlice";
+} from "../../store/slices/userSlice";
 
 export const useUserStore = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export const useUserStore = () => {
   const startCreateUser = async (userData) => {
     try {
       dispatch(setUserLoading(true));
-      const { data } = await userService.post("/user/post", userData);
+      const { data } = await apiConn.post("/user/post", userData);
       dispatch(setUserLoading(false));
       return data;
     } catch (error) {
@@ -24,7 +24,7 @@ export const useUserStore = () => {
   const startGetUsers = async () => {
     try {
       dispatch(setUserLoading(true));
-      const { data } = await userService.get("/user/");
+      const { data } = await apiConn.get("/user/");
       dispatch(setUsers(data.users));
       dispatch(setTotalUsers(data.total));
       dispatch(setUserLoading(false));

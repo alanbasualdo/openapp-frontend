@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthStore } from "../hooks/Users/useAuthStore";
 import { useSelector } from "react-redux";
 
 export const LoginPage = () => {

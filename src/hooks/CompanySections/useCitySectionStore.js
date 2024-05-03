@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 import { setCities, setLoading } from "../../store/slices/companySectionSlice";
 
 export const useCitySectionStore = () => {
@@ -8,7 +8,7 @@ export const useCitySectionStore = () => {
   const startPostCity = async (city) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post("/cities/post-city", city);
+      const { data } = await apiConn.post("/cities/post-city", city);
       dispatch(setLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useCitySectionStore = () => {
   const startGetCities = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/cities/get-cities");
+      const { data } = await apiConn.get("/cities/get-cities");
       dispatch(setCities(data.cities));
       dispatch(setLoading(false));
     } catch (error) {
@@ -32,7 +32,7 @@ export const useCitySectionStore = () => {
   const startDeleteCity = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/cities/delete-city/${id}`
       );
       dispatch(setLoading(false));

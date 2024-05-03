@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import sectionsService from "../../api/sectionsService";
+import apiConn from "../../api/apiConn";
 import { setBrands, setLoading } from "../../store/slices/companySectionSlice";
 
 export const useBrandSectionStore = () => {
@@ -8,7 +8,7 @@ export const useBrandSectionStore = () => {
   const startPostBrand = async (brand) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.post("/brands/post-brand", brand);
+      const { data } = await apiConn.post("/brands/post-brand", brand);
       dispatch(setLoading(false));
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const useBrandSectionStore = () => {
   const startGetBrands = async () => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.get("/brands/get-brands");
+      const { data } = await apiConn.get("/brands/get-brands");
       dispatch(setBrands(data.brands));
       dispatch(setLoading(false));
     } catch (error) {
@@ -32,7 +32,7 @@ export const useBrandSectionStore = () => {
   const startDeleteBrand = async (id) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await sectionsService.delete(
+      const { data } = await apiConn.delete(
         `/brands/delete-brand/${id}`
       );
       dispatch(setLoading(false));
