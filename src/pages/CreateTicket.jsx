@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { useFileDropzone } from "../hooks/Users/useFileDropzone";
+import { useAreaSectionStore } from "../hooks/PositionsSections/useAreaSectionStore";
 
-export const CreateTicket = () => {
+export const CreateTicket = ({ user, users }) => {
   const initialStateTicket = {
     area: "",
     category: "",
@@ -12,23 +15,75 @@ export const CreateTicket = () => {
   };
 
   const [ticket, setTicket] = useState(initialStateTicket);
+  const [files, setFiles] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedObservers, setSelectedObservers] = useState([]);
+  const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
+    useFileDropzone(files, setFiles);
+  const { areas, startGetAreas } = useAreaSectionStore();
+
+  const handleInputChange = (inputValue) => {
+    setInputValue(inputValue);
+    // Filtrar los usuarios cuyo nombre comience con el valor del input y que no estén en selectedObservers
+    const filteredSuggestions = users.filter(
+      (user) =>
+        (user.name.toLowerCase().startsWith(inputValue.toLowerCase()) ||
+          user.lastName.toLowerCase().startsWith(inputValue.toLowerCase())) &&
+        !selectedObservers.some((observer) => observer._id === user._id)
+    );
+    setSuggestions(filteredSuggestions);
+  };
+
+  const handleRemoveObserver = (index) => {
+    setSelectedObservers((prevObservers) =>
+      prevObservers.filter((_, i) => i !== index)
+    );
+  };
 
   const createTicket = () => {
-    console.log(ticket);
+    console.log(files);
   };
+
+  useEffect(() => {
+    startGetAreas();
+  }, [ticket]);
+
+  console.log(areas);
 
   return (
     <>
-      <div className="rounded-lg p-4 text-center text-white bg-gray mx-3">
-        <div className="input-group input-group-sm  mb-3">
-          <label className="input-group-text font-semibold">Área</label>
+      <div className="rounded-lg p-4 text-white bg-gray mx-3">
+        <div className="input-group input-group-sm mb-3">
+          <label className="input-group-text font-medium bg-dark text-white input-none">
+            Área
+          </label>
           <select
-            className="form-select"
+            className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
             value={ticket.area}
             onChange={(e) => setTicket({ ...ticket, area: e.target.value })}
           >
             <option value="" disabled>
-              Seleccionar área
+              Seleccionar
+            </option>
+            {areas.map((area) => (
+              <option key={area._id} value={area._id}>
+                {area.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="input-group input-group-sm mb-3">
+          <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+            Categoría
+          </label>
+          <select
+            className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
+            value={ticket.category}
+            onChange={(e) => setTicket({ ...ticket, category: e.target.value })}
+          >
+            <option value="" disabled>
+              Seleccionar
             </option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -36,31 +91,18 @@ export const CreateTicket = () => {
           </select>
         </div>
         <div className="input-group input-group-sm mb-3">
-          <label className="input-group-text font-semibold">Categoría</label>
+          <label className="input-group-text font-medium bg-dark text-white input-none">
+            Subcategoría
+          </label>
           <select
-            className="form-select"
-            value={ticket.category}
-            onChange={(e) => setTicket({ ...ticket, category: e.target.value })}
-          >
-            <option value="" disabled>
-              Seleccionar categoría
-            </option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div className="input-group input-group-sm  mb-3">
-          <label className="input-group-text font-semibold">Subcategoría</label>
-          <select
-            className="form-select"
+            className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
             value={ticket.subcategory}
             onChange={(e) =>
               setTicket({ ...ticket, subcategory: e.target.value })
             }
           >
             <option value="" disabled>
-              Seleccionar subcategoría
+              Seleccionar
             </option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -68,58 +110,149 @@ export const CreateTicket = () => {
           </select>
         </div>
         <div className="input-group input-group-sm mb-3">
-          <span className="input-group-text font-semibold">Título</span>
+          <span className="input-group-text font-medium bg-dark text-white input-none">
+            Título
+          </span>
           <input
             type="text"
-            className="form-control"
+            className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
             value={ticket.title}
             onChange={(e) => setTicket({ ...ticket, title: e.target.value })}
           />
         </div>
         <div className="input-group input-group-sm mb-3">
-          <span className="input-group-text font-semibold">Descripción</span>
+          <span className="input-group-text font-medium bg-dark text-white input-none">
+            Descripción
+          </span>
           <textarea
-            className="form-control"
+            className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
             value={ticket.description}
             onChange={(e) =>
               setTicket({ ...ticket, description: e.target.value })
             }
           ></textarea>
         </div>
+
         <div className="input-group input-group-sm mb-3">
-          <label className="input-group-text font-semibold">Adjuntos</label>
-          <input
-            type="file"
-            className="form-control"
-            value={ticket.attachments}
-            onChange={(e) =>
-              setTicket({ ...ticket, attachments: e.target.value })
-            }
-          />
-        </div>
-        <div className="input-group input-group-sm mb-3">
-          <span className="input-group-text font-semibold">Observadores</span>
+          <span className="input-group-text font-medium bg-dark text-white input-none">
+            Observadores
+          </span>
           <input
             type="text"
-            className="form-control"
-            value={ticket.observers}
-            onChange={(e) =>
-              setTicket({ ...ticket, observers: e.target.value })
-            }
+            className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+            value={inputValue}
+            onChange={(e) => handleInputChange(e.target.value)}
           />
         </div>
+
+        {suggestions.length > 0 && inputValue && (
+          <ul className="mb-3 flex flex-wrap gap-1">
+            {suggestions.map((user, index) => (
+              <li
+                key={index}
+                onClick={() => {
+                  setSelectedObservers((prevObservers) => [
+                    ...prevObservers,
+                    user,
+                  ]);
+                  setInputValue("");
+                  setSuggestions([]);
+                }}
+                className="cursor-pointer text-xs flex"
+              >
+                <span className="rounded-lg bg-dark p-2 hover:border">
+                  {user.name} {user.lastName}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {selectedObservers.length > 0 && (
+          <ul className="mb-3 flex flex-wrap gap-1">
+            {selectedObservers.map((observer, index) => (
+              <li
+                key={index}
+                onClick={() => handleRemoveObserver(index)}
+                className="cursor-pointer text-xs"
+                title="Eliminar"
+              >
+                <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
+                  {observer.name} {observer.lastName}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div
+          {...getRootPropsFile()}
+          className="bg-dark rounded-lg p-3 mb-3 cursor-pointer hover:border text-sm"
+        >
+          <input {...getInputPropsFile()} />
+          {isDragActiveFile ? (
+            <p>Suelte los archivos aquí...</p>
+          ) : (
+            <p>
+              Arrastre y suelte aquí los adjuntos, o haz clic para seleccionar
+            </p>
+          )}
+        </div>
+        {files.length > 0 && (
+          <div className="d-flex justify-content-center flex-wrap gap-2 mb-3">
+            {files.map((file, index) => (
+              <div
+                key={index}
+                className="d-flex flex-column align-items-center gap-2"
+              >
+                {!file.type.startsWith("image/") ? (
+                  <>
+                    <i className="ri-file-text-fill text-5xl text-dark"></i>
+                    <a
+                      href={URL.createObjectURL(file)}
+                      download={file.name}
+                      className="text-xs"
+                    >
+                      {file.name.length > 20
+                        ? file.name.slice(0, 20) + "..."
+                        : file.name}
+                    </a>
+                  </>
+                ) : (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={file.name}
+                    className="rounded-lg"
+                    style={{ maxWidth: "100px" }}
+                  />
+                )}
+                <button
+                  className="btn btn-sm btn-outline-danger input-none"
+                  type="button"
+                  onClick={() => removeFile(index, "dni")}
+                >
+                  <i className="ri-delete-bin-line"></i>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
         <div className="text-center d-flex justify-content-center gap-3">
           <button
             className="btn btn-sm btn-secondary"
-            onClick={() => setTicket(initialStateTicket)}
+            onClick={() => {
+              setTicket(initialStateTicket),
+                setFiles([]),
+                setSelectedObservers([]);
+            }}
           >
-            Limpiar campos
+            Limpiar
           </button>
           <button
-            className="btn btn-sm btn-success"
+            className="btn btn-sm btn-opencars"
             onClick={() => createTicket()}
           >
-            Crear ticket
+            Listo
           </button>
         </div>
       </div>

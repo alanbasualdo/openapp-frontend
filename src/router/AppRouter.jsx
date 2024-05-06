@@ -17,6 +17,7 @@ import { Sections } from "../pages/SystemDep/Sections";
 
 export const AppRouter = () => {
   const { authStatus, user } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.loader);
   const [showLeftbar, setShowLeftbar] = useState(true);
   const [showRightbar, setShowRightbar] = useState(true);
@@ -149,7 +150,7 @@ export const AppRouter = () => {
                           <Route path="/dollar" element={<DollarPage />} />
                           <Route
                             path="/createTicket"
-                            element={<CreateTicket />}
+                            element={<CreateTicket user={user} users={users} />}
                           />
                           <Route path="/users" element={<UsersPage />} />
                           <Route path="/sections" element={<Sections />} />

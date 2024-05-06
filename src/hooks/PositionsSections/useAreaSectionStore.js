@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAreas, setLoading } from "../../store/slices/companySectionSlice";
 import apiConn from "../../api/apiConn";
 
 export const useAreaSectionStore = () => {
   const dispatch = useDispatch();
+  const { areas } = useSelector((state) => state.companySection);
 
   const startPostArea = async (area) => {
     try {
@@ -45,5 +46,6 @@ export const useAreaSectionStore = () => {
     startPostArea,
     startGetAreas,
     startDeleteArea,
+    areas,
   };
 };

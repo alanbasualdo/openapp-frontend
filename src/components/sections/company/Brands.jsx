@@ -120,7 +120,7 @@ export const Brands = ({ setBtnActivated }) => {
       {addBtn && (
         <div className="my-4 d-flex flex-wrap gap-2 justify-content-center">
           <select
-            className="input-none bg-dark  rounded-lg py-1 px-3"
+            className="input-none bg-dark rounded-lg py-1 px-3"
             value={brand.company}
             onChange={(e) => setBrand({ ...brand, company: e.target.value })}
           >
@@ -135,7 +135,7 @@ export const Brands = ({ setBtnActivated }) => {
           </select>
           <input
             type="text"
-            className="input-none bg-dark  rounded-lg py-1 px-3"
+            className="input-none bg-dark rounded-lg py-1 px-3"
             placeholder="Marca"
             value={brand.name}
             onChange={(e) => setBrand({ ...brand, name: e.target.value })}

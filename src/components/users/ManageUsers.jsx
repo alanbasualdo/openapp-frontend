@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 import { useUserStore } from "../../hooks/Users/useUserStore";
 import { useSelector } from "react-redux";
 import { getEnvVariables } from "../../helpers/getEnvVariables";
@@ -141,7 +141,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 />
                 <label className="input-group-text font-medium">Género</label>
                 <select
-                  className="form-select"
+                  className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
                   value={userData.gender}
                   onChange={(e) =>
                     setUserData({ ...userData, gender: e.target.value })
@@ -264,7 +264,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
               <div className="input-group input-group-sm mb-3">
                 <label className="input-group-text font-medium">Nómina</label>
                 <select
-                  className="form-select"
+                  className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
                   value={userData.payroll}
                   onChange={(e) =>
                     setUserData({ ...userData, payroll: e.target.value })
@@ -280,7 +280,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 </select>
                 <label className="input-group-text font-medium">Sucursal</label>
                 <select
-                  className="form-select"
+                  className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
                   value={userData.branch}
                   onChange={(e) =>
                     setUserData({ ...userData, branch: e.target.value })
@@ -297,7 +297,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 </select>
                 <label className="input-group-text font-medium">Ciudad</label>
                 <select
-                  className="form-select"
+                  className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
                   value={userData.city}
                   onChange={(e) =>
                     setUserData({ ...userData, city: e.target.value })
@@ -334,7 +334,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
               <div className="input-group input-group-sm mb-3">
                 <label className="input-group-text font-medium">Posición</label>
                 <select
-                  className="form-select"
+                  className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
                   value={userData.position}
                   onChange={(e) =>
                     setUserData({ ...userData, position: e.target.value })
@@ -347,7 +347,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
                 </select>
                 <label className="input-group-text font-medium">Permisos</label>
                 <select
-                  className="form-select"
+                  className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
                   value={userData.permissions}
                   onChange={(e) =>
                     setUserData({ ...userData, permissions: e.target.value })

@@ -109,7 +109,7 @@ export const Navbar = ({
           </li>
         </ul>
       </div>
-      <div className="text-end me-2">
+      <div className="text-end me-2 px-2">
         <div className="offcanvas-header dropdown">
           <img
             src={`https://api.opencars.com.ar/api/download/usuarios/${user.cuil}`}
