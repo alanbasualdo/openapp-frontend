@@ -34,9 +34,9 @@ export const LeftSidebar = ({
           {/* Start Departamentos */}
           {/* <div
             style={{ overflowY: "auto", maxHeight: "calc(100vh - 100px)" }}
-            className="text-sm"
+            className="text-xs"
           > */}
-          <div className="ml-3 mt-3 text-sm">
+          <div className="ml-3 mt-3 text-xs">
             <div className="mb-5">
               <h2 className="font-bold">Tickets</h2>
               <ul className="mt-3 ml-7">

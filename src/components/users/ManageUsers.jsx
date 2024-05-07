@@ -231,7 +231,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
               </div>
 
               {userData.password !== secondPassword && (
-                <div className="text-sm text-red-500 mb-3">
+                <div className="text-xs text-red-500 mb-3">
                   Las contraseñas no coinciden
                 </div>
               )}

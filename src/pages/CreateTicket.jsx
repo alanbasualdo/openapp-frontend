@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 import { useFileDropzone } from "../hooks/Users/useFileDropzone";
 import { useAreaSectionStore } from "../hooks/PositionsSections/useAreaSectionStore";
+import { useTicketsStore } from "../hooks/Tickets/useTicketsStore";
+import { TicketList } from "../components/tickets/TicketList";
 
 export const CreateTicket = ({ user, users }) => {
   const initialStateTicket = {
@@ -10,105 +11,115 @@ export const CreateTicket = ({ user, users }) => {
     subcategory: "",
     title: "",
     description: "",
-    attachments: "",
-    observers: "",
+    observers: [],
   };
 
   const [ticket, setTicket] = useState(initialStateTicket);
   const [files, setFiles] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [selectedObservers, setSelectedObservers] = useState([]);
   const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
     useFileDropzone(files, setFiles);
   const { areas, startGetAreas } = useAreaSectionStore();
+  const { startPostTicket, startGetTickets } = useTicketsStore();
 
   const handleInputChange = (inputValue) => {
     setInputValue(inputValue);
     // Filtrar los usuarios cuyo nombre comience con el valor del input y que no estén en selectedObservers
     const filteredSuggestions = users.filter(
-      (user) =>
-        (user.name.toLowerCase().startsWith(inputValue.toLowerCase()) ||
-          user.lastName.toLowerCase().startsWith(inputValue.toLowerCase())) &&
-        !selectedObservers.some((observer) => observer._id === user._id)
+      (filteredUser) =>
+        (filteredUser.name.toLowerCase().startsWith(inputValue.toLowerCase()) ||
+          filteredUser.lastName
+            .toLowerCase()
+            .startsWith(inputValue.toLowerCase())) &&
+        !ticket.observers.includes(filteredUser._id)
     );
     setSuggestions(filteredSuggestions);
   };
 
   const handleRemoveObserver = (index) => {
-    setSelectedObservers((prevObservers) =>
-      prevObservers.filter((_, i) => i !== index)
-    );
+    setTicket({
+      ...ticket,
+      observers: ticket.observers.filter((_, i) => i !== index),
+    });
   };
 
-  const createTicket = () => {
-    console.log(files);
+  const createTicket = async () => {
+    await startPostTicket(ticket, files);
+    startGetTickets();
   };
 
   useEffect(() => {
     startGetAreas();
   }, [ticket]);
 
-  console.log(areas);
+  useEffect(() => {
+    startGetTickets();
+  }, []);
 
   return (
     <>
       <div className="rounded-lg p-4 text-white bg-gray mx-3">
-        <div className="input-group input-group-sm mb-3">
-          <label className="input-group-text font-medium bg-dark text-white input-none">
-            Área
-          </label>
-          <select
-            className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
-            value={ticket.area}
-            onChange={(e) => setTicket({ ...ticket, area: e.target.value })}
-          >
-            <option value="" disabled>
-              Seleccionar
-            </option>
-            {areas.map((area) => (
-              <option key={area._id} value={area._id}>
-                {area.name}
+        <div className="flex flex-wrap gap-3 mb-3">
+          <div className="input-group input-group-sm lg:w-64 w-full">
+            <label className="input-group-text font-medium bg-dark text-white input-none">
+              Área
+            </label>
+            <select
+              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
+              value={ticket.area}
+              onChange={(e) => setTicket({ ...ticket, area: e.target.value })}
+            >
+              <option value="" disabled>
+                Seleccionar
               </option>
-            ))}
-          </select>
+              {areas.map((area) => (
+                <option key={area._id} value={area._id}>
+                  {area.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="input-group input-group-sm lg:w-64 w-full">
+            <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+              Categoría
+            </label>
+            <select
+              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
+              value={ticket.category}
+              onChange={(e) =>
+                setTicket({ ...ticket, category: e.target.value })
+              }
+            >
+              <option value="" disabled>
+                Seleccionar
+              </option>
+              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
+              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
+              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
+            </select>
+          </div>
+          <div className="input-group input-group-sm lg:w-64 w-full">
+            <label className="input-group-text font-medium bg-dark text-white input-none">
+              Subcategoría
+            </label>
+            <select
+              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
+              value={ticket.subcategory}
+              onChange={(e) =>
+                setTicket({ ...ticket, subcategory: e.target.value })
+              }
+            >
+              <option value="" disabled>
+                Seleccionar
+              </option>
+              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
+              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
+              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
+            </select>
+          </div>
         </div>
-        <div className="input-group input-group-sm mb-3">
-          <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
-            Categoría
-          </label>
-          <select
-            className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
-            value={ticket.category}
-            onChange={(e) => setTicket({ ...ticket, category: e.target.value })}
-          >
-            <option value="" disabled>
-              Seleccionar
-            </option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div className="input-group input-group-sm mb-3">
-          <label className="input-group-text font-medium bg-dark text-white input-none">
-            Subcategoría
-          </label>
-          <select
-            className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
-            value={ticket.subcategory}
-            onChange={(e) =>
-              setTicket({ ...ticket, subcategory: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              Seleccionar
-            </option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
+
         <div className="input-group input-group-sm mb-3">
           <span className="input-group-text font-medium bg-dark text-white input-none">
             Título
@@ -127,6 +138,7 @@ export const CreateTicket = ({ user, users }) => {
           <textarea
             className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
             value={ticket.description}
+            rows={3}
             onChange={(e) =>
               setTicket({ ...ticket, description: e.target.value })
             }
@@ -151,10 +163,10 @@ export const CreateTicket = ({ user, users }) => {
               <li
                 key={index}
                 onClick={() => {
-                  setSelectedObservers((prevObservers) => [
-                    ...prevObservers,
-                    user,
-                  ]);
+                  setTicket((prevTicket) => ({
+                    ...prevTicket,
+                    observers: [...prevTicket.observers, user],
+                  }));
                   setInputValue("");
                   setSuggestions([]);
                 }}
@@ -168,9 +180,9 @@ export const CreateTicket = ({ user, users }) => {
           </ul>
         )}
 
-        {selectedObservers.length > 0 && (
+        {ticket.observers.length > 0 && (
           <ul className="mb-3 flex flex-wrap gap-1">
-            {selectedObservers.map((observer, index) => (
+            {ticket.observers.map((observer, index) => (
               <li
                 key={index}
                 onClick={() => handleRemoveObserver(index)}
@@ -187,7 +199,7 @@ export const CreateTicket = ({ user, users }) => {
 
         <div
           {...getRootPropsFile()}
-          className="bg-dark rounded-lg p-3 mb-3 cursor-pointer hover:border text-sm"
+          className="bg-dark rounded-lg p-3 mb-3 cursor-pointer hover:border text-xs"
         >
           <input {...getInputPropsFile()} />
           {isDragActiveFile ? (
@@ -241,9 +253,7 @@ export const CreateTicket = ({ user, users }) => {
           <button
             className="btn btn-sm btn-secondary"
             onClick={() => {
-              setTicket(initialStateTicket),
-                setFiles([]),
-                setSelectedObservers([]);
+              setTicket(initialStateTicket), setFiles([]);
             }}
           >
             Limpiar
@@ -256,6 +266,7 @@ export const CreateTicket = ({ user, users }) => {
           </button>
         </div>
       </div>
+      <TicketList user={user} />
     </>
   );
 };

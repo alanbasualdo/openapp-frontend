@@ -15,7 +15,7 @@ export const UserList = () => {
   return (
     <>
       <h1 className="mb-1 font-semibold">Lista de usuarios</h1>
-      <p className="text-gray-400 mb-3 text-sm font-semibold">
+      <p className="text-gray-400 mb-3 text-xs font-semibold">
         Total: {totalUsers}
       </p>
       <div className="row mx-auto justify-content-center mb-3">
@@ -35,7 +35,7 @@ export const UserList = () => {
             onClick={() => setSearch("")}
             title="Borrar"
           >
-            <i className="ri-close-fill cursor-pointer text-gray-400 hover:text-red-400 font-bold text-md"></i>
+            <i className="ri-close-fill cursor-pointer text-gray-400 hover:text-red-400 font-bold text-xs"></i>
           </div>
         )}
       </div>

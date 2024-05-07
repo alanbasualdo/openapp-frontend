@@ -4,6 +4,7 @@ import userSlice from "./slices/userSlice";
 import loaderSlice from "./slices/loaderSlice";
 import companySectionSlice from "./slices/companySectionSlice";
 import pcsSectionSlice from "./slices/pcsSectionSlice";
+import ticketsSlice from "./slices/ticketsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     loader: loaderSlice.reducer,
     companySection: companySectionSlice.reducer,
     pcsSection: pcsSectionSlice.reducer,
+    tickets: ticketsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

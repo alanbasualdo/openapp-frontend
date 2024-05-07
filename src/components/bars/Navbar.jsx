@@ -124,7 +124,7 @@ export const Navbar = ({
               boxShadow: "0px 0px 5px rgba(255, 255, 255, 0.5)",
             }}
           />
-          <ul className="dropdown-menu text-sm">
+          <ul className="dropdown-menu text-xs">
             <li className="dropdown-item mb-1">
               <Link to="/createTicket">Mis vacaciones</Link>
             </li>

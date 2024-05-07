@@ -31,7 +31,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
             <div className="mt-2">
               <div className="mx-auto">
                 <div
-                  className="px-2 mx-1 mb-2 row text-sm"
+                  className="px-2 mx-1 mb-2 row text-xs"
                   style={{
                     height: "50px",
                   }}
@@ -47,7 +47,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                         height: "45px",
                       }}
                     />
-                    <p className="text-gray-400 font-bold text-md ml-4">
+                    <p className="text-gray-400 font-bold text-xs ml-4">
                       Alan Basualdo
                     </p>
                   </div>
@@ -56,7 +56,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                     onClick={() => setOpenChat(false)}
                     title="Cerrar"
                   >
-                    <i className="ri-close-fill text-lg cursor-pointer text-gray-400 font-bold text-md hover:text-gray-300"></i>
+                    <i className="ri-close-fill text-xs cursor-pointer text-gray-400 font-bold hover:text-gray-300"></i>
                   </div>
                 </div>
 
@@ -75,15 +75,24 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                   <div className="p-2 flex-grow">
                     {/* Mensaje recibio */}
                     <div className="bg-light px-2 py-1 rounded-lg max-w-60 mb-1">
-                      <p className="text-dark font-medium w-full">hola mundo</p>
-                      <p className="text-right text-xs text-gray-500">12:00</p>
+                      <p className="text-dark text-xs font-medium w-full">
+                        hola mundo
+                      </p>
+                      <p
+                        className="text-right text-gray-500"
+                        style={{ fontSize: "10px" }}
+                      >
+                        12:00
+                      </p>
                     </div>
                     {/* Mensaje enviado */}
                     <div className="bg-opencars px-2 py-1 rounded-lg max-w-60 mb-1 ml-auto">
-                      <p className="text-white font-medium text-right w-full">
+                      <p className="text-white font-medium text-xs text-right w-full">
                         hola mundo
                       </p>
-                      <p className="text-xs text-gray-300">12:00</p>
+                      <p className="text-gray-300" style={{ fontSize: "10px" }}>
+                        12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -117,10 +126,10 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
             /* Lista de colaboradores */
             <div className="mt-2">
               <div className="mx-auto p-1">
-                <div className="px-2 mx-1 mb-2 row text-sm">
+                <div className="px-2 mx-1 mb-2 row text-xs">
                   <div className="col-md-10 col-10 d-flex align-items-center">
                     {searchUser ? (
-                      <div className="font-bold text-md text-gray-400 py-2 w-full">
+                      <div className="font-bold text-xs text-gray-400 py-2 w-full">
                         <input
                           type="text"
                           className="border-none outline-none bg-transparent focus:ring-0 w-full"
@@ -131,7 +140,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                         />
                       </div>
                     ) : (
-                      <div className="text-gray-400 font-bold text-md py-2">
+                      <div className="text-gray-400 font-bold text-xs py-2">
                         <p>Colaboradores</p>
                       </div>
                     )}
@@ -145,7 +154,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                       }}
                       title="Cerrar"
                     >
-                      <i className="ri-close-fill cursor-pointer text-gray-400 hover:text-gray-300 font-bold text-md"></i>
+                      <i className="ri-close-fill cursor-pointer text-gray-400 hover:text-gray-300 font-bold text-xs"></i>
                     </div>
                   ) : (
                     <div
@@ -153,7 +162,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                       onClick={() => setSetSearchUser(true)}
                       title="Buscar"
                     >
-                      <i className="ri-search-line cursor-pointer text-gray-400 hover:text-gray-300 font-bold text-md"></i>
+                      <i className="ri-search-line cursor-pointer text-gray-400 hover:text-gray-300 font-bold text-xs"></i>
                     </div>
                   )}
                 </div>
@@ -187,7 +196,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                           />
                           <div className="min-w-0 flex-auto">
                             <div className="d-flex gap-2">
-                              <p className="text-sm font-semibold leading-6 text-gray-200">
+                              <p className="text-xs font-semibold leading-6 text-gray-200">
                                 {user.name} {user.lastName}
                               </p>
                               <div className="flex items-center gap-x-1.5">
