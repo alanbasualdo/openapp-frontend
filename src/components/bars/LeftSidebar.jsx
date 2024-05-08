@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { setArea } from "../../store/slices/ticketsSlice";
 
 export const LeftSidebar = ({
   showLeftbar,
@@ -6,6 +8,7 @@ export const LeftSidebar = ({
   setSetShowContent,
   setShowLeftbar,
 }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const isActive = (path) => {
     return location.pathname === path ? "font-bold" : "";
@@ -16,6 +19,10 @@ export const LeftSidebar = ({
       setSetShowContent(true);
       setShowLeftbar(false);
     }
+  };
+
+  const handleTicketArea = (area) => {
+    dispatch(setArea(area));
   };
 
   return (
@@ -47,11 +54,6 @@ export const LeftSidebar = ({
                     onClick={() => funcCloseBar()}
                   >
                     Crear ticket
-                  </Link>
-                </li>
-                <li className={`list-disc mb-2 ${isActive("/managetickets")}`}>
-                  <Link className="hover:font-bold" to="/managetickets">
-                    Gestionar tickets
                   </Link>
                 </li>
                 <li className={`list-disc mb-2 ${isActive("/seetickets")}`}>
@@ -113,6 +115,15 @@ export const LeftSidebar = ({
             <div className="mb-5">
               <h2 className="font-bold">Dpto. de sistemas</h2>
               <ul className="mt-3 ml-7">
+                <li className={`list-disc mb-2 ${isActive("/managetickets")}`}>
+                  <Link
+                    className="hover:font-bold"
+                    to="/managetickets"
+                    onClick={() => handleTicketArea("Sistemas")}
+                  >
+                    Gestionar tickets
+                  </Link>
+                </li>
                 <li
                   className={`list-disc mb-2 ${isActive("/accountclosures")}`}
                 >

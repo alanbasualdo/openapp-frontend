@@ -3,8 +3,10 @@ import moment from "moment";
 import { useState } from "react";
 
 export const TicketList = ({ user }) => {
-  const { tickets } = useSelector((state) => state.tickets);
+  const { tickets, area } = useSelector((state) => state.tickets);
   const [orderByStatus, setOrderByStatus] = useState("");
+
+  console.log(area);
 
   const handleOrderByStatus = (status) => {
     // Si se hace clic en la misma opción, desactivar el filtro
@@ -83,10 +85,10 @@ export const TicketList = ({ user }) => {
         {filteredByStatus.map((ticket) => (
           <li
             key={ticket._id}
-            className={`flex flex-wrap justify-between gap-x-0 rounded-lg px-3 py-2 cursor-pointer bg-gray mb-2 hover:bg-gray-700`}
+            className={`flex justify-between gap-x-0 rounded-lg px-3 py-2 cursor-pointer bg-gray mb-2 hover:bg-gray-700`}
           >
-            <div className="justify-center items-center">
-              <div>
+            <div className="col col-2">
+              <div className="flex flex-col justify-center items-start">
                 {ticket.status === "Pendiente" ? (
                   <div className="flex items-center gap-x-1.5">
                     <div className="flex-none rounded-full bg-blue-500/20 p-1">
@@ -125,23 +127,20 @@ export const TicketList = ({ user }) => {
                   </div>
                 )}
               </div>
-              {ticket.createdBy._id == user._id && (
-                <p className="text-gray-400 mt-1" style={{ fontSize: "10px" }}>
-                  Creado por: {ticket.createdBy.name}{" "}
-                  {ticket.createdBy.lastName}
-                </p>
-              )}
               <p className="text-gray-400 mt-1" style={{ fontSize: "9px" }}>
                 {moment(ticket.createdAt).format("DD/MM/YYYY HH:mm:ss")}
               </p>
             </div>
-            <div className="flex justify-end items-end">
-              <div className="flex flex-col justify-end items-end">
-                <p className="text-xs text-white px-1 truncate md:truncate-words-lg lg:truncate-words-xl">
+            <div className="col col-10">
+              <div className="flex flex-col justify-center items-end">
+                <p className="text-xs text-white truncate md:truncate-words-lg lg:truncate-words-xl">
                   {ticket.title}
                 </p>
-                <p className="text-gray-400" style={{ fontSize: "10px" }}>
-                  Tomado por: Diego Gatica
+                <p
+                  className="text-gray-400 mt-1 text-end"
+                  style={{ fontSize: "10px" }}
+                >
+                  De: {ticket.createdBy.name} {ticket.createdBy.lastName}
                 </p>
               </div>
             </div>

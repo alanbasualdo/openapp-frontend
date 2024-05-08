@@ -4,7 +4,7 @@ import { useAreaSectionStore } from "../hooks/PositionsSections/useAreaSectionSt
 import { useTicketsStore } from "../hooks/Tickets/useTicketsStore";
 import { TicketList } from "../components/tickets/TicketList";
 
-export const CreateTicket = ({ user, users }) => {
+export const ManageTickets = ({ user, users }) => {
   const initialStateTicket = {
     area: "",
     category: "",
