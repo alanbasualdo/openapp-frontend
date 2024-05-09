@@ -86,8 +86,6 @@ export const Computers = ({ setBtnActivated }) => {
     startGetUsers();
   }, []);
 
-  console.log(computers);
-
   return (
     <>
       <div className="row d-flex flex-wrap justify-content-center align-items-center mb-2">

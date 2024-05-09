@@ -1,12 +1,8 @@
-import { useSelector } from "react-redux";
 import moment from "moment";
 import { useState } from "react";
 
-export const TicketList = ({ user }) => {
-  const { tickets, area } = useSelector((state) => state.tickets);
+export const TicketList = ({ user, tickets, setSelectedTicket }) => {
   const [orderByStatus, setOrderByStatus] = useState("");
-
-  console.log(area);
 
   const handleOrderByStatus = (status) => {
     // Si se hace clic en la misma opción, desactivar el filtro
@@ -18,7 +14,7 @@ export const TicketList = ({ user }) => {
     : tickets;
 
   return (
-    <div className="mt-3">
+    <div className="mt-3 mx-3">
       <div className="flex justify-end mb-3 gap-3">
         <div
           className="flex items-center gap-x-1.5 cursor-pointer text-gray-100 hover:text-gray-400"
@@ -82,10 +78,11 @@ export const TicketList = ({ user }) => {
         </div>
       </div>
       <ul>
-        {filteredByStatus.map((ticket) => (
+        {filteredByStatus?.map((ticket) => (
           <li
             key={ticket._id}
             className={`flex justify-between gap-x-0 rounded-lg px-3 py-2 cursor-pointer bg-gray mb-2 hover:bg-gray-700`}
+            onClick={() => setSelectedTicket(ticket)}
           >
             <div className="col col-2">
               <div className="flex flex-col justify-center items-start">

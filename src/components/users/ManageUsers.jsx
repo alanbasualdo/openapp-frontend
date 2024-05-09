@@ -11,7 +11,7 @@ export const ManageUsers = ({ createUserClick, setCreateUserClick }) => {
   const [seePassword, setSeePassword] = useState(false);
   const [secondPassword, setSecondPassword] = useState("");
 
-  const { VITE_USER_SERVICE_URL } = getEnvVariables();
+  const { VITE_BACKEND } = getEnvVariables();
 
   const initialStateUserData = {
     name: "",

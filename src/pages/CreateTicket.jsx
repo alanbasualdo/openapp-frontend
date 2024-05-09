@@ -3,6 +3,7 @@ import { useFileDropzone } from "../hooks/Users/useFileDropzone";
 import { useAreaSectionStore } from "../hooks/PositionsSections/useAreaSectionStore";
 import { useTicketsStore } from "../hooks/Tickets/useTicketsStore";
 import { TicketList } from "../components/tickets/TicketList";
+import { showErrorMessage, showSuccessMessage } from "../utils/showMessages";
 
 export const CreateTicket = ({ user, users }) => {
   const initialStateTicket = {
@@ -21,7 +22,7 @@ export const CreateTicket = ({ user, users }) => {
   const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
     useFileDropzone(files, setFiles);
   const { areas, startGetAreas } = useAreaSectionStore();
-  const { startPostTicket, startGetTickets } = useTicketsStore();
+  const { startPostTicket } = useTicketsStore();
 
   const handleInputChange = (inputValue) => {
     setInputValue(inputValue);
@@ -45,91 +46,115 @@ export const CreateTicket = ({ user, users }) => {
   };
 
   const createTicket = async () => {
-    await startPostTicket(ticket, files);
-    startGetTickets();
+    try {
+      const data = await startPostTicket(ticket, files);
+      if (data.success) {
+        showSuccessMessage(data.message);
+        setAddBtn(false);
+        setTicket(initialStateTicket);
+        setFiles([]);
+      } else {
+        showErrorMessage(data.message);
+      }
+    } catch (error) {
+      showErrorMessage(error.response.data.message);
+    }
   };
 
   useEffect(() => {
     startGetAreas();
   }, [ticket]);
 
-  useEffect(() => {
-    startGetTickets();
-  }, []);
-
   return (
     <>
       <div className="rounded-lg p-4 text-white bg-gray mx-3">
-        <div className="flex flex-wrap gap-3 mb-3">
-          <div className="input-group input-group-sm lg:w-64 w-full">
-            <label className="input-group-text font-medium bg-dark text-white input-none">
-              Área
-            </label>
-            <select
-              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
-              value={ticket.area}
-              onChange={(e) => setTicket({ ...ticket, area: e.target.value })}
-            >
-              <option value="" disabled>
-                Seleccionar
-              </option>
-              {areas.map((area) => (
-                <option key={area._id} value={area._id}>
-                  {area.name}
+        <div className="mb-3">
+          <div className="flex flex-wrap gap-3 mb-3">
+            <div className="input-group input-group-sm lg:w-64 w-full">
+              <span className="input-group-text font-medium bg-dark text-white input-none">
+                Título
+              </span>
+              <input
+                type="text"
+                className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+                value={ticket.title}
+                onChange={(e) =>
+                  setTicket({ ...ticket, title: e.target.value })
+                }
+              />
+            </div>
+            <div className="input-group input-group-sm lg:w-64 w-full">
+              <label className="input-group-text font-medium bg-dark text-white input-none">
+                Área
+              </label>
+              <select
+                className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
+                value={ticket.area}
+                onChange={(e) => setTicket({ ...ticket, area: e.target.value })}
+              >
+                <option value="" disabled>
+                  Seleccionar
                 </option>
-              ))}
-            </select>
+                {areas.map((area) => (
+                  <option key={area._id} value={area._id}>
+                    {area.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="input-group input-group-sm lg:w-64 w-full">
-            <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
-              Categoría
-            </label>
-            <select
-              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
-              value={ticket.category}
-              onChange={(e) =>
-                setTicket({ ...ticket, category: e.target.value })
-              }
-            >
-              <option value="" disabled>
-                Seleccionar
-              </option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-            </select>
+          <div className="flex flex-wrap gap-3">
+            <div className="input-group input-group-sm lg:w-64 w-full">
+              <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+                Categoría
+              </label>
+              <select
+                className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
+                value={ticket.category}
+                onChange={(e) =>
+                  setTicket({ ...ticket, category: e.target.value })
+                }
+              >
+                <option value="" disabled>
+                  Seleccionar
+                </option>
+                <option value="asdasdasdasdasdasdas">
+                  asdasdasdasdasdasdas
+                </option>
+                <option value="asdasdasdasdasdasdas">
+                  asdasdasdasdasdasdas
+                </option>
+                <option value="asdasdasdasdasdasdas">
+                  asdasdasdasdasdasdas
+                </option>
+              </select>
+            </div>
+            <div className="input-group input-group-sm lg:w-64 w-full">
+              <label className="input-group-text font-medium bg-dark text-white input-none">
+                Subcategoría
+              </label>
+              <select
+                className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
+                value={ticket.subcategory}
+                onChange={(e) =>
+                  setTicket({ ...ticket, subcategory: e.target.value })
+                }
+              >
+                <option value="" disabled>
+                  Seleccionar
+                </option>
+                <option value="asdasdasdasdasdasdas">
+                  asdasdasdasdasdasdas
+                </option>
+                <option value="asdasdasdasdasdasdas">
+                  asdasdasdasdasdasdas
+                </option>
+                <option value="asdasdasdasdasdasdas">
+                  asdasdasdasdasdasdas
+                </option>
+              </select>
+            </div>
           </div>
-          <div className="input-group input-group-sm lg:w-64 w-full">
-            <label className="input-group-text font-medium bg-dark text-white input-none">
-              Subcategoría
-            </label>
-            <select
-              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
-              value={ticket.subcategory}
-              onChange={(e) =>
-                setTicket({ ...ticket, subcategory: e.target.value })
-              }
-            >
-              <option value="" disabled>
-                Seleccionar
-              </option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="input-group input-group-sm mb-3">
-          <span className="input-group-text font-medium bg-dark text-white input-none">
-            Título
-          </span>
-          <input
-            type="text"
-            className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
-            value={ticket.title}
-            onChange={(e) => setTicket({ ...ticket, title: e.target.value })}
-          />
         </div>
         <div className="input-group input-group-sm mb-3">
           <span className="input-group-text font-medium bg-dark text-white input-none">
@@ -144,7 +169,6 @@ export const CreateTicket = ({ user, users }) => {
             }
           ></textarea>
         </div>
-
         <div className="input-group input-group-sm mb-3">
           <span className="input-group-text font-medium bg-dark text-white input-none">
             Observadores

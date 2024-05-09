@@ -17,12 +17,26 @@ export const useTicketsStore = () => {
       files.forEach((file) => {
         formData.append("attachments", file);
       });
-      const resp = await apiConn.post("/tickets/post-ticket", formData, {
+      const { data } = await apiConn.post("/tickets/post-ticket", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(resp);
+      dispatch(setTicketsLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setTicketsLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
+  const startGetTicketByArea = async (area) => {
+    try {
+      dispatch(setTicketsLoading(true));
+      const { data } = await apiConn.get(
+        `/tickets/get-tickets-by-area/${area}`
+      );
+      dispatch(setTickets(data.tickets));
       dispatch(setTicketsLoading(false));
     } catch (error) {
       dispatch(setTicketsLoading(false));
@@ -56,6 +70,7 @@ export const useTicketsStore = () => {
 
   return {
     startPostTicket,
+    startGetTicketByArea,
     startGetTickets,
     startDeleteTickets,
   };

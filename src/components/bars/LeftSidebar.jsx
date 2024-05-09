@@ -1,6 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setArea } from "../../store/slices/ticketsSlice";
+import { useAreaSectionStore } from "../../hooks/PositionsSections/useAreaSectionStore";
+import { useEffect } from "react";
 
 export const LeftSidebar = ({
   showLeftbar,
@@ -10,6 +12,8 @@ export const LeftSidebar = ({
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { areas } = useSelector((state) => state.companySection);
+  const { startGetAreas } = useAreaSectionStore();
   const isActive = (path) => {
     return location.pathname === path ? "font-bold" : "";
   };
@@ -21,9 +25,16 @@ export const LeftSidebar = ({
     }
   };
 
-  const handleTicketArea = (area) => {
-    dispatch(setArea(area));
+  const handleTicketArea = (areaName) => {
+    const area = areas.find((area) => area.name === areaName);
+    if (area) {
+      dispatch(setArea(area._id));
+    }
   };
+
+  useEffect(() => {
+    startGetAreas();
+  }, []);
 
   return (
     <>

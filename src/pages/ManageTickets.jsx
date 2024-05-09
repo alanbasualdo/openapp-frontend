@@ -1,272 +1,185 @@
-import { useEffect, useState } from "react";
-import { useFileDropzone } from "../hooks/Users/useFileDropzone";
-import { useAreaSectionStore } from "../hooks/PositionsSections/useAreaSectionStore";
 import { useTicketsStore } from "../hooks/Tickets/useTicketsStore";
 import { TicketList } from "../components/tickets/TicketList";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getEnvVariables } from "../helpers/getEnvVariables";
+import moment from "moment";
 
 export const ManageTickets = ({ user, users }) => {
-  const initialStateTicket = {
-    area: "",
-    category: "",
-    subcategory: "",
-    title: "",
-    description: "",
-    observers: [],
-  };
+  const { tickets, area } = useSelector((state) => state.tickets);
+  const { startGetTicketByArea } = useTicketsStore();
+  const [selectedTicket, setSelectedTicket] = useState(null);
 
-  const [ticket, setTicket] = useState(initialStateTicket);
-  const [files, setFiles] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
-    useFileDropzone(files, setFiles);
-  const { areas, startGetAreas } = useAreaSectionStore();
-  const { startPostTicket, startGetTickets } = useTicketsStore();
-
-  const handleInputChange = (inputValue) => {
-    setInputValue(inputValue);
-    // Filtrar los usuarios cuyo nombre comience con el valor del input y que no estén en selectedObservers
-    const filteredSuggestions = users.filter(
-      (filteredUser) =>
-        (filteredUser.name.toLowerCase().startsWith(inputValue.toLowerCase()) ||
-          filteredUser.lastName
-            .toLowerCase()
-            .startsWith(inputValue.toLowerCase())) &&
-        !ticket.observers.includes(filteredUser._id)
-    );
-    setSuggestions(filteredSuggestions);
-  };
-
-  const handleRemoveObserver = (index) => {
-    setTicket({
-      ...ticket,
-      observers: ticket.observers.filter((_, i) => i !== index),
-    });
-  };
-
-  const createTicket = async () => {
-    await startPostTicket(ticket, files);
-    startGetTickets();
-  };
+  const { VITE_BACKEND } = getEnvVariables();
 
   useEffect(() => {
-    startGetAreas();
-  }, [ticket]);
-
-  useEffect(() => {
-    startGetTickets();
+    startGetTicketByArea(area);
   }, []);
 
   return (
     <>
-      <div className="rounded-lg p-4 text-white bg-gray mx-3">
-        <div className="flex flex-wrap gap-3 mb-3">
-          <div className="input-group input-group-sm lg:w-64 w-full">
-            <label className="input-group-text font-medium bg-dark text-white input-none">
-              Área
-            </label>
-            <select
-              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
-              value={ticket.area}
-              onChange={(e) => setTicket({ ...ticket, area: e.target.value })}
-            >
-              <option value="" disabled>
-                Seleccionar
-              </option>
-              {areas.map((area) => (
-                <option key={area._id} value={area._id}>
-                  {area.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="input-group input-group-sm lg:w-64 w-full">
-            <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
-              Categoría
-            </label>
-            <select
-              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
-              value={ticket.category}
-              onChange={(e) =>
-                setTicket({ ...ticket, category: e.target.value })
-              }
-            >
-              <option value="" disabled>
-                Seleccionar
-              </option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-            </select>
-          </div>
-          <div className="input-group input-group-sm lg:w-64 w-full">
-            <label className="input-group-text font-medium bg-dark text-white input-none">
-              Subcategoría
-            </label>
-            <select
-              className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
-              value={ticket.subcategory}
-              onChange={(e) =>
-                setTicket({ ...ticket, subcategory: e.target.value })
-              }
-            >
-              <option value="" disabled>
-                Seleccionar
-              </option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-              <option value="asdasdasdasdasdasdas">asdasdasdasdasdasdas</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="input-group input-group-sm mb-3">
-          <span className="input-group-text font-medium bg-dark text-white input-none">
-            Título
-          </span>
-          <input
-            type="text"
-            className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
-            value={ticket.title}
-            onChange={(e) => setTicket({ ...ticket, title: e.target.value })}
-          />
-        </div>
-        <div className="input-group input-group-sm mb-3">
-          <span className="input-group-text font-medium bg-dark text-white input-none">
-            Descripción
-          </span>
-          <textarea
-            className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
-            value={ticket.description}
-            rows={3}
-            onChange={(e) =>
-              setTicket({ ...ticket, description: e.target.value })
-            }
-          ></textarea>
-        </div>
-
-        <div className="input-group input-group-sm mb-3">
-          <span className="input-group-text font-medium bg-dark text-white input-none">
-            Observadores
-          </span>
-          <input
-            type="text"
-            className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
-            value={inputValue}
-            onChange={(e) => handleInputChange(e.target.value)}
-          />
-        </div>
-
-        {suggestions.length > 0 && inputValue && (
-          <ul className="mb-3 flex flex-wrap gap-1">
-            {suggestions.map((user, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  setTicket((prevTicket) => ({
-                    ...prevTicket,
-                    observers: [...prevTicket.observers, user],
-                  }));
-                  setInputValue("");
-                  setSuggestions([]);
-                }}
-                className="cursor-pointer text-xs flex"
-              >
-                <span className="rounded-lg bg-dark p-2 hover:border">
-                  {user.name} {user.lastName}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {ticket.observers.length > 0 && (
-          <ul className="mb-3 flex flex-wrap gap-1">
-            {ticket.observers.map((observer, index) => (
-              <li
-                key={index}
-                onClick={() => handleRemoveObserver(index)}
-                className="cursor-pointer text-xs"
-                title="Eliminar"
-              >
-                <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
-                  {observer.name} {observer.lastName}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <div
-          {...getRootPropsFile()}
-          className="bg-dark rounded-lg p-3 mb-3 cursor-pointer hover:border text-sm text-center"
-        >
-          <input {...getInputPropsFile()} />
-          {isDragActiveFile ? (
-            <p>Suelte los archivos aquí...</p>
-          ) : (
-            <p>
-              Arrastre y suelte aquí los adjuntos, o haz clic para seleccionar
-            </p>
-          )}
-        </div>
-        {files.length > 0 && (
-          <div className="d-flex justify-content-center flex-wrap gap-2 mb-3">
-            {files.map((file, index) => (
-              <div
-                key={index}
-                className="d-flex flex-column align-items-center gap-2"
-              >
-                {!file.type.startsWith("image/") ? (
-                  <>
-                    <i className="ri-file-text-fill text-5xl text-dark"></i>
-                    <a
-                      href={URL.createObjectURL(file)}
-                      download={file.name}
-                      className="text-xs"
-                    >
-                      {file.name.length > 20
-                        ? file.name.slice(0, 20) + "..."
-                        : file.name}
-                    </a>
-                  </>
+      <div className="rounded-lg py-3 px-4 text-white bg-gray">
+        {selectedTicket && (
+          <>
+            <div className="flex justify-between">
+              <div>
+                {selectedTicket.status === "Pendiente" ? (
+                  <div className="flex items-center justify-start gap-x-1.5">
+                    <div className="flex-none rounded-full bg-blue-500/20 p-1">
+                      <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+                    </div>
+                    <p className="text-sm font-medium text-white">
+                      {selectedTicket.status}
+                    </p>
+                  </div>
+                ) : selectedTicket.status === "En curso" ? (
+                  <div className="flex items-center justify-start gap-x-1.5">
+                    <div className="flex-none rounded-full bg-red-500/20 p-1">
+                      <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                    </div>
+                    <p className="text-sm font-medium text-white">
+                      {selectedTicket.status}
+                    </p>
+                  </div>
+                ) : selectedTicket.status === "En espera" ? (
+                  <div className="flex items-center justify-start gap-x-1.5">
+                    <div className="flex-none rounded-full bg-yellow-500/20 p-1">
+                      <div className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                    </div>
+                    <p className="text-sm font-medium text-white">
+                      {selectedTicket.status}
+                    </p>
+                  </div>
                 ) : (
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt={file.name}
-                    className="rounded-lg"
-                    style={{ maxWidth: "100px" }}
-                  />
+                  <div className="flex items-center justify-start gap-x-1.5">
+                    <div className="flex-none rounded-full bg-gray-500/20 p-1">
+                      <div className="h-1.5 w-1.5 rounded-full bg-gray-500" />
+                    </div>
+                    <p className="text-sm font-medium text-white">
+                      {selectedTicket.status}
+                    </p>
+                  </div>
                 )}
-                <button
-                  className="btn btn-sm btn-outline-danger input-none"
-                  type="button"
-                  onClick={() => removeFile(index, "dni")}
-                >
-                  <i className="ri-delete-bin-line"></i>
-                </button>
+
+                <p className="text-xs text-secondary">
+                  ID {selectedTicket._id}
+                </p>
               </div>
-            ))}
-          </div>
+              <div>
+                <h1 className="text-sm flex justify-end font-medium">
+                  Creado por: {selectedTicket.createdBy.name}{" "}
+                  {selectedTicket.createdBy.lastName}
+                </h1>
+                <p className="text-secondary text-xs flex justify-end">
+                  {moment(selectedTicket.createdAt).format(
+                    "DD/MM/YYYY HH:mm:ss"
+                  )}
+                </p>
+              </div>
+            </div>
+            <hr className="mt-2 mb-3" />
+            <div className="d-flex gap-3 justify-center align-center">
+              <div className="col-6">
+                <div className="input-group input-group-sm w-full mb-3">
+                  <span className="input-group-text font-medium bg-dark text-white input-none">
+                    Título:
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+                    value={selectedTicket.title}
+                    readOnly
+                  />
+                </div>
+                <div className="input-group input-group-sm w-full mb-3">
+                  <span className="input-group-text font-medium bg-dark text-white input-none">
+                    Descripción:
+                  </span>
+                  <textarea
+                    className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+                    value={selectedTicket.description}
+                    rows={3}
+                    readOnly
+                  ></textarea>
+                </div>
+                <div className="input-group input-group-sm w-full mb-3">
+                  <span className="input-group-text font-medium bg-dark text-white input-none">
+                    Categoría:
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+                    value={selectedTicket.category}
+                    readOnly
+                  />
+                </div>
+                <div className="input-group input-group-sm w-full mb-3">
+                  <span className="input-group-text font-medium bg-dark text-white input-none">
+                    Subcategoría:
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+                    value={selectedTicket.subcategory}
+                    readOnly
+                  />
+                </div>
+                <div>
+                  <div className="bg-dark py-1 px-2 w-full text-sm font-medium mb-3 rounded-sm">
+                    Observadores:
+                  </div>
+                  <ul className="flex flex-wrap gap-1">
+                    {selectedTicket.observers.map((obs) => (
+                      <li
+                        key={obs._id}
+                        className="cursor-pointer text-xs mb-3"
+                        title="Eliminar"
+                      >
+                        <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
+                          {obs.name} {obs.lastName}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <div className="bg-dark py-1 px-2 w-full text-sm font-medium mb-3 rounded-sm">
+                    Adjuntos:
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {selectedTicket.attachments.map((atta, index) => (
+                      <img
+                        src={`${VITE_BACKEND}/uploads/${atta}`}
+                        className="w-24 h-auto rounded-lg hover:border cursor-pointer border-secondary"
+                        title={atta}
+                        key={`${atta}-${index}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="col-6 h-full">
+                <div className="border rounded-lg border-secondary bg-dark mb-2 h-96"></div>
+                <div className="input-group input-group-sm w-full">
+                  <input
+                    type="text"
+                    className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+                  />
+                  <button className="py-1 px-3 text-sm font-medium bg-dark text-white">
+                    Enviar mensaje
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
         )}
-        <div className="text-center d-flex justify-content-center gap-3">
-          <button
-            className="btn btn-sm btn-secondary"
-            onClick={() => {
-              setTicket(initialStateTicket), setFiles([]);
-            }}
-          >
-            Limpiar
-          </button>
-          <button
-            className="btn btn-sm btn-opencars"
-            onClick={() => createTicket()}
-          >
-            Listo
-          </button>
-        </div>
       </div>
-      <TicketList user={user} />
+
+      <TicketList
+        user={user}
+        tickets={tickets}
+        setSelectedTicket={setSelectedTicket}
+      />
     </>
   );
 };
