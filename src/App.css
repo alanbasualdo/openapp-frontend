@@ -56,3 +56,15 @@ body {
   color: white;
   background-color: #0072b887;
 }
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}

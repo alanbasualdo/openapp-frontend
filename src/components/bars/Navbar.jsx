@@ -59,7 +59,7 @@ export const Navbar = ({
       }}
     >
       <div
-        className="ml-2 text-2xl sm:text-3xl font-semibold"
+        className="ml-2 text-2xl sm:text-3xl font-bold"
         onMouseEnter={window.innerWidth > 768 ? handleHover : undefined}
         onMouseLeave={window.innerWidth > 768 ? handleLeave : undefined}
       >
@@ -121,10 +121,10 @@ export const Navbar = ({
               objectFit: "cover",
               width: "45px",
               height: "45px",
-              boxShadow: "0px 0px 5px rgba(255, 255, 255, 0.5)",
+              boxShadow: "0px 0px 5px 3px rgb(0, 113, 184)",
             }}
           />
-          <ul className="dropdown-menu text-xs">
+          <ul className="dropdown-menu text-xs dropdown-menu-dark">
             <li className="dropdown-item mb-1">
               <Link to="/createTicket">Mis vacaciones</Link>
             </li>

@@ -14,7 +14,7 @@ export const TicketList = ({ user, tickets, setSelectedTicket }) => {
     : tickets;
 
   return (
-    <div className="mt-3 mx-3">
+    <div className="mt-1">
       <div className="flex justify-end mb-3 gap-3">
         <div
           className="flex items-center gap-x-1.5 cursor-pointer text-gray-100 hover:text-gray-400"

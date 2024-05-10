@@ -56,6 +56,21 @@ export const useTicketsStore = () => {
     }
   };
 
+  const startPutObservers = async (ticketID, observerID) => {
+    try {
+      dispatch(setTicketsLoading(true));
+      const { data } = await apiConn.delete(
+        `/tickets/put-observers/${ticketID}`,
+        observerID
+      );
+      dispatch(setTicketsLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setTicketsLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
   const startDeleteTickets = async (id) => {
     try {
       dispatch(setTicketsLoading(true));
@@ -72,6 +87,7 @@ export const useTicketsStore = () => {
     startPostTicket,
     startGetTicketByArea,
     startGetTickets,
+    startPutObservers,
     startDeleteTickets,
   };
 };
