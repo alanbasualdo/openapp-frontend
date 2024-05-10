@@ -4,6 +4,7 @@ import { useAreaSectionStore } from "../hooks/PositionsSections/useAreaSectionSt
 import { useTicketsStore } from "../hooks/Tickets/useTicketsStore";
 import { TicketList } from "../components/tickets/TicketList";
 import { showErrorMessage, showSuccessMessage } from "../utils/showMessages";
+import { useSelector } from "react-redux";
 
 export const CreateTicket = ({ user, users }) => {
   const initialStateTicket = {
@@ -22,7 +23,8 @@ export const CreateTicket = ({ user, users }) => {
   const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
     useFileDropzone(files, setFiles);
   const { areas, startGetAreas } = useAreaSectionStore();
-  const { startPostTicket } = useTicketsStore();
+  const { startPostTicket, startGetTicketByUser } = useTicketsStore();
+  const { tickets } = useSelector((state) => state.tickets);
 
   const handleInputChange = (inputValue) => {
     setInputValue(inputValue);
@@ -45,6 +47,8 @@ export const CreateTicket = ({ user, users }) => {
     });
   };
 
+  console.log(tickets);
+
   const createTicket = async () => {
     try {
       const data = await startPostTicket(ticket, files);
@@ -62,12 +66,16 @@ export const CreateTicket = ({ user, users }) => {
   };
 
   useEffect(() => {
+    startGetTicketByUser(user._id);
+  }, []);
+
+  useEffect(() => {
     startGetAreas();
   }, [ticket]);
 
   return (
     <>
-      <div className="rounded-lg p-4 text-white bg-gray mx-3">
+      <div className="rounded-lg py-3 px-4 text-white bg-gray mb-3">
         <div className="mb-3">
           <div className="flex flex-wrap gap-3 mb-3">
             <div className="input-group input-group-sm lg:w-64 w-full">
@@ -290,7 +298,7 @@ export const CreateTicket = ({ user, users }) => {
           </button>
         </div>
       </div>
-      <TicketList user={user} />
+      <TicketList user={user} tickets={tickets} />
     </>
   );
 };

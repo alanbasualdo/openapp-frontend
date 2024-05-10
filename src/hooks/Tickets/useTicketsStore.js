@@ -30,6 +30,20 @@ export const useTicketsStore = () => {
     }
   };
 
+  const startGetTicketByUser = async (user) => {
+    try {
+      dispatch(setTicketsLoading(true));
+      const { data } = await apiConn.get(
+        `/tickets/get-tickets-by-user/${user}`
+      );
+      dispatch(setTickets(data.tickets));
+      dispatch(setTicketsLoading(false));
+    } catch (error) {
+      dispatch(setTicketsLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
   const startGetTicketByArea = async (area) => {
     try {
       dispatch(setTicketsLoading(true));
@@ -88,6 +102,7 @@ export const useTicketsStore = () => {
     startGetTicketByArea,
     startGetTickets,
     startPutObservers,
+    startGetTicketByUser,
     startDeleteTickets,
   };
 };

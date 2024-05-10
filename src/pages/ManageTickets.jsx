@@ -118,46 +118,42 @@ export const ManageTickets = ({ user, users }) => {
                   {selectedTicket.subcategory}
                 </p>
               </div>
-              {selectedTicket.observers.length > 0 && (
-                <div>
-                  <div className="py-1 px-2 w-full text-xs font-medium">
-                    Observadores
-                  </div>
-                  <hr />
-                  <ul className="flex flex-wrap gap-1 mt-3">
-                    {selectedTicket.observers.map((obs) => (
-                      <li
-                        key={obs._id}
-                        className="cursor-pointer text-xs mb-3"
-                        title="Eliminar"
-                      >
-                        <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
-                          {obs.name} {obs.lastName}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+              <div>
+                <div className="py-1 px-2 w-full text-xs font-medium">
+                  Observadores
                 </div>
-              )}
-              {selectedTicket.attachments.length > 0 && (
-                <div>
-                  <div className="py-1 px-2 w-full text-xs font-medium">
-                    Adjuntos
-                  </div>
-                  <hr />
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {selectedTicket.attachments.map((atta, index) => (
-                      <img
-                        src={`${VITE_BACKEND}/uploads/${atta}`}
-                        className="w-16 h-auto rounded-lg hover:border cursor-pointer border-secondary"
-                        title={atta}
-                        key={`${atta}-${index}`}
-                        onClick={(e) => openImage(atta)}
-                      />
-                    ))}
-                  </div>
+                <hr />
+                <ul className="flex flex-wrap gap-1 mt-3">
+                  {selectedTicket.observers.map((obs) => (
+                    <li
+                      key={obs._id}
+                      className="cursor-pointer text-xs mb-3"
+                      title="Eliminar"
+                    >
+                      <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
+                        {obs.name} {obs.lastName}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <div className="py-1 px-2 w-full text-xs font-medium">
+                  Adjuntos
                 </div>
-              )}
+                <hr />
+                <div className="flex flex-wrap gap-1 mt-2">
+                  {selectedTicket.attachments.map((atta, index) => (
+                    <img
+                      src={`${VITE_BACKEND}/uploads/${atta}`}
+                      className="w-16 h-auto rounded-lg hover:border cursor-pointer border-secondary"
+                      title={atta}
+                      key={`${atta}-${index}`}
+                      onClick={(e) => openImage(atta)}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
             <div className="col-6 d-flex flex-column">
               <div className="border rounded-lg border-secondary bg-dark mb-2 flex-grow-1">

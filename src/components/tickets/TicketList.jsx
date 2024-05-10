@@ -137,7 +137,9 @@ export const TicketList = ({ user, tickets, setSelectedTicket }) => {
                   className="text-gray-400 mt-1 text-end"
                   style={{ fontSize: "10px" }}
                 >
-                  De: {ticket.createdBy.name} {ticket.createdBy.lastName}
+                  {ticket.createdBy._id === user._id
+                    ? "Creado por mi"
+                    : `De: ${ticket.createdBy.name} ${ticket.createdBy.lastName}`}
                 </p>
               </div>
             </div>
