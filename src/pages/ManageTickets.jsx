@@ -12,12 +12,17 @@ export const ManageTickets = ({ user, users }) => {
   );
   const { startGetTicketByArea, startPutObservers } = useTicketsStore();
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const { VITE_BACKEND } = getEnvVariables();
 
-  useEffect(() => {
-    startGetTicketByArea(area);
-  }, []);
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const putObservers = async (userID) => {
     const canDeleteObserver =
@@ -30,6 +35,10 @@ export const ManageTickets = ({ user, users }) => {
     }
   };
 
+  const putPriority = async (ticket) => {
+    console.log(ticket);
+  };
+
   const openImage = (atta) => {
     Swal.fire({
       imageUrl: `${VITE_BACKEND}/uploads/${atta}`,
@@ -40,6 +49,9 @@ export const ManageTickets = ({ user, users }) => {
     });
   };
 
+  useEffect(() => {
+    startGetTicketByArea(area);
+  }, []);
   return (
     <>
       {selectedTicket ? (
@@ -83,13 +95,40 @@ export const ManageTickets = ({ user, users }) => {
                   </p>
                 </div>
               )}
-
               <p className="text-xs text-secondary">ID {selectedTicket._id}</p>
             </div>
             <div>
               <h1 className="text-sm flex justify-end font-medium">
                 {selectedTicket.createdBy.name}{" "}
                 {selectedTicket.createdBy.lastName}
+                {selectedTicket.priority === 3 ? (
+                  <i
+                    className={`ri ${
+                      isHovered ? "ri-fire-fill" : "ri-fire-line"
+                    } ml-1 cursor-pointer`}
+                    onClick={(e) => putPriority(selectedTicket)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  ></i>
+                ) : selectedTicket.priority === 2 ? (
+                  <i
+                    className={`ri ${
+                      isHovered ? "ri-fire-fill" : "ri-fire-line"
+                    } ml-1 cursor-pointer text-warning`}
+                    onClick={(e) => putPriority(selectedTicket)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  ></i>
+                ) : (
+                  <i
+                    className={`ri ${
+                      isHovered ? "ri-fire-fill" : "ri-fire-line"
+                    } ml-1 cursor-pointer text-danger`}
+                    onClick={(e) => putPriority(selectedTicket)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  ></i>
+                )}
               </h1>
               <p className="text-secondary text-xs flex justify-end">
                 {moment(selectedTicket.createdAt).format("DD/MM/YYYY HH:mm:ss")}
@@ -206,7 +245,6 @@ export const ManageTickets = ({ user, users }) => {
           <h1 className="text-sm">Seleccione un ticket para gestionar.</h1>
         </div>
       )}
-
       <TicketList
         user={user}
         tickets={tickets}
