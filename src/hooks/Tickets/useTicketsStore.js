@@ -73,10 +73,10 @@ export const useTicketsStore = () => {
   const startPutObservers = async (ticketID, observerID) => {
     try {
       dispatch(setTicketsLoading(true));
-      const { data } = await apiConn.delete(
-        `/tickets/put-observers/${ticketID}`,
-        observerID
-      );
+      const { data } = await apiConn.put(`/tickets/put-observers/${ticketID}`, {
+        user: observerID,
+      });
+      console.log(data);
       dispatch(setTicketsLoading(false));
       return data;
     } catch (error) {

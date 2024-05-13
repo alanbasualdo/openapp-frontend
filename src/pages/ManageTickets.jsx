@@ -7,7 +7,9 @@ import moment from "moment";
 import Swal from "sweetalert2";
 
 export const ManageTickets = ({ user, users }) => {
-  const { tickets, area } = useSelector((state) => state.tickets);
+  const { tickets, area, ticketsLoading } = useSelector(
+    (state) => state.tickets
+  );
   const { startGetTicketByArea, startPutObservers } = useTicketsStore();
   const [selectedTicket, setSelectedTicket] = useState(null);
 
@@ -17,8 +19,15 @@ export const ManageTickets = ({ user, users }) => {
     startGetTicketByArea(area);
   }, []);
 
-  const putObservers = async () => {
-    const data = await startPutObservers(selectedTicket._id, user._id);
+  const putObservers = async (userID) => {
+    const canDeleteObserver =
+      selectedTicket.area === user.area || userID === user._id;
+    if (canDeleteObserver) {
+      const data = await startPutObservers(selectedTicket._id, userID);
+      console.log(data);
+    } else {
+      alert("No tienes permiso para eliminar este observador.");
+    }
   };
 
   const openImage = (atta) => {
@@ -33,7 +42,7 @@ export const ManageTickets = ({ user, users }) => {
 
   return (
     <>
-      {selectedTicket && (
+      {selectedTicket ? (
         <div className="rounded-lg py-3 px-4 text-white bg-gray mb-3">
           <div className="flex justify-between">
             <div>
@@ -79,7 +88,7 @@ export const ManageTickets = ({ user, users }) => {
             </div>
             <div>
               <h1 className="text-sm flex justify-end font-medium">
-                Creado por: {selectedTicket.createdBy.name}{" "}
+                {selectedTicket.createdBy.name}{" "}
                 {selectedTicket.createdBy.lastName}
               </h1>
               <p className="text-secondary text-xs flex justify-end">
@@ -129,6 +138,7 @@ export const ManageTickets = ({ user, users }) => {
                       key={obs._id}
                       className="cursor-pointer text-xs mb-3"
                       title="Eliminar"
+                      onClick={(e) => putObservers(obs._id)}
                     >
                       <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
                         {obs.name} {obs.lastName}
@@ -191,12 +201,17 @@ export const ManageTickets = ({ user, users }) => {
             </div>
           </div>
         </div>
+      ) : (
+        <div className="text-center mb-4">
+          <h1 className="text-sm">Seleccione un ticket para gestionar.</h1>
+        </div>
       )}
 
       <TicketList
         user={user}
         tickets={tickets}
         setSelectedTicket={setSelectedTicket}
+        ticketsLoading={ticketsLoading}
       />
     </>
   );
