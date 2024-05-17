@@ -15,6 +15,7 @@ import { Loader } from "../components/Loader";
 import { UsersPage } from "../pages/SystemDep/UsersPage";
 import { Sections } from "../pages/SystemDep/Sections";
 import { ManageTickets } from "../pages/ManageTickets";
+import { getEnvVariables } from "../helpers/getEnvVariables";
 
 export const AppRouter = () => {
   const { authStatus, user } = useSelector((state) => state.auth);
@@ -25,6 +26,7 @@ export const AppRouter = () => {
   const [showContent, setSetShowContent] = useState(true);
   const { startGetUsers } = useUserStore();
   const { checkAuth } = useAuthStore();
+  const { VITE_BACKEND } = getEnvVariables();
 
   const funcShowLeftbar = () => {
     if (window.innerWidth > 1240) {
@@ -121,6 +123,7 @@ export const AppRouter = () => {
                 setShowLeftbar={setShowLeftbar}
                 setShowRightbar={setShowRightbar}
                 user={user}
+                VITE_BACKEND={VITE_BACKEND}
               />
               <div className="flex" style={{ marginTop: "60px" }}>
                 <LeftSidebar
@@ -170,6 +173,7 @@ export const AppRouter = () => {
                   showRightbar={showRightbar}
                   showContent={showContent}
                   user={user}
+                  VITE_BACKEND={VITE_BACKEND}
                 />
               </div>
             </>

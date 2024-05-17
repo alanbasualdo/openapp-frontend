@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export const RightSidebar = ({ showRightbar, showContent, user }) => {
+export const RightSidebar = ({
+  showRightbar,
+  showContent,
+  user,
+  VITE_BACKEND,
+}) => {
   const [searchUser, setSetSearchUser] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const { users } = useSelector((state) => state.user);
@@ -186,7 +191,7 @@ export const RightSidebar = ({ showRightbar, showContent, user }) => {
                         <div className="flex items-center gap-x-5">
                           <img
                             className="flex-none rounded-full"
-                            src={`https://api.opencars.com.ar/api/download/usuarios/${user.cuil}`}
+                            src={`${VITE_BACKEND}/uploads/${user.userPhoto}`}
                             alt="Foto de perfil"
                             style={{
                               objectFit: "cover",

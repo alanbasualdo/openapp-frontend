@@ -9,10 +9,19 @@ import {
 export const useUserStore = () => {
   const dispatch = useDispatch();
 
-  const startCreateUser = async (userData) => {
+  const startCreateUser = async (userData, files) => {
     try {
       dispatch(setUserLoading(true));
-      const { data } = await apiConn.post("/user/post", userData);
+      const formData = new FormData();
+      formData.append("user", JSON.stringify(userData));
+      files.forEach((file) => {
+        formData.append("attachments", file);
+      });
+      const { data } = await apiConn.post("/user/post-user", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       dispatch(setUserLoading(false));
       return data;
     } catch (error) {

@@ -12,6 +12,7 @@ export const Navbar = ({
   setShowLeftbar,
   setShowRightbar,
   user,
+  VITE_BACKEND,
 }) => {
   const { startLogout } = useAuthStore();
   const textRef = useRef(null);
