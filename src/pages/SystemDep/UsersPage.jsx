@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { ManageUsers } from "../../components/users/ManageUsers";
 import { UserList } from "../../components/users/UserList";
 import { useUserStore } from "../../hooks/Users/useUserStore";
+import { UserView } from "../../components/users/UserView";
 
 export const UsersPage = () => {
   const [createUserClick, setCreateUserClick] = useState(false);
-  const [searchUser, setSetSearchUser] = useState(false);
   const { startGetUsers } = useUserStore();
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     startGetUsers();
@@ -19,7 +20,13 @@ export const UsersPage = () => {
         setCreateUserClick={setCreateUserClick}
       />
       <hr className="text-white my-3" />
-      <UserList />
+      <UserList setSelectedUser={setSelectedUser} />
+      {selectedUser && (
+        <UserView
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+        />
+      )}
     </div>
   );
 };

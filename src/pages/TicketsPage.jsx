@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 export const TicketsPage = () => {
-    const [btnActivated, setBtnActivated] = useState(false);
+  const [btnActivated, setBtnActivated] = useState(false);
   const [section, setSection] = useState("");
 
   const activeBtn = () => {
@@ -145,7 +145,7 @@ export const TicketsPage = () => {
           </div>
         ) : (
           <div className="bg-dark p-1 rounded-lg ">
-            <table className="table table-hover table-dark">
+            <table className="table table-hover table-dark text-sm">
               <thead>
                 <tr>
                   <th scope="col">Ciudad</th>
@@ -173,5 +173,5 @@ export const TicketsPage = () => {
         )}
       </div>
     </>
-  )
-}
+  );
+};

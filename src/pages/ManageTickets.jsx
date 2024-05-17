@@ -52,6 +52,7 @@ export const ManageTickets = ({ user, users }) => {
   useEffect(() => {
     startGetTicketByArea(area);
   }, []);
+
   return (
     <>
       {selectedTicket ? (

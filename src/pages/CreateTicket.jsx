@@ -78,11 +78,8 @@ export const CreateTicket = ({ user, users }) => {
       {selectedTicket ? (
         <>
           <div className="text-end">
-            <button
-              className="btn btn-sm btn-secondary mb-2"
-              onClick={(e) => setSelectedTicket(null)}
-            >
-              Cerrar
+            <button className="mb-1" onClick={(e) => setSelectedTicket(null)}>
+              <i className="ri-close-fill text-sm cursor-pointer text-red-600 font-bold hover:text-red-300"></i>
             </button>
           </div>
           <UserManageTicket selectedTicket={selectedTicket} />

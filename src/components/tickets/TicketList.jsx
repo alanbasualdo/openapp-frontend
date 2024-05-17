@@ -8,6 +8,7 @@ export const TicketList = ({
   setSelectedTicket,
 }) => {
   const [orderByStatus, setOrderByStatus] = useState("");
+  const area = localStorage.getItem("area");
 
   const handleOrderByStatus = (status) => {
     // Si se hace clic en la misma opción, desactivar el filtro
@@ -144,12 +145,16 @@ export const TicketList = ({
                 <div className="flex flex-col justify-center items-end">
                   <p className="text-xs text-white truncate md:truncate-words-lg lg:truncate-words-xl">
                     {ticket.title}
-                    {ticket.priority === 3 ? (
-                      <i className="ri-fire-line ml-1"></i>
-                    ) : ticket.priority === 2 ? (
-                      <i className="ri-fire-line text-warning ml-1"></i>
-                    ) : (
-                      <i className="ri-fire-line text-danger ml-1"></i>
+                    {area !== "userTicket" && (
+                      <>
+                        {ticket.priority === 3 ? (
+                          <i className="ri-fire-line ml-1"></i>
+                        ) : ticket.priority === 2 ? (
+                          <i className="ri-fire-line text-warning ml-1"></i>
+                        ) : (
+                          <i className="ri-fire-line text-danger ml-1"></i>
+                        )}
+                      </>
                     )}
                   </p>
                   <p

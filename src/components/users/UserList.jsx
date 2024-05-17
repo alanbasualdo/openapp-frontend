@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export const UserList = () => {
+export const UserList = ({ setSelectedUser }) => {
   const [search, setSearch] = useState("");
   const { users, totalUsers } = useSelector((state) => state.user);
 
@@ -39,28 +39,31 @@ export const UserList = () => {
           </div>
         )}
       </div>
-      <div
-        className="bg-dark p-1 rounded-lg "
-        style={{ overflowX: "auto" }}
-      >
-        <table className="table table-hover table-dark">
+      <div className="bg-dark p-1 rounded-lg " style={{ overflowX: "auto" }}>
+        <table className="table table-hover table-dark text-sm">
           <thead>
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Apellido</th>
               <th scope="col">Usuario</th>
-              <th scope="col">Ciudad</th>
               <th scope="col">Sucursal</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user) => (
-              <tr key={user._id} className="cursor-pointer">
+              <tr
+                key={user._id}
+                className="cursor-pointer"
+                onClick={() => {
+                  setSelectedUser(user);
+                }}
+              >
                 <td>{user.name}</td>
                 <td>{user.lastName}</td>
                 <td>{user.userName}</td>
-                <td>{user.city}</td>
-                <td>{user.branch}</td>
+                <td>
+                  {user.branch?.company} {user.branch?.city}
+                </td>
               </tr>
             ))}
           </tbody>

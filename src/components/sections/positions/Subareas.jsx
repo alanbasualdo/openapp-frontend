@@ -182,7 +182,7 @@ export const Subareas = ({ setBtnActivated }) => {
           </div>
         ) : (
           <div className="bg-dark p-1 rounded-lg ">
-            <table className="table table-hover table-dark">
+            <table className="table table-hover table-dark text-sm">
               <thead>
                 <tr>
                   <th scope="col">Subárea</th>

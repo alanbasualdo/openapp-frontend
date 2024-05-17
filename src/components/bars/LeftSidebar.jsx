@@ -29,6 +29,8 @@ export const LeftSidebar = ({
     const area = areas.find((area) => area.name === areaName);
     if (area) {
       dispatch(setArea(area._id));
+    } else {
+      dispatch(setArea(areaName));
     }
   };
 
@@ -62,7 +64,10 @@ export const LeftSidebar = ({
                   <Link
                     className="hover:font-bold"
                     to="/createticket"
-                    onClick={() => funcCloseBar()}
+                    onClick={() => {
+                      funcCloseBar();
+                      handleTicketArea("userTicket");
+                    }}
                   >
                     Crear ticket
                   </Link>
@@ -130,7 +135,10 @@ export const LeftSidebar = ({
                   <Link
                     className="hover:font-bold"
                     to="/managetickets"
-                    onClick={() => handleTicketArea("Sistemas")}
+                    onClick={() => {
+                      funcCloseBar();
+                      handleTicketArea("Sistemas");
+                    }}
                   >
                     Gestionar tickets
                   </Link>
