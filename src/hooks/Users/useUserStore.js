@@ -44,8 +44,30 @@ export const useUserStore = () => {
     }
   };
 
+  const startPutUser = async (userId, userData, files) => {
+    try {
+      dispatch(setUserLoading(true));
+      const formData = new FormData();
+      formData.append("user", JSON.stringify(userData));
+      files.forEach((file) => {
+        formData.append("attachments", file);
+      });
+      const { data } = await apiConn.put(`/user/put-user/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      dispatch(setUserLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setUserLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
   return {
     startCreateUser,
     startGetUsers,
+    startPutUser,
   };
 };
