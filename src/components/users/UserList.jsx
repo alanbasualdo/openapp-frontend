@@ -21,6 +21,7 @@ export const UserList = ({ setSelectedUser }) => {
       <div className="row mx-auto justify-content-center mb-3">
         <div className="col-md-4 d-flex align-items-center justify-content-center font-medium">
           <input
+            name="search-user-input"
             type="text"
             className="border-none outline-none bg-transparent focus:ring-0 w-full text-center"
             placeholder="Buscar usuario"

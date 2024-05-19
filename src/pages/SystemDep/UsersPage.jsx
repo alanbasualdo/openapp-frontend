@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ManageUsers } from "../../components/users/ManageUsers";
 import { UserList } from "../../components/users/UserList";
 import { useUserStore } from "../../hooks/Users/useUserStore";
-import { UserView } from "../../components/users/UserView";
 
 export const UsersPage = () => {
   const [createUser, setCreateUser] = useState(false);
@@ -48,13 +47,6 @@ export const UsersPage = () => {
         </>
       )}
       <UserList setSelectedUser={setSelectedUser} />
-      {/* Puedes descomentar UserView si deseas mostrarlo al seleccionar un usuario
-      {selectedUser && (
-        <UserView
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-        />
-      )} */}
     </div>
   );
 };

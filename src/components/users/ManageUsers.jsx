@@ -31,6 +31,7 @@ export const ManageUsers = ({
   const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
     useFileDropzone("userPhoto", files, setFiles);
   const { VITE_BACKEND } = getEnvVariables();
+  const [havePhone, setHavePhone] = useState(false);
 
   const initialStateUserData = {
     name: "",
@@ -44,10 +45,11 @@ export const ManageUsers = ({
     admissionDate: "",
     departureDate: "",
     payroll: "",
-    branch: "",
     area: "",
     subarea: "",
+    branch: "",
     position: "",
+    phoneNumber: "",
   };
 
   const [userData, setUserData] = useState(initialStateUserData);
@@ -120,16 +122,22 @@ export const ManageUsers = ({
         departureDate: selectedUser.departureDate
           ? selectedUser.departureDate.split("T")[0]
           : "",
+        position: selectedUser.position._id,
+        area: selectedUser.area._id,
+        subarea: selectedUser.subarea._id,
+        phoneNumber: selectedUser.phoneNumber || "",
       };
       setUserData(formattedUser);
+      setHavePhone(!!selectedUser.phoneNumber);
     } else {
       setUserData(initialStateUserData);
+      setHavePhone(false);
     }
   }, [selectedUser]);
 
   return (
     <div>
-      <h1 className="text-white font-bold text-md mb-4">
+      <h1 className="text-white font-bold text-md mb-2">
         {selectedUser ? "Modificación de usuario" : "Creación de usuario"}
       </h1>
       <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
@@ -200,7 +208,11 @@ export const ManageUsers = ({
                       {...getRootPropsFile()}
                       className="bg-dark rounded-lg p-3 cursor-pointer hover:border text-sm text-center flex items-center justify-center h-52 w-80"
                     >
-                      <input {...getInputPropsFile()} className="hidden" />
+                      <input
+                        {...getInputPropsFile()}
+                        className="hidden"
+                        name="files-input"
+                      />
                       {isDragActiveFile ? (
                         <p className="text-center m-0">
                           Suelte los archivos aquí...
@@ -221,6 +233,7 @@ export const ManageUsers = ({
                 Nombre/s
               </span>
               <input
+                name="name-input"
                 type="text"
                 className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                 value={userData.name}
@@ -234,6 +247,7 @@ export const ManageUsers = ({
                 Apellido/s
               </span>
               <input
+                name="lastName-input"
                 type="text"
                 className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                 value={userData.lastName}
@@ -247,6 +261,7 @@ export const ManageUsers = ({
                 CUIL
               </span>
               <input
+                name="cuil-input"
                 type="number"
                 className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                 value={userData.cuil}
@@ -260,6 +275,7 @@ export const ManageUsers = ({
                 Fecha de nacimiento
               </span>
               <input
+                name="birthdate-input"
                 type="date"
                 className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                 value={userData.birthdate}
@@ -269,10 +285,14 @@ export const ManageUsers = ({
               />
             </div>
             <div className="input-group input-group-sm w-full">
-              <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+              <label
+                className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none"
+                htmlFor="gender-select"
+              >
                 Género
               </label>
               <select
+                id="gender-select"
                 className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
                 value={userData.gender}
                 onChange={(e) =>
@@ -298,6 +318,7 @@ export const ManageUsers = ({
                 Usuario
               </span>
               <input
+                name="files-userName"
                 type="text"
                 className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                 value={userData.userName}
@@ -311,6 +332,7 @@ export const ManageUsers = ({
                 Email
               </span>
               <input
+                name="files-email"
                 type="text"
                 className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                 value={userData.email}
@@ -326,6 +348,7 @@ export const ManageUsers = ({
                     Contraseña
                   </span>
                   <input
+                    name="password-input"
                     type={seePassword ? "text" : "password"}
                     className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                     value={userData.password}
@@ -351,6 +374,7 @@ export const ManageUsers = ({
                     Repetir contraseña
                   </span>
                   <input
+                    name="rpassword-input"
                     type={seeSecondPassword ? "text" : "password"}
                     className={`form-control input-none bg-dark rounded-lg py-1 px-3 text-white ${
                       userData.password !== secondPassword && "border-red-500"
@@ -383,6 +407,7 @@ export const ManageUsers = ({
                 Fecha de ingreso
               </span>
               <input
+                name="admissionDate-input"
                 type="date"
                 className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
                 value={userData.admissionDate}
@@ -395,10 +420,14 @@ export const ManageUsers = ({
               />
             </div>
             <div className="input-group input-group-sm w-full">
-              <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+              <label
+                className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none"
+                htmlFor="payroll-select"
+              >
                 Nómina
               </label>
               <select
+                id="payroll-select"
                 className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
                 value={userData.payroll}
                 onChange={(e) =>
@@ -415,12 +444,16 @@ export const ManageUsers = ({
               </select>
             </div>
             <div className="input-group input-group-sm w-full">
-              <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+              <label
+                className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none"
+                htmlFor="area-select"
+              >
                 Área
               </label>
               <select
+                id="area-select"
                 className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
-                value={userData.area}
+                value={selectedUser ? selectedUser.area._id : userData.area}
                 onChange={(e) =>
                   setUserData({ ...userData, area: e.target.value })
                 }
@@ -436,10 +469,14 @@ export const ManageUsers = ({
               </select>
             </div>
             <div className="input-group input-group-sm w-full">
-              <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+              <label
+                className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none"
+                htmlFor="subarea-select"
+              >
                 Subárea
               </label>
               <select
+                id="subarea-select"
                 className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
                 value={userData.subarea}
                 onChange={(e) =>
@@ -457,10 +494,14 @@ export const ManageUsers = ({
               </select>
             </div>
             <div className="input-group input-group-sm w-full">
-              <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+              <label
+                className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none"
+                htmlFor="branch-select"
+              >
                 Sucursal
               </label>
               <select
+                id="branch-select"
                 className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
                 value={userData.branch}
                 onChange={(e) =>
@@ -468,21 +509,24 @@ export const ManageUsers = ({
                 }
               >
                 <option value="" disabled>
-                  Seleccionar sucursal
+                  Seleccionar posiciones
                 </option>
                 {branches.map((branch) => (
                   <option key={branch._id} value={branch._id}>
-                    {branch.brand} - {branch.company} - {branch.province} -{" "}
-                    {branch.city}
+                    {branch.company} - {branch.city}
                   </option>
                 ))}
               </select>
             </div>
             <div className="input-group input-group-sm w-full">
-              <label className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none">
+              <label
+                className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none"
+                htmlFor="position-select"
+              >
                 Posición
               </label>
               <select
+                id="position-select"
                 className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
                 value={userData.position}
                 onChange={(e) =>
@@ -490,7 +534,7 @@ export const ManageUsers = ({
                 }
               >
                 <option value="" disabled>
-                  Seleccionar posiciónes
+                  Seleccionar posiciones
                 </option>
                 {positions.map((position) => (
                   <option key={position._id} value={position._id}>
@@ -499,6 +543,56 @@ export const ManageUsers = ({
                 ))}
               </select>
             </div>
+            <div className="input-group input-group-sm w-full">
+              <div className="input-group input-group-sm">
+                <span className="input-group-text bg-dark input-none p-0 w-full">
+                  <label
+                    className="input-group-text text-sm font-medium bg-dark text-white input-none bg-dark input-none col-10 px-2"
+                    htmlFor="phoneNumber-check"
+                  >
+                    ¿Tiene celular corporativo?
+                  </label>
+                  <div className="form-check form-switch col-2 flex items-center justify-center">
+                    <input
+                      id="phoneNumber-check"
+                      className="form-check-input input-sm"
+                      type="checkbox"
+                      role="switch"
+                      checked={havePhone}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setHavePhone(checked);
+                        if (!checked) {
+                          setUserData({ ...userData, phoneNumber: "" });
+                        }
+                      }}
+                    />
+                  </div>
+                </span>
+              </div>
+            </div>
+            {havePhone && (
+              <div className="input-group input-group-sm w-full">
+                <label
+                  className="input-group-text font-medium bg-dark text-white input-none bg-dark input-none"
+                  htmlFor="phoneNumber-input"
+                >
+                  Número
+                </label>
+                <input
+                  id="phoneNumber-input"
+                  type="number"
+                  className="form-control input-none bg-dark rounded-lg py-1 px-3 text-white"
+                  value={userData.phoneNumber || ""}
+                  onChange={(e) =>
+                    setUserData({
+                      ...userData,
+                      phoneNumber: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
