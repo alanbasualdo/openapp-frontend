@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useUserStore } from "../../hooks/Users/useUserStore";
 import { useSelector } from "react-redux";
-import { showErrorMessage, showSuccessMessage } from "../../utils/showMessages";
+import {
+  showConfirmDialog,
+  showErrorMessage,
+  showSuccessMessage,
+} from "../../utils/showMessages";
 import { useBranchSectionStore } from "../../hooks/CompanySections/useBranchSectionStore";
 import { usePositionSectionStore } from "../../hooks/PositionsSections/usePositionSectionStore";
 import { useAreaSectionStore } from "../../hooks/PositionsSections/useAreaSectionStore";
@@ -78,20 +82,23 @@ export const ManageUsers = ({
   };
 
   const updateUser = async () => {
-    try {
-      const data = await startPutUser(selectedUser._id, userData, files);
-      if (data.success) {
-        showSuccessMessage(data.message);
-        setCreateUser(false);
-        setSelectedUser(null);
-        resetForm();
-        startGetUsers();
-      } else {
-        showErrorMessage(data.message);
+    const result = await showConfirmDialog();
+    if (result.isConfirmed) {
+      try {
+        const data = await startPutUser(selectedUser._id, userData, files);
+        if (data.success) {
+          showSuccessMessage(data.message);
+          setCreateUser(false);
+          setSelectedUser(null);
+          resetForm();
+          startGetUsers();
+        } else {
+          showErrorMessage(data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        showErrorMessage(error.response.data.message);
       }
-    } catch (error) {
-      console.log(error);
-      showErrorMessage(error.response.data.message);
     }
   };
 
@@ -122,9 +129,10 @@ export const ManageUsers = ({
         departureDate: selectedUser.departureDate
           ? selectedUser.departureDate.split("T")[0]
           : "",
-        position: selectedUser.position._id,
-        area: selectedUser.area._id,
-        subarea: selectedUser.subarea._id,
+        position: selectedUser.position && selectedUser.position._id,
+        area: selectedUser.area && selectedUser.area._id,
+        subarea: selectedUser.subarea && selectedUser.subarea._id,
+        branch: selectedUser.branch && selectedUser.branch._id,
         phoneNumber: selectedUser.phoneNumber || "",
       };
       setUserData(formattedUser);
@@ -147,11 +155,14 @@ export const ManageUsers = ({
               Datos personales
             </h1>
             <div className="flex items-center justify-center w-full">
-              {selectedUser ? (
+              {selectedUser && selectedUser.userPhoto ? (
                 <div className="w-full mb-2 flex items-center justify-center">
-                  <label htmlFor="fileInput" className="cursor-pointer">
+                  <label
+                    htmlFor="fileInput"
+                    className="cursor-pointer bg-transparent"
+                  >
                     <img
-                      className="rounded-lg h-72 hover:opacity-50 transition-opacity duration-300"
+                      className="rounded-lg h-72 hover:opacity-50 transition-opacity duration-300 object-cover"
                       src={`${VITE_BACKEND}/uploads/${selectedUser.userPhoto}`}
                       alt={selectedUser.userPhoto}
                       title={selectedUser.userPhoto}
@@ -453,7 +464,11 @@ export const ManageUsers = ({
               <select
                 id="area-select"
                 className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white input-none bg-dark"
-                value={selectedUser ? selectedUser.area._id : userData.area}
+                value={
+                  selectedUser
+                    ? selectedUser.area && selectedUser.area._id
+                    : userData.area
+                }
                 onChange={(e) =>
                   setUserData({ ...userData, area: e.target.value })
                 }

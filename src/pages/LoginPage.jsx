@@ -70,7 +70,7 @@ export const LoginPage = () => {
           <button
             className="btn btn-dark"
             onClick={() => login()}
-            disabled={!loginData.userName || !loginData.password || authLoading}
+            /*   disabled={!loginData.userName || !loginData.password || authLoading} */
           >
             {authLoading ? (
               <div className="spinner-border spinner-border-sm" role="status">

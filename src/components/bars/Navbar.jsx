@@ -12,7 +12,6 @@ export const Navbar = ({
   setShowLeftbar,
   setShowRightbar,
   user,
-  VITE_BACKEND,
 }) => {
   const { startLogout } = useAuthStore();
   const textRef = useRef(null);
@@ -32,6 +31,7 @@ export const Navbar = ({
       text: "OpenApp",
       x: 20,
       opacity: 1,
+      color: "#005b94", // Color original del texto
       ease: "power2.inOut",
     });
   };
@@ -42,6 +42,7 @@ export const Navbar = ({
       text: "OA",
       x: 0,
       opacity: 1,
+      color: "#005b94", // Color original del texto
       ease: "power2.inOut",
     });
   };

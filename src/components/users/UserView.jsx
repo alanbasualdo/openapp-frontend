@@ -144,12 +144,21 @@ export const UserView = ({ selectedUser, setSelectedUser }) => {
                       <div className="order-1 sm:order-2 w-full">
                         <div className="w-full mb-2 flex items-center justify-center">
                           <label htmlFor="fileInput" className="cursor-pointer">
-                            <img
-                              className="rounded-lg h-72 hover:opacity-50 transition-opacity duration-300"
-                              src={`${VITE_BACKEND}/uploads/${selectedUser.userPhoto}`}
-                              alt={selectedUser.userPhoto}
-                              title={selectedUser.userPhoto}
-                            />
+                            {selectedUser.userPhoto ? (
+                              <img
+                                className="rounded-lg h-72 hover:opacity-50 transition-opacity duration-300 object-cover"
+                                src={`${VITE_BACKEND}/uploads/${selectedUser.userPhoto}`}
+                                alt={selectedUser.userPhoto}
+                                title={selectedUser.userPhoto}
+                              />
+                            ) : (
+                              <img
+                                className="rounded-lg h-72 hover:opacity-50 transition-opacity duration-300 object-cover"
+                                src={`${VITE_BACKEND}/uploads/user.png`}
+                                alt={selectedUser.userPhoto}
+                                title={selectedUser.userPhoto}
+                              />
+                            )}
                           </label>
                           <input
                             id="fileInput"

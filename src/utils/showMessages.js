@@ -29,12 +29,12 @@ export const showErrorMessage = (message) => {
 export const showConfirmDialog = () => {
   return Swal.fire({
     title: "¿Está seguro?",
-    text: "No podrá revertir esta acción",
+    text: "No podrá revertir esta acción.",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Sí, eliminar!",
+    confirmButtonText: "Sí, estoy seguro!",
     cancelButtonText: "Cancelar",
   });
 };

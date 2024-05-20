@@ -188,17 +188,31 @@ export const RightSidebar = ({
                         className="flex justify-between rounded-lg py-2 px-2 cursor-pointer hover:bg-gray-700"
                         onClick={() => setOpenChat(true)}
                       >
-                        <div className="flex items-center gap-x-5">
-                          <img
-                            className="flex-none rounded-full"
-                            src={`${VITE_BACKEND}/uploads/${user.userPhoto}`}
-                            alt="Foto de perfil"
-                            style={{
-                              objectFit: "cover",
-                              width: "50px",
-                              height: "50px",
-                            }}
-                          />
+                        <div className="flex items-center gap-x-5 bg-transparent">
+                          {user.userPhoto ? (
+                            <img
+                              className="flex-none rounded-full"
+                              src={`${VITE_BACKEND}/uploads/${user.userPhoto}`}
+                              alt="Foto de perfil"
+                              style={{
+                                objectFit: "cover",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                            />
+                          ) : (
+                            <img
+                              className="flex-none rounded-full"
+                              src={`${VITE_BACKEND}/uploads/user.png`}
+                              alt="Foto de perfil"
+                              style={{
+                                objectFit: "cover",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                            />
+                          )}
+
                           <div className="min-w-0 flex-auto">
                             <div className="d-flex gap-2">
                               <p className="text-xs font-semibold leading-6 text-gray-200">
