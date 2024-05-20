@@ -68,3 +68,29 @@ input:-ms-input-placeholder {
 input::-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
+
+.custom-swal {
+  color: #fff; /* Color del texto */
+  text-align: center; /* Centrar el texto */
+  background-color: rgba(33, 37, 41); /* Fondo personalizado */
+}
+
+.custom-swal .swal2-title {
+  color: #fff; /* Color del título */
+  font-size: 1.25rem; /* Tamaño del título */
+}
+
+.custom-swal .swal2-html-container {
+  color: #fff; /* Color del contenido */
+  font-size: 1rem; /* Tamaño del subtítulo/contenido */
+}
+
+.custom-swal .swal2-confirm {
+  background-color: #3085d6 !important; /* Color del botón de confirmación */
+  color: #fff; /* Color del texto del botón de confirmación */
+}
+
+.custom-swal .swal2-cancel {
+  background-color: #d33 !important; /* Color del botón de cancelación */
+  color: #fff; /* Color del texto del botón de cancelación */
+}

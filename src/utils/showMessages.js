@@ -8,7 +8,9 @@ export const showSuccessMessage = (message) => {
     showConfirmButton: false,
     timer: 1300,
     customClass: {
-      title: "my-swal-title-class",
+      popup: "custom-swal", // Aplica la clase personalizada
+      confirmButton: "swal2-confirm",
+      cancelButton: "swal2-cancel",
     },
   });
 };
@@ -21,7 +23,9 @@ export const showErrorMessage = (message) => {
     showConfirmButton: false,
     timer: 1700,
     customClass: {
-      title: "my-swal-title-class",
+      popup: "custom-swal", // Aplica la clase personalizada
+      confirmButton: "swal2-confirm",
+      cancelButton: "swal2-cancel",
     },
   });
 };
@@ -29,11 +33,13 @@ export const showErrorMessage = (message) => {
 export const showConfirmDialog = () => {
   return Swal.fire({
     title: "¿Está seguro?",
-    text: "No podrá revertir esta acción.",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
+    customClass: {
+      popup: "custom-swal", // Aplica la clase personalizada
+      confirmButton: "swal2-confirm",
+      cancelButton: "swal2-cancel",
+    },
     confirmButtonText: "Sí, estoy seguro!",
     cancelButtonText: "Cancelar",
   });

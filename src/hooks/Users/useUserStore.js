@@ -65,9 +65,29 @@ export const useUserStore = () => {
     }
   };
 
+  const startPutPassword = async (userID, newPassword) => {
+    try {
+      dispatch(setUserLoading(true));
+      const { data } = await apiConn.put(
+        `/user/put-password/${userID}`, // Asegúrate de que userID tenga un valor válido
+        { newPassword } // Enviar newPassword dentro de un objeto
+      );
+      dispatch(setUserLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setUserLoading(false));
+      return {
+        success: false,
+        message:
+          error.response?.data?.message || "Error actualizando la contraseña",
+      };
+    }
+  };
+
   return {
     startCreateUser,
     startGetUsers,
     startPutUser,
+    startPutPassword,
   };
 };

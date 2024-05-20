@@ -5,7 +5,7 @@ import { useUserStore } from "../../hooks/Users/useUserStore";
 
 export const UsersPage = () => {
   const [createUser, setCreateUser] = useState(false);
-  const { startGetUsers } = useUserStore();
+  const { startGetUsers, startPutPassword } = useUserStore();
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
@@ -46,7 +46,10 @@ export const UsersPage = () => {
           <hr className="text-white my-3" />
         </>
       )}
-      <UserList setSelectedUser={setSelectedUser} />
+      <UserList
+        setSelectedUser={setSelectedUser}
+        startPutPassword={startPutPassword}
+      />
     </div>
   );
 };

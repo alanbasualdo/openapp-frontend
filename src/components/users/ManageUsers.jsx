@@ -19,11 +19,11 @@ export const ManageUsers = ({
   setSelectedUser,
 }) => {
   const { userLoading } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => state.auth);
   const { branches, positions, areas, subareas } = useSelector(
     (state) => state.companySection
   );
-  const { startCreateUser, startGetUsers, startPutUser } = useUserStore();
+  const { startCreateUser, startGetUsers, startPutUser, startPutPassword } =
+    useUserStore();
   const [seePassword, setSeePassword] = useState(false);
   const [seeSecondPassword, setSeeSecondPassword] = useState(false);
   const [secondPassword, setSecondPassword] = useState("");
@@ -81,7 +81,7 @@ export const ManageUsers = ({
     }
   };
 
-  const updateUser = async () => {
+  const putUser = async () => {
     const result = await showConfirmDialog();
     if (result.isConfirmed) {
       try {
@@ -615,7 +615,7 @@ export const ManageUsers = ({
         {selectedUser ? (
           <button
             className="btn btn-sm btn-success"
-            onClick={updateUser}
+            onClick={putUser}
             disabled={userLoading}
           >
             {userLoading ? (

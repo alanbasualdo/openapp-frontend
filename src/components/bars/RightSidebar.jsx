@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 
 export const RightSidebar = ({
@@ -6,11 +6,15 @@ export const RightSidebar = ({
   showContent,
   user,
   VITE_BACKEND,
+  onlineUsers,
 }) => {
-  const [searchUser, setSetSearchUser] = useState(false);
+  const [searchUser, setSearchUser] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const { users } = useSelector((state) => state.user);
   const [search, setSearch] = useState("");
+
+  // Convierte onlineUsers a un Set para una búsqueda más eficiente
+  const onlineUsersSet = useMemo(() => new Set(onlineUsers), [onlineUsers]);
 
   const filteredUsers = users.filter(
     (user) =>
@@ -18,6 +22,8 @@ export const RightSidebar = ({
       user.lastName.toLowerCase().includes(search.toLowerCase()) ||
       user.userName.toLowerCase().includes(search.toLowerCase())
   );
+
+  const isUserOnline = (userId) => onlineUsersSet.has(userId);
 
   return (
     <>
@@ -78,7 +84,7 @@ export const RightSidebar = ({
                   }}
                 >
                   <div className="p-2 flex-grow">
-                    {/* Mensaje recibio */}
+                    {/* Mensaje recibido */}
                     <div className="bg-light px-2 py-1 rounded-lg max-w-60 mb-1">
                       <p className="text-dark text-xs font-medium w-full">
                         hola mundo
@@ -219,18 +225,22 @@ export const RightSidebar = ({
                                 {user.name} {user.lastName}
                               </p>
                               <div className="flex items-center gap-x-1.5">
-                                <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                <div
+                                  className={`flex-none rounded-full p-1 ${
+                                    isUserOnline(user._id)
+                                      ? "bg-emerald-500/20"
+                                      : "bg-red-500/20"
+                                  }`}
+                                >
+                                  <div
+                                    className={`h-1.5 w-1.5 rounded-full ${
+                                      isUserOnline(user._id)
+                                        ? "bg-emerald-500"
+                                        : "bg-red-500"
+                                    }`}
+                                  />
                                 </div>
                               </div>
-                              {/* <div className="flex items-center gap-x-1.5">
-                                <div className="flex-none rounded-full bg-red-500/20 p-1">
-                                  <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                </div>
-                                <p className="text-xs leading-5 text-gray-700 font-medium truncate">
-                                  {useLastSeenFormat(user?.lastSeen)}
-                                </p>
-                              </div> */}
                             </div>
                             <div>
                               <p

@@ -3,6 +3,11 @@ import { useAuthStore } from "../../hooks/Users/useAuthStore";
 import { gsap } from "gsap";
 import { useRef } from "react";
 import { TextPlugin } from "gsap/TextPlugin";
+import {
+  showConfirmDialog,
+  showErrorMessage,
+  showSuccessMessage,
+} from "../../utils/showMessages";
 
 export const Navbar = ({
   funcShowLeftbar,
@@ -12,10 +17,30 @@ export const Navbar = ({
   setShowLeftbar,
   setShowRightbar,
   user,
+  socket,
 }) => {
   const { startLogout } = useAuthStore();
   const textRef = useRef(null);
   gsap.registerPlugin(TextPlugin);
+
+  const logout = async () => {
+    const result = await showConfirmDialog();
+    if (result.isConfirmed) {
+      try {
+        const data = startLogout();
+        if (data.success) {
+          socket.disconnect(); // Desconectar el socket al cerrar sesión
+          showSuccessMessage(data.message);
+        } else {
+          showErrorMessage(data.message);
+        }
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || "Error desconocido";
+        showErrorMessage(errorMessage);
+      }
+    }
+  };
 
   const funcCloseBar = () => {
     if (!showContent) {
@@ -143,7 +168,7 @@ export const Navbar = ({
               <Link to="/createTicket">Foto de perfil</Link>
             </li>
             <hr className="mb-1" />
-            <li className="dropdown-item" onClick={() => startLogout()}>
+            <li className="dropdown-item" onClick={() => logout()}>
               <Link to="/login">Cerra sesión</Link>
             </li>
           </ul>

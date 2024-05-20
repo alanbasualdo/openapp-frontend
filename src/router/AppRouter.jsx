@@ -16,6 +16,7 @@ import { UsersPage } from "../pages/SystemDep/UsersPage";
 import { Sections } from "../pages/SystemDep/Sections";
 import { ManageTickets } from "../pages/ManageTickets";
 import { getEnvVariables } from "../helpers/getEnvVariables";
+import { io } from "socket.io-client";
 
 export const AppRouter = () => {
   const { authStatus, user } = useSelector((state) => state.auth);
@@ -27,6 +28,11 @@ export const AppRouter = () => {
   const { startGetUsers } = useUserStore();
   const { checkAuth } = useAuthStore();
   const { VITE_BACKEND } = getEnvVariables();
+  const [onlineUsers, setOnlineUsers] = useState([]);
+
+  const socket = io(VITE_BACKEND, {
+    transports: ["websocket"],
+  });
 
   const funcShowLeftbar = () => {
     if (window.innerWidth > 1240) {
@@ -107,6 +113,18 @@ export const AppRouter = () => {
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    if (authStatus === "auth") {
+      socket.emit("join-room", user._id);
+      socket.on("online-users-updated", (users) => {
+        setOnlineUsers(users);
+      });
+    }
+    return () => {
+      socket.off("online-users-updated");
+    };
+  }, [authStatus]);
+
   return (
     <>
       {loading ? (
@@ -124,6 +142,7 @@ export const AppRouter = () => {
                 setShowRightbar={setShowRightbar}
                 user={user}
                 VITE_BACKEND={VITE_BACKEND}
+                socket={socket}
               />
               <div className="flex" style={{ marginTop: "60px" }}>
                 <LeftSidebar
@@ -174,6 +193,7 @@ export const AppRouter = () => {
                   showContent={showContent}
                   user={user}
                   VITE_BACKEND={VITE_BACKEND}
+                  onlineUsers={onlineUsers}
                 />
               </div>
             </>
