@@ -56,8 +56,7 @@ export const CreateTicket = ({ user, users }) => {
       const data = await startPostTicket(ticket, files);
       if (data.success) {
         showSuccessMessage(data.message);
-        setAddBtn(false);
-        createTicket();
+        clearTicket();
       } else {
         showErrorMessage(data.message);
       }
@@ -86,7 +85,7 @@ export const CreateTicket = ({ user, users }) => {
       {selectedTicket ? (
         <>
           <div className="text-end">
-            <button className="mb-1" onClick={(e) => setSelectedTicket(null)}>
+            <button className="mb-1" onClick={(e) => {setSelectedTicket(null); e.key === "Esc"}}>
               <i className="ri-close-fill text-sm cursor-pointer text-red-600 font-bold hover:text-red-300"></i>
             </button>
           </div>

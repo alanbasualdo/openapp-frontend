@@ -88,13 +88,7 @@ export const UserManageTicket = ({ selectedTicket }) => {
               <div className="py-1 px-2 w-full text-xs font-medium bg-dark rounded-md">
                 Categoría
               </div>
-              <p className="px-2 py-1 text-sm">{selectedTicket.category}</p>
-            </div>
-            <div className="w-full mb-3">
-              <div className="py-1 px-2 w-full text-xs font-medium bg-dark rounded-md">
-                Subcategoría
-              </div>
-              <p className="px-2 py-1 text-sm">{selectedTicket.subcategory}</p>
+              <p className="px-2 py-1 text-sm">{selectedTicket.category.categoryName}</p>
             </div>
             <div>
               <div className="py-1 px-2 w-full text-xs font-medium">
