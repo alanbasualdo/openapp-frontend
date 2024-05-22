@@ -60,11 +60,14 @@ export const useFileDropzone = (typeOfFile, files, setFiles) => {
     [typeOfFile, setFiles]
   );
 
-  const removeFile = (files, setFiles, index) => {
-    const updatedFileList = files.slice();
-    updatedFileList.splice(index, 1);
-    setFiles(updatedFileList);
-  };
+  const removeFile = useCallback(
+    (index) => {
+      const updatedFileList = files.slice();
+      updatedFileList.splice(index, 1);
+      setFiles(updatedFileList);
+    },
+    [files, setFiles]
+  );
 
   const {
     getRootProps: getRootPropsFile,
@@ -78,6 +81,6 @@ export const useFileDropzone = (typeOfFile, files, setFiles) => {
     getRootPropsFile,
     getInputPropsFile,
     isDragActiveFile,
-    removeFile: (index) => removeFile(files, setFiles, index),
+    removeFile,
   };
 };

@@ -6,6 +6,8 @@ export const ticketsSlice = createSlice({
     tickets: [],
     ticketsLoading: false,
     area: localStorage.getItem("area") || "",
+    loadingCategories: false,
+    categories: [],
   },
   reducers: {
     setTickets: (state, action) => {
@@ -16,11 +18,23 @@ export const ticketsSlice = createSlice({
     },
     setArea: (state, action) => {
       state.area = action.payload;
-      localStorage.setItem("area", action.payload); // Guardar el valor en localStorage al establecer el área
+      localStorage.setItem("area", action.payload);
+    },
+    setLoadingCategories: (state, action) => {
+      state.loadingCategories = action.payload;
+    },
+    setCategories: (state, action) => {
+      state.categories = action.payload;
     },
   },
 });
 
-export const { setTickets, setTicketsLoading, setArea } = ticketsSlice.actions;
+export const {
+  setTickets,
+  setTicketsLoading,
+  setArea,
+  setLoadingCategories,
+  setCategories,
+} = ticketsSlice.actions;
 
 export default ticketsSlice;

@@ -11,6 +11,7 @@ import { Ram } from "../../components/sections/pcs/Ram";
 import { Disks } from "../../components/sections/pcs/Disks";
 import { Models } from "../../components/sections/pcs/Models";
 import { Computers } from "../../components/sections/pcs/Computers";
+import { Categories } from "../../components/tickets/Categories";
 
 export const Sections = () => {
   const [btnActivated, setBtnActivated] = useState(false);
@@ -49,6 +50,9 @@ export const Sections = () => {
           {section === "models" && <Models setBtnActivated={setBtnActivated} />}
           {section === "computers" && (
             <Computers setBtnActivated={setBtnActivated} />
+          )}
+          {section === "categories" && (
+            <Categories setBtnActivated={setBtnActivated} />
           )}
         </div>
       ) : (
@@ -180,78 +184,6 @@ export const Sections = () => {
             </div>
           </div>
           <div className="text-center mt-4">
-            <h1 className="mb-2 font-medium">Configuración de celulares</h1>
-            <hr className="mb-2" />
-            <div className="btn-group btn-group-sm flex-wrap gap-1">
-              <button
-                className="btn btn-sm btn-opencars"
-                onClick={() => {
-                  activeBtn();
-                  setSection("brands");
-                }}
-              >
-                Marcas
-              </button>
-              <button
-                className="btn btn-sm btn-opencars"
-                onClick={() => {
-                  activeBtn();
-                  setSection("models");
-                }}
-              >
-                Modelos
-              </button>
-              <button
-                className="btn btn-sm btn-opencars"
-                onClick={() => {
-                  activeBtn();
-                  setSection("plans");
-                }}
-              >
-                Planes
-              </button>
-            </div>
-          </div>
-          <div className="text-center mt-4">
-            <h1 className="mb-2 font-medium">Configuración de redes</h1>
-            <hr className="mb-2" />
-            <div className="btn-group btn-group-sm flex-wrap gap-1">
-              <button
-                className="btn btn-sm btn-opencars"
-                onClick={() => {
-                  activeBtn();
-                  setSection("types");
-                }}
-              >
-                Tipo de dispositivos
-              </button>
-              <button
-                className="btn btn-sm btn-opencars"
-                onClick={() => {
-                  activeBtn();
-                  setSection("devices");
-                }}
-              >
-                Dispositivos
-              </button>
-            </div>
-          </div>
-          <div className="text-center mt-4">
-            <h1 className="mb-2 font-medium">Configuración de líneas</h1>
-            <hr className="mb-2" />
-            <div className="btn-group btn-group-sm flex-wrap gap-1">
-              <button
-                className="btn btn-sm btn-opencars"
-                onClick={() => {
-                  activeBtn();
-                  setSection("types");
-                }}
-              >
-                Tipo de líneas
-              </button>
-            </div>
-          </div>
-          <div className="text-center mt-4">
             <h1 className="mb-2 font-medium">Configuración de tickets</h1>
             <hr className="mb-2" />
             <div className="btn-group btn-group-sm flex-wrap gap-1">
@@ -272,15 +204,6 @@ export const Sections = () => {
                 }}
               >
                 Categorías
-              </button>
-              <button
-                className="btn btn-sm btn-opencars"
-                onClick={() => {
-                  activeBtn();
-                  setSection("subcategories");
-                }}
-              >
-                Subcategorías
               </button>
             </div>
           </div>

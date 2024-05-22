@@ -6,12 +6,12 @@ import { TicketList } from "../components/tickets/TicketList";
 import { showErrorMessage, showSuccessMessage } from "../utils/showMessages";
 import { useSelector } from "react-redux";
 import { UserManageTicket } from "../components/tickets/UserManageTicket";
+import { useCategoriesStore } from "../hooks/Tickets/useCategoriesStore";
 
 export const CreateTicket = ({ user, users }) => {
   const initialStateTicket = {
     area: "",
     category: "",
-    subcategory: "",
     title: "",
     description: "",
     observers: [],
@@ -22,10 +22,12 @@ export const CreateTicket = ({ user, users }) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
-    useFileDropzone(files, setFiles);
+    useFileDropzone("ticketFiles", files, setFiles);
+
   const { areas, startGetAreas } = useAreaSectionStore();
+  const { startGetCategoriesByArea } = useCategoriesStore();
   const { startPostTicket, startGetTicketByUser } = useTicketsStore();
-  const { tickets } = useSelector((state) => state.tickets);
+  const { tickets, categories } = useSelector((state) => state.tickets);
   const [selectedTicket, setSelectedTicket] = useState(null);
 
   const handleInputChange = (inputValue) => {
@@ -55,14 +57,19 @@ export const CreateTicket = ({ user, users }) => {
       if (data.success) {
         showSuccessMessage(data.message);
         setAddBtn(false);
-        setTicket(initialStateTicket);
-        setFiles([]);
+        createTicket();
       } else {
         showErrorMessage(data.message);
       }
     } catch (error) {
+      console.log(error);
       showErrorMessage(error.response.data.message);
     }
+  };
+
+  const clearTicket = () => {
+    setTicket(initialStateTicket);
+    setFiles([]);
   };
 
   useEffect(() => {
@@ -71,7 +78,8 @@ export const CreateTicket = ({ user, users }) => {
 
   useEffect(() => {
     startGetAreas();
-  }, [ticket]);
+    startGetCategoriesByArea(ticket.area);
+  }, [ticket.area]);
 
   return (
     <>
@@ -139,40 +147,11 @@ export const CreateTicket = ({ user, users }) => {
                     <option value="" disabled>
                       Seleccionar
                     </option>
-                    <option value="asdasdasdasdasdasdas">
-                      asdasdasdasdasdasdas
-                    </option>
-                    <option value="asdasdasdasdasdasdas">
-                      asdasdasdasdasdasdas
-                    </option>
-                    <option value="asdasdasdasdasdasdas">
-                      asdasdasdasdasdasdas
-                    </option>
-                  </select>
-                </div>
-                <div className="input-group input-group-sm w-full">
-                  <label className="input-group-text font-medium bg-dark text-white input-none">
-                    Subcategoría
-                  </label>
-                  <select
-                    className="form-select input-none bg-dark rounded-lg py-1 px-3 text-white"
-                    value={ticket.subcategory}
-                    onChange={(e) =>
-                      setTicket({ ...ticket, subcategory: e.target.value })
-                    }
-                  >
-                    <option value="" disabled>
-                      Seleccionar
-                    </option>
-                    <option value="asdasdasdasdasdasdas">
-                      asdasdasdasdasdasdas
-                    </option>
-                    <option value="asdasdasdasdasdasdas">
-                      asdasdasdasdasdasdas
-                    </option>
-                    <option value="asdasdasdasdasdasdas">
-                      asdasdasdasdasdasdas
-                    </option>
+                    {categories.map((category) => (
+                      <option key={category._id} value={category._id}>
+                        {category.categoryName}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -295,9 +274,7 @@ export const CreateTicket = ({ user, users }) => {
             <div className="text-center d-flex justify-content-center gap-3">
               <button
                 className="btn btn-sm btn-secondary"
-                onClick={() => {
-                  setTicket(initialStateTicket), setFiles([]);
-                }}
+                onClick={clearTicket}
               >
                 Limpiar
               </button>
