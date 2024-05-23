@@ -14,9 +14,9 @@ import { useAuthStore } from "../hooks/Users/useAuthStore";
 import { Loader } from "../components/Loader";
 import { UsersPage } from "../pages/SystemDep/UsersPage";
 import { Sections } from "../pages/SystemDep/Sections";
-import { ManageTickets } from "../pages/ManageTickets";
 import { getEnvVariables } from "../helpers/getEnvVariables";
 import { io } from "socket.io-client";
+import { ManageTickets } from "../pages/ManageTickets";
 
 export const AppRouter = () => {
   const { authStatus, user } = useSelector((state) => state.auth);
@@ -150,6 +150,7 @@ export const AppRouter = () => {
                   showContent={showContent}
                   setSetShowContent={setSetShowContent}
                   setShowLeftbar={setShowLeftbar}
+                  user={user}
                 />
                 <div
                   className="w-full bg-dark text-white app-router-padding justify-center align-center d-flex"
@@ -173,16 +174,20 @@ export const AppRouter = () => {
                           <Route path="/dollar" element={<DollarPage />} />
                           <Route
                             path="/createTicket"
-                            element={<CreateTicket user={user} users={users} />}
+                            element={<CreateTicket user={user} users={users} socket={socket} />}
                           />
                           <Route path="/users" element={<UsersPage />} />
-                          <Route path="/sections" element={<Sections />} />
-                          <Route
-                            path="/managetickets"
-                            element={
-                              <ManageTickets user={user} users={users} />
-                            }
-                          />
+                          {user.area.name === "Sistemas" && (
+                            <>
+                              <Route path="/sections" element={<Sections />} />
+                              <Route
+                                path="/managetickets"
+                                element={
+                                  <ManageTickets user={user} socket={socket}/>
+                                }
+                              />
+                            </>
+                          )}
                         </>
                       </Routes>
                     </div>

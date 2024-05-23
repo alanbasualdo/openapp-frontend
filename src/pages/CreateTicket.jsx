@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { UserManageTicket } from "../components/tickets/UserManageTicket";
 import { useCategoriesStore } from "../hooks/Tickets/useCategoriesStore";
 
-export const CreateTicket = ({ user, users }) => {
+export const CreateTicket = ({ user, users, socket }) => {
   const initialStateTicket = {
     area: "",
     category: "",
@@ -108,7 +108,11 @@ export const CreateTicket = ({ user, users }) => {
               <i className="ri-close-fill text-sm cursor-pointer text-red-600 font-bold hover:text-red-300"></i>
             </button>
           </div>
-          <UserManageTicket selectedTicket={selectedTicket} />
+          <UserManageTicket
+            selectedTicket={selectedTicket}
+            setSelectedTicket={setSelectedTicket}
+            socket={socket}
+          />
         </>
       ) : (
         <>

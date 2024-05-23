@@ -1,21 +1,26 @@
 import { useTicketsStore } from "../hooks/Tickets/useTicketsStore";
 import { TicketList } from "../components/tickets/TicketList";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getEnvVariables } from "../helpers/getEnvVariables";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { showErrorMessage, showSuccessMessage } from "../utils/showMessages";
+import { setTickets } from "../store/slices/ticketsSlice";
 
-export const ManageTickets = ({ user, users }) => {
+export const ManageTickets = ({ user, socket }) => {
   const { tickets, area, ticketsLoading } = useSelector(
     (state) => state.tickets
   );
-  const { startGetTicketByArea, startPutObservers, startPutPriority } =
-    useTicketsStore();
+  const {
+    startGetTicketByArea,
+    startPutObservers,
+    startPutPriority,
+    startPutStatus,
+  } = useTicketsStore();
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
-
+  const dispatch = useDispatch();
   const { VITE_BACKEND } = getEnvVariables();
 
   const handleMouseEnter = () => {
@@ -53,6 +58,30 @@ export const ManageTickets = ({ user, users }) => {
     }
   };
 
+  const putStatus = (newStatus) => {
+    socket.emit("change-ticket-status", {
+      ticketId: selectedTicket._id,
+      status: newStatus,
+    });
+  };
+
+  useEffect(() => {
+    socket.on("status-changed", (updatedTicket) => {
+      if (updatedTicket._id === selectedTicket._id) {
+        setSelectedTicket(updatedTicket);
+        showSuccessMessage();
+      }
+      startGetTicketByArea(area).then((data) => {
+        console.log(data);
+        dispatch(setTickets(data.tickets));
+      });
+    });
+
+    return () => {
+      socket.off("status-changed");
+    };
+  }, [selectedTicket, socket, area, dispatch, startGetTicketByArea]);
+
   const openImage = (atta) => {
     Swal.fire({
       imageUrl: `${VITE_BACKEND}/uploads/${atta}`,
@@ -86,36 +115,96 @@ export const ManageTickets = ({ user, users }) => {
                   <div className="flex-none rounded-full bg-blue-500/20 p-1">
                     <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
                   </div>
-                  <p className="text-sm font-medium text-white">
-                    {selectedTicket.status}
-                  </p>
+                  <select
+                    className="bg-transparent text-sm font-medium text-white"
+                    value={selectedTicket.status}
+                    onChange={(e) => putStatus(e.target.value)}
+                  >
+                    <option value="Pendiente" className="bg-dark">
+                      Pendiente
+                    </option>
+                    <option value="En curso" className="bg-dark">
+                      En curso
+                    </option>
+                    <option value="En espera" className="bg-dark">
+                      En espera
+                    </option>
+                    <option value="Cerrado" className="bg-dark">
+                      Cerrado
+                    </option>
+                  </select>
                 </div>
               ) : selectedTicket.status === "En curso" ? (
                 <div className="flex items-center justify-start gap-x-1.5">
                   <div className="flex-none rounded-full bg-red-500/20 p-1">
                     <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
                   </div>
-                  <p className="text-sm font-medium text-white">
-                    {selectedTicket.status}
-                  </p>
+                  <select
+                    className="bg-transparent text-sm font-medium text-white"
+                    value={selectedTicket.status}
+                    onChange={(e) => putStatus(e.target.value)}
+                  >
+                    <option value="Pendiente" className="bg-dark">
+                      Pendiente
+                    </option>
+                    <option value="En curso" className="bg-dark">
+                      En curso
+                    </option>
+                    <option value="En espera" className="bg-dark">
+                      En espera
+                    </option>
+                    <option value="Cerrado" className="bg-dark">
+                      Cerrado
+                    </option>
+                  </select>
                 </div>
               ) : selectedTicket.status === "En espera" ? (
                 <div className="flex items-center justify-start gap-x-1.5">
                   <div className="flex-none rounded-full bg-yellow-500/20 p-1">
                     <div className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
                   </div>
-                  <p className="text-sm font-medium text-white">
-                    {selectedTicket.status}
-                  </p>
+                  <select
+                    className="bg-transparent text-sm font-medium text-white"
+                    value={selectedTicket.status}
+                    onChange={(e) => putStatus(e.target.value)}
+                  >
+                    <option value="Pendiente" className="bg-dark">
+                      Pendiente
+                    </option>
+                    <option value="En curso" className="bg-dark">
+                      En curso
+                    </option>
+                    <option value="En espera" className="bg-dark">
+                      En espera
+                    </option>
+                    <option value="Cerrado" className="bg-dark">
+                      Cerrado
+                    </option>
+                  </select>
                 </div>
               ) : (
                 <div className="flex items-center justify-start gap-x-1.5">
                   <div className="flex-none rounded-full bg-gray-500/20 p-1">
                     <div className="h-1.5 w-1.5 rounded-full bg-gray-500" />
                   </div>
-                  <p className="text-sm font-medium text-white">
-                    {selectedTicket.status}
-                  </p>
+                  <select
+                    className="bg-transparent text-sm font-medium text-white"
+                    value={selectedTicket.status}
+                    onChange={(e) => putStatus(e.target.value)}
+                  >
+                    <option value="Pendiente" className="bg-dark">
+                      Pendiente
+                    </option>
+                    <option value="En curso" className="bg-dark">
+                      En curso
+                    </option>
+                    <option value="En espera" className="bg-dark">
+                      En espera
+                    </option>
+                    <option value="Cerrado" className="bg-dark">
+                      Cerrado
+                    </option>
+                  </select>
                 </div>
               )}
               <p className="text-xs text-secondary">ID {selectedTicket._id}</p>
@@ -172,14 +261,6 @@ export const ManageTickets = ({ user, users }) => {
                 </div>
                 <p className="px-2 py-1 text-sm">
                   {selectedTicket.category.categoryName}
-                </p>
-              </div>
-              <div className="w-full mb-2">
-                <div className="py-1 px-2 w-full text-xs font-medium bg-dark rounded-md">
-                  Subcategoría
-                </div>
-                <p className="px-2 py-1 text-sm">
-                  {selectedTicket.subcategory}
                 </p>
               </div>
               <div>

@@ -76,7 +76,6 @@ export const useTicketsStore = () => {
       const { data } = await apiConn.put(`/tickets/put-observers/${ticketID}`, {
         user: observerID,
       });
-      console.log(data);
       dispatch(setTicketsLoading(false));
       return data;
     } catch (error) {
@@ -90,6 +89,20 @@ export const useTicketsStore = () => {
       dispatch(setTicketsLoading(true));
       const { data } = await apiConn.put(`/tickets/${ticketId}/priority`, {
         priority: newPriority,
+      });
+      dispatch(setTicketsLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setTicketsLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
+  const startPutStatus = async (ticketId, newStatus) => {
+    try {
+      dispatch(setTicketsLoading(true));
+      const { data } = await apiConn.put(`/tickets/${ticketId}/status`, {
+        status: newStatus,
       });
       dispatch(setTicketsLoading(false));
       return data;
@@ -115,9 +128,10 @@ export const useTicketsStore = () => {
     startPostTicket,
     startGetTicketByArea,
     startGetTickets,
-    startPutObservers,
     startGetTicketByUser,
-    startDeleteTickets,
+    startPutObservers,
     startPutPriority,
+    startPutStatus,
+    startDeleteTickets,
   };
 };

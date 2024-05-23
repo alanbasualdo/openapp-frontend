@@ -89,7 +89,7 @@ export const TicketList = ({
             <span className="visually-hidden">Cargando...</span>
           </div>
         </div>
-      ) : filteredByStatus.length > 0 ? (
+      ) : filteredByStatus?.length > 0 ? (
         <ul>
           {filteredByStatus?.map((ticket) => (
             <li

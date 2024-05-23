@@ -2,7 +2,9 @@ import Swal from "sweetalert2";
 import { getEnvVariables } from "../../helpers/getEnvVariables";
 import moment from "moment";
 
-export const UserManageTicket = ({ selectedTicket }) => {
+export const UserManageTicket = ({
+  selectedTicket,
+  }) => {
   const { VITE_BACKEND } = getEnvVariables();
 
   const openImage = (atta) => {
