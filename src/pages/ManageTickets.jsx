@@ -1,26 +1,20 @@
 import { useTicketsStore } from "../hooks/Tickets/useTicketsStore";
 import { TicketList } from "../components/tickets/TicketList";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getEnvVariables } from "../helpers/getEnvVariables";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { showErrorMessage, showSuccessMessage } from "../utils/showMessages";
-import { setTickets } from "../store/slices/ticketsSlice";
 
 export const ManageTickets = ({ user, socket }) => {
   const { tickets, area, ticketsLoading } = useSelector(
     (state) => state.tickets
   );
-  const {
-    startGetTicketByArea,
-    startPutObservers,
-    startPutPriority,
-    startPutStatus,
-  } = useTicketsStore();
+  const { startGetTicketByArea, startPutObservers, startPutPriority } =
+    useTicketsStore();
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
-  const dispatch = useDispatch();
   const { VITE_BACKEND } = getEnvVariables();
 
   const handleMouseEnter = () => {
@@ -62,6 +56,7 @@ export const ManageTickets = ({ user, socket }) => {
     socket.emit("change-ticket-status", {
       ticketId: selectedTicket._id,
       status: newStatus,
+      takenBy: user._id,
     });
   };
 
@@ -69,18 +64,13 @@ export const ManageTickets = ({ user, socket }) => {
     socket.on("status-changed", (updatedTicket) => {
       if (updatedTicket._id === selectedTicket._id) {
         setSelectedTicket(updatedTicket);
-        showSuccessMessage();
       }
-      startGetTicketByArea(area).then((data) => {
-        console.log(data);
-        dispatch(setTickets(data.tickets));
-      });
     });
 
     return () => {
       socket.off("status-changed");
     };
-  }, [selectedTicket, socket, area, dispatch, startGetTicketByArea]);
+  }, [selectedTicket, socket]);
 
   const openImage = (atta) => {
     Swal.fire({
@@ -271,7 +261,7 @@ export const ManageTickets = ({ user, socket }) => {
                 {selectedTicket.observers.length === 0 ? (
                   <p className="text-xs p-2">No hay observadores.</p>
                 ) : (
-                  <ul className="flex flex-wrap gap-1 mt-3">
+                  <ul className="flex flex-wrap gap-1 mt-2">
                     {selectedTicket.observers.map((obs) => (
                       <li
                         key={obs._id}
@@ -375,6 +365,12 @@ export const ManageTickets = ({ user, socket }) => {
                 />
                 <button className="btn btn-sm btn-dark">Enviar</button>
               </div>
+              {selectedTicket.takenBy && (
+                <p className="text-xs text-secondary text-end mt-1">
+                  {selectedTicket.takenBy.name}{" "}
+                  {selectedTicket.takenBy.lastName}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -388,6 +384,8 @@ export const ManageTickets = ({ user, socket }) => {
         tickets={tickets}
         setSelectedTicket={setSelectedTicket}
         ticketsLoading={ticketsLoading}
+        socket={socket}
+        selectedTicket={selectedTicket}
       />
     </>
   );

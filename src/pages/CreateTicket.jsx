@@ -314,6 +314,8 @@ export const CreateTicket = ({ user, users, socket }) => {
         user={user}
         tickets={tickets}
         setSelectedTicket={setSelectedTicket}
+        socket={socket}
+        selectedTicket={selectedTicket}
       />
     </>
   );

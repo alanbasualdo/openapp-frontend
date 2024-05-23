@@ -110,7 +110,7 @@ export const UserManageTicket = ({
               {selectedTicket.observers.length === 0 ? (
                 <p className="text-xs p-2">No hay observadores.</p>
               ) : (
-                <ul className="flex flex-wrap gap-1 mt-3">
+                <ul className="flex flex-wrap gap-1 mt-2">
                   {selectedTicket.observers.map((obs) => (
                     <li
                       key={obs._id}

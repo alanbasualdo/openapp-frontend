@@ -1,14 +1,21 @@
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const TicketList = ({
   user,
   tickets,
   ticketsLoading,
   setSelectedTicket,
+  socket,
+  selectedTicket
 }) => {
   const [orderByStatus, setOrderByStatus] = useState("");
+  const [ticketList, setTicketList] = useState(tickets);
   const area = localStorage.getItem("area");
+
+  useEffect(() => {
+    setTicketList(tickets);
+  }, [tickets]);
 
   const handleOrderByStatus = (status) => {
     // Si se hace clic en la misma opción, desactivar el filtro
@@ -16,8 +23,25 @@ export const TicketList = ({
   };
 
   const filteredByStatus = orderByStatus
-    ? tickets.filter((ticket) => ticket.status === orderByStatus)
-    : tickets;
+    ? ticketList.filter((ticket) => ticket.status === orderByStatus)
+    : ticketList;
+
+  useEffect(() => {
+    socket.on("status-changed", (updatedTicket) => {
+      setTicketList((prevTickets) =>
+        prevTickets.map((ticket) =>
+          ticket._id === updatedTicket._id ? updatedTicket : ticket
+        )
+      );
+      if (updatedTicket._id === selectedTicket?._id) {
+        setSelectedTicket(updatedTicket);
+      }
+    });
+
+    return () => {
+      socket.off("status-changed");
+    };
+  }, [selectedTicket, socket]);
 
   return (
     <div className="mt-1">
