@@ -6,7 +6,7 @@ export const showSuccessMessage = (message) => {
     icon: "success",
     title: message,
     showConfirmButton: false,
-    timer: 1300,
+    timer: 1000,
     customClass: {
       popup: "custom-swal", // Aplica la clase personalizada
       confirmButton: "swal2-confirm",
@@ -21,7 +21,7 @@ export const showErrorMessage = (message) => {
     icon: "error",
     text: message,
     showConfirmButton: false,
-    timer: 1700,
+    timer: 1500,
     customClass: {
       popup: "custom-swal", // Aplica la clase personalizada
       confirmButton: "swal2-confirm",

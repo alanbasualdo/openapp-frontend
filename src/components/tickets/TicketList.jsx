@@ -147,12 +147,10 @@ export const TicketList = ({
                     {ticket.title}
                     {area !== "userTicket" && (
                       <>
-                        {ticket.priority === 3 ? (
-                          <i className="ri-fire-line ml-1"></i>
-                        ) : ticket.priority === 2 ? (
-                          <i className="ri-fire-line text-warning ml-1"></i>
-                        ) : (
+                        {ticket.priority === 1 ? (
                           <i className="ri-fire-line text-danger ml-1"></i>
+                        ) : (
+                          <i className="ri-fire-line ml-1"></i>
                         )}
                       </>
                     )}

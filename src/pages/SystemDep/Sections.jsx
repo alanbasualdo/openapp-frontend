@@ -12,6 +12,7 @@ import { Disks } from "../../components/sections/pcs/Disks";
 import { Models } from "../../components/sections/pcs/Models";
 import { Computers } from "../../components/sections/pcs/Computers";
 import { Categories } from "../../components/tickets/Categories";
+import { TicketsArea } from "../../components/tickets/TicketsArea";
 
 export const Sections = () => {
   const [btnActivated, setBtnActivated] = useState(false);
@@ -53,6 +54,9 @@ export const Sections = () => {
           )}
           {section === "categories" && (
             <Categories setBtnActivated={setBtnActivated} />
+          )}
+          {section === "tickets-areas" && (
+            <TicketsArea setBtnActivated={setBtnActivated} />
           )}
         </div>
       ) : (
@@ -191,7 +195,7 @@ export const Sections = () => {
                 className="btn btn-sm btn-opencars"
                 onClick={() => {
                   activeBtn();
-                  setSection("areas");
+                  setSection("tickets-areas");
                 }}
               >
                 Áreas

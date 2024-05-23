@@ -85,6 +85,20 @@ export const useTicketsStore = () => {
     }
   };
 
+  const startPutPriority = async (ticketId, newPriority) => {
+    try {
+      dispatch(setTicketsLoading(true));
+      const { data } = await apiConn.put(`/tickets/${ticketId}/priority`, {
+        priority: newPriority,
+      });
+      dispatch(setTicketsLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setTicketsLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
   const startDeleteTickets = async (id) => {
     try {
       dispatch(setTicketsLoading(true));
@@ -104,5 +118,6 @@ export const useTicketsStore = () => {
     startPutObservers,
     startGetTicketByUser,
     startDeleteTickets,
+    startPutPriority,
   };
 };

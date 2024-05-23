@@ -15,9 +15,17 @@ export const UserManageTicket = ({ selectedTicket }) => {
     });
   };
 
+  const isImage = (fileName) => {
+    return /\.(jpg|jpeg|png|gif|bmp|tiff)$/i.test(fileName);
+  };
+
+  const isTextFile = (fileName) => {
+    return /\.(pdf|docx|txt)$/i.test(fileName);
+  };
+
   return (
     <>
-      <div className="rounded-lg py-3 px-4 text-white bg-gray mb-3">
+      <div className="rounded-lg py-3 px-4 text-white bg-gray mb-2">
         <div className="flex justify-between">
           <div>
             {selectedTicket.status === "Pendiente" ? (
@@ -69,63 +77,106 @@ export const UserManageTicket = ({ selectedTicket }) => {
             </p>
           </div>
         </div>
-        <hr className="mt-2 mb-3" />
+        <hr className="mt-2 mb-2" />
         <div className="d-flex gap-3 justify-center align-center">
           <div className="col-6">
-            <div className="w-full mb-3">
+            <div className="w-full mb-2">
               <div className="py-1 px-2 w-full text-xs font-medium bg-dark rounded-md">
                 Título
               </div>
               <p className="px-2 py-1 text-sm">{selectedTicket.title}</p>
             </div>
-            <div className="w-full mb-3">
+            <div className="w-full mb-2">
               <div className="py-1 px-2 w-full text-xs font-medium bg-dark rounded-md">
                 Descripción
               </div>
               <p className="px-2 py-1 text-sm">{selectedTicket.description}</p>
             </div>
-            <div className="w-full mb-3">
+            <div className="w-full mb-2">
               <div className="py-1 px-2 w-full text-xs font-medium bg-dark rounded-md">
                 Categoría
               </div>
-              <p className="px-2 py-1 text-sm">{selectedTicket.category.categoryName}</p>
+              <p className="px-2 py-1 text-sm">
+                {selectedTicket.category.categoryName}
+              </p>
             </div>
             <div>
               <div className="py-1 px-2 w-full text-xs font-medium">
                 Observadores
               </div>
               <hr />
-              <ul className="flex flex-wrap gap-1 mt-3">
-                {selectedTicket.observers.map((obs) => (
-                  <li
-                    key={obs._id}
-                    className="cursor-pointer text-xs mb-3"
-                    title="Eliminar"
-                    onClick={(e) => putObservers(obs._id)}
-                  >
-                    <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
-                      {obs.name} {obs.lastName}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              {selectedTicket.observers.length === 0 ? (
+                <p className="text-xs p-2">No hay observadores.</p>
+              ) : (
+                <ul className="flex flex-wrap gap-1 mt-3">
+                  {selectedTicket.observers.map((obs) => (
+                    <li
+                      key={obs._id}
+                      className="cursor-pointer text-xs mb-2"
+                      title="Eliminar"
+                      onClick={(e) => putObservers(obs._id)}
+                    >
+                      <span className="rounded-lg bg-dark p-2 hover:border border-red-600">
+                        {obs.name} {obs.lastName}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div>
               <div className="py-1 px-2 w-full text-xs font-medium">
                 Adjuntos
               </div>
               <hr />
-              <div className="flex flex-wrap gap-1 mt-2">
-                {selectedTicket.attachments.map((atta, index) => (
-                  <img
-                    src={`${VITE_BACKEND}/uploads/${atta}`}
-                    className="w-16 h-auto rounded-lg hover:border cursor-pointer border-secondary"
-                    title={atta}
-                    key={`${atta}-${index}`}
-                    onClick={(e) => openImage(atta)}
-                  />
-                ))}
-              </div>
+              {selectedTicket.attachments.length === 0 ? (
+                <p className="text-xs p-2">No hay adjuntos.</p>
+              ) : (
+                <div className="flex flex-wrap gap-1 mt-2">
+                  {selectedTicket.attachments.map((atta, index) => (
+                    <div
+                      key={`${atta}-${index}`}
+                      className="d-flex flex-column align-items-center gap-2"
+                    >
+                      {isImage(atta) ? (
+                        <img
+                          src={`${VITE_BACKEND}/uploads/${atta}`}
+                          className="w-16 h-auto rounded-lg hover:border cursor-pointer border-secondary object-cover"
+                          title={atta}
+                          onClick={() => openImage(atta)}
+                        />
+                      ) : isTextFile(atta) ? (
+                        <>
+                          <i className="ri-file-text-fill text-5xl text-dark"></i>
+                          <a
+                            href={`${VITE_BACKEND}/uploads/${atta}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs"
+                          >
+                            {atta.length > 20
+                              ? atta.slice(0, 20) + "..."
+                              : atta}
+                          </a>
+                        </>
+                      ) : (
+                        <div>
+                          <p>Archivo no soportado</p>
+                          <a
+                            href={`${VITE_BACKEND}/uploads/${atta}`}
+                            download={atta}
+                            className="text-xs"
+                          >
+                            {atta.length > 20
+                              ? atta.slice(0, 20) + "..."
+                              : atta}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="col-6 d-flex flex-column">

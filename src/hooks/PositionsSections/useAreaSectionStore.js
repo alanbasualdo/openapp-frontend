@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAreas, setLoading } from "../../store/slices/companySectionSlice";
 import apiConn from "../../api/apiConn";
 
 export const useAreaSectionStore = () => {
   const dispatch = useDispatch();
-  const { areas } = useSelector((state) => state.companySection);
 
   const startPostArea = async (area) => {
     try {
@@ -30,6 +29,18 @@ export const useAreaSectionStore = () => {
     }
   };
 
+  const startPutArea = async (area) => {
+    try {
+      dispatch(setLoading(true));
+      const { data } = await apiConn.put(`/areas/put-area/${area._id}`, area);
+      dispatch(setLoading(false));
+      return data;
+    } catch (error) {
+      dispatch(setLoading(false));
+      return { success: false, message: error.response.data.message };
+    }
+  };
+
   const startDeleteArea = async (id) => {
     try {
       dispatch(setLoading(true));
@@ -46,6 +57,6 @@ export const useAreaSectionStore = () => {
     startPostArea,
     startGetAreas,
     startDeleteArea,
-    areas,
+    startPutArea,
   };
 };

@@ -23,8 +23,8 @@ export const CreateTicket = ({ user, users }) => {
   const [suggestions, setSuggestions] = useState([]);
   const { getRootPropsFile, getInputPropsFile, isDragActiveFile, removeFile } =
     useFileDropzone("ticketFiles", files, setFiles);
-
-  const { areas, startGetAreas } = useAreaSectionStore();
+  const { areas } = useSelector((state) => state.companySection);
+  const { startGetAreas } = useAreaSectionStore();
   const { startGetCategoriesByArea } = useCategoriesStore();
   const { startPostTicket, startGetTicketByUser } = useTicketsStore();
   const { tickets, categories } = useSelector((state) => state.tickets);
@@ -57,6 +57,7 @@ export const CreateTicket = ({ user, users }) => {
       if (data.success) {
         showSuccessMessage(data.message);
         clearTicket();
+        startGetTicketByUser(user._id);
       } else {
         showErrorMessage(data.message);
       }
@@ -71,21 +72,39 @@ export const CreateTicket = ({ user, users }) => {
     setFiles([]);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      setSelectedTicket(null);
+    }
+  };
+
   useEffect(() => {
     startGetTicketByUser(user._id);
   }, []);
 
   useEffect(() => {
     startGetAreas();
-    startGetCategoriesByArea(ticket.area);
+  }, []);
+
+  useEffect(() => {
+    if (ticket.area) {
+      startGetCategoriesByArea(ticket.area);
+    }
   }, [ticket.area]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <>
       {selectedTicket ? (
         <>
           <div className="text-end">
-            <button className="mb-1" onClick={(e) => {setSelectedTicket(null); e.key === "Esc"}}>
+            <button className="mb-1" onClick={() => setSelectedTicket(null)}>
               <i className="ri-close-fill text-sm cursor-pointer text-red-600 font-bold hover:text-red-300"></i>
             </button>
           </div>
